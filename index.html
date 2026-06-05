@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ML Nutrition | Premium Supplements</title>
+	<meta name="description" content="ML Nutrition offers premium supplements, trusted global brands, and a genuine in-store experience.">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Teko:wght@600&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg: #111111;
+			--surface: #171717;
+			--surface-alt: #1e1e1e;
+			--surface-soft: #242424;
+			--accent: #cc0000;
+			--accent-strong: #ff2020;
+			--text: #f5f5f5;
+			--muted: #b5b5b5;
+			--border: rgba(255, 255, 255, 0.08);
+			--shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+			--radius: 22px;
+			--radius-sm: 16px;
+			--max-width: 1180px;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Poppins", sans-serif;
+			background:
+				radial-gradient(circle at top left, rgba(204, 0, 0, 0.18), transparent 28%),
+				radial-gradient(circle at 85% 10%, rgba(204, 0, 0, 0.12), transparent 24%),
+				var(--bg);
+			color: var(--text);
+			line-height: 1.6;
+		}
+
+		img {
+			max-width: 100%;
+			display: block;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		button {
+			font: inherit;
+		}
+
+		.container {
+			width: min(calc(100% - 2rem), var(--max-width));
+			margin: 0 auto;
+		}
+
+		.section {
+			padding: 4.5rem 0;
+		}
+
+		.section-heading {
+			margin: 0 0 0.85rem;
+			font-size: clamp(1.8rem, 2vw + 1rem, 2.8rem);
+			line-height: 1.15;
+		}
+
+		.section-copy {
+			margin: 0 0 2rem;
+			max-width: 42rem;
+			color: var(--muted);
+		}
+
+		.site-header {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			backdrop-filter: blur(14px);
+			background: rgba(17, 17, 17, 0.88);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		}
+
+		.header-bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			min-height: 4.75rem;
+		}
+
+		.logo {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.logo img {
+			display: block;
+			height: 50px;
+			width: auto;
+			object-fit: contain;
+		}
+
+		.logo-text {
+			font-family: "Teko", sans-serif;
+			color: #ffffff;
+			font-size: 32px;
+			font-weight: 600;
+			letter-spacing: 4px;
+			line-height: 1;
+			text-transform: uppercase;
+		}
+
+		.footer .logo img {
+			height: 3.5rem;
+		}
+
+		.nav-toggle {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 2.85rem;
+			height: 2.85rem;
+			border: 1px solid var(--border);
+			border-radius: 999px;
+			background: transparent;
+			color: var(--text);
+			cursor: pointer;
+		}
+
+		.nav-toggle span,
+		.nav-toggle span::before,
+		.nav-toggle span::after {
+			display: block;
+			width: 1.15rem;
+			height: 2px;
+			border-radius: 999px;
+			background: currentColor;
+			position: relative;
+			transition: transform 0.25s ease, opacity 0.25s ease;
+			content: "";
+		}
+
+		.nav-toggle span::before {
+			position: absolute;
+			top: -0.38rem;
+			left: 0;
+		}
+
+		.nav-toggle span::after {
+			position: absolute;
+			top: 0.38rem;
+			left: 0;
+		}
+
+		.nav-toggle[aria-expanded="true"] span {
+			background: transparent;
+		}
+
+		.nav-toggle[aria-expanded="true"] span::before {
+			top: 0;
+			transform: rotate(45deg);
+		}
+
+		.nav-toggle[aria-expanded="true"] span::after {
+			top: 0;
+			transform: rotate(-45deg);
+		}
+
+		.site-nav {
+			position: absolute;
+			top: calc(100% + 0.75rem);
+			left: 1rem;
+			right: 1rem;
+			display: none;
+			flex-direction: column;
+			padding: 1rem;
+			border: 1px solid var(--border);
+			border-radius: 20px;
+			background: rgba(23, 23, 23, 0.97);
+			box-shadow: var(--shadow);
+		}
+
+		.site-nav.is-open {
+			display: flex;
+		}
+
+		.site-nav a {
+			padding: 0.9rem 1rem;
+			border-radius: 14px;
+			color: var(--muted);
+			transition: background-color 0.2s ease, color 0.2s ease;
+		}
+
+		.site-nav a:hover,
+		.site-nav a:focus-visible {
+			background: rgba(204, 0, 0, 0.16);
+			color: var(--text);
+			outline: none;
+		}
+
+		.hero {
+			padding: 4rem 0 3rem;
+		}
+
+		.hero-panel {
+			position: relative;
+			overflow: hidden;
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			border-radius: 28px;
+			padding: 2rem;
+			background:
+				linear-gradient(135deg, rgba(204, 0, 0, 0.22), transparent 38%),
+				radial-gradient(circle at right top, rgba(204, 0, 0, 0.24), transparent 26%),
+				#131313;
+			box-shadow: var(--shadow);
+		}
+
+		.hero-panel::after {
+			content: "";
+			position: absolute;
+			inset: auto -10% -25% auto;
+			width: 15rem;
+			height: 15rem;
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(204, 0, 0, 0.28), transparent 65%);
+			pointer-events: none;
+		}
+
+		.eyebrow {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.55rem;
+			margin-bottom: 1rem;
+			padding: 0.45rem 0.85rem;
+			border: 1px solid rgba(204, 0, 0, 0.2);
+			border-radius: 999px;
+			background: rgba(204, 0, 0, 0.09);
+			color: #ffd0d0;
+			font-size: 0.82rem;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+		}
+
+		.hero h1 {
+			margin: 0;
+			max-width: 11ch;
+			font-size: clamp(2.5rem, 7vw, 5.4rem);
+			line-height: 0.96;
+			letter-spacing: -0.04em;
+		}
+
+		.hero p {
+			margin: 1.25rem 0 0;
+			max-width: 34rem;
+			color: var(--muted);
+			font-size: 1rem;
+		}
+
+		.hero-actions {
+			display: flex;
+			flex-direction: column;
+			gap: 0.9rem;
+			margin-top: 1.8rem;
+		}
+
+		.button,
+		.button-secondary,
+		.product-link,
+		.directions-link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.55rem;
+			min-height: 3.15rem;
+			padding: 0.85rem 1.25rem;
+			border-radius: 999px;
+			font-weight: 600;
+			transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+		}
+
+		.button,
+		.product-link {
+			background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+			color: #ffffff;
+			box-shadow: 0 14px 30px rgba(204, 0, 0, 0.22);
+		}
+
+		.button-secondary,
+		.directions-link {
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.03);
+			color: var(--text);
+		}
+
+		.button:hover,
+		.button-secondary:hover,
+		.product-link:hover,
+		.directions-link:hover,
+		.button:focus-visible,
+		.button-secondary:focus-visible,
+		.product-link:focus-visible,
+		.directions-link:focus-visible {
+			transform: translateY(-2px);
+			outline: none;
+		}
+
+		.hero-stats {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.85rem;
+			margin-top: 2rem;
+		}
+
+		.stat-card {
+			padding: 1rem;
+			border: 1px solid rgba(255, 255, 255, 0.07);
+			border-radius: 18px;
+			background: rgba(255, 255, 255, 0.03);
+		}
+
+		.stat-card strong {
+			display: block;
+			font-size: 1.45rem;
+		}
+
+		.stat-card span {
+			color: var(--muted);
+			font-size: 0.92rem;
+		}
+
+		.grid {
+			display: grid;
+			gap: 1rem;
+		}
+
+		.categories-grid,
+		.products-grid,
+		.stores-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.category-card,
+		.product-card,
+		.store-card {
+			height: 100%;
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+			box-shadow: var(--shadow);
+		}
+
+		.category-card {
+			padding: 1.3rem;
+			transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+		}
+
+		.category-card:hover,
+		.category-card:focus-within {
+			transform: translateY(-4px);
+			border-color: rgba(204, 0, 0, 0.5);
+			background: linear-gradient(180deg, rgba(204, 0, 0, 0.12), rgba(255, 255, 255, 0.02));
+		}
+
+		.category-icon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 3rem;
+			height: 3rem;
+			border-radius: 18px;
+			background: rgba(204, 0, 0, 0.16);
+			font-size: 1.45rem;
+		}
+
+		.category-card h3,
+		.product-card h3,
+		.store-card h3 {
+			margin: 1rem 0 0.35rem;
+			font-size: 1.15rem;
+		}
+
+		.category-card p,
+		.product-card p,
+		.store-card p,
+		.product-meta,
+		.store-meta {
+			margin: 0;
+			color: var(--muted);
+		}
+
+		.product-card {
+			padding: 1rem;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.products-toolbar {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.filter-button {
+			padding: 0.7rem 1rem;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.03);
+			color: var(--muted);
+			cursor: pointer;
+			transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+		}
+
+		.filter-button:hover,
+		.filter-button:focus-visible,
+		.filter-button.is-active {
+			background: rgba(204, 0, 0, 0.14);
+			border-color: rgba(204, 0, 0, 0.45);
+			color: #ffffff;
+			outline: none;
+			transform: translateY(-1px);
+		}
+
+		.product-image {
+			position: relative;
+			min-height: 14rem;
+			overflow: hidden;
+			border-radius: 20px;
+			background:
+				radial-gradient(circle at top, rgba(204, 0, 0, 0.28), transparent 38%),
+				linear-gradient(180deg, #252525, #111111);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+		}
+
+		.product-image img {
+			width: 100%;
+			height: 100%;
+			min-height: 14rem;
+			object-fit: cover;
+		}
+
+		.product-image.has-image::before,
+		.product-image.has-image::after {
+			display: none;
+		}
+
+		.product-image::before {
+			content: "";
+			position: absolute;
+			inset: 14% 25%;
+			border-radius: 24px;
+			background: linear-gradient(180deg, #3c3c3c, #1a1a1a);
+			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 26px 34px rgba(0, 0, 0, 0.26);
+		}
+
+		.product-image::after {
+			content: attr(data-label);
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 5.5rem;
+			height: 5.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			background: linear-gradient(135deg, var(--accent), #8d0000);
+			color: #fff;
+			font-weight: 700;
+			letter-spacing: 0.04em;
+		}
+
+		.product-brand {
+			display: inline-flex;
+			width: fit-content;
+			padding: 0.38rem 0.72rem;
+			border-radius: 999px;
+			background: rgba(204, 0, 0, 0.12);
+			color: #ffb0b0;
+			font-size: 0.82rem;
+			font-weight: 600;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+		}
+
+		.product-copy {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+			flex: 1;
+		}
+
+		.price {
+			color: #ffffff;
+			font-weight: 700;
+			font-size: 1.05rem;
+		}
+
+		.product-status {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.75rem;
+			flex-wrap: wrap;
+		}
+
+		.out-of-stock {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.35rem 0.7rem;
+			border-radius: 999px;
+			background: rgba(255, 167, 38, 0.16);
+			color: #ffcf85;
+			font-size: 0.8rem;
+			font-weight: 600;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+		}
+
+		.product-link.whatsapp-link {
+			background: linear-gradient(135deg, #119c4a, #25d366);
+			box-shadow: 0 14px 30px rgba(37, 211, 102, 0.2);
+		}
+
+		.products-feedback {
+			display: grid;
+			place-items: center;
+			min-height: 14rem;
+			padding: 2rem;
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+			text-align: center;
+			box-shadow: var(--shadow);
+		}
+
+		.products-feedback p {
+			margin: 0;
+			color: var(--muted);
+		}
+
+		.spinner {
+			width: 2.75rem;
+			height: 2.75rem;
+			border: 3px solid rgba(255, 255, 255, 0.08);
+			border-top-color: var(--accent);
+			border-radius: 50%;
+			animation: spin 0.9s linear infinite;
+			margin-bottom: 1rem;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.store-card {
+			padding: 1.3rem;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.store-badge {
+			display: inline-flex;
+			width: fit-content;
+			padding: 0.42rem 0.75rem;
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.06);
+			color: var(--muted);
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+		}
+
+		.store-badge.coming-soon {
+			background: rgba(204, 0, 0, 0.14);
+			color: #ffb6b6;
+		}
+
+		.footer {
+			padding: 2rem 0 3rem;
+			border-top: 1px solid rgba(255, 255, 255, 0.06);
+		}
+
+		.footer-grid {
+			display: grid;
+			gap: 1rem;
+		}
+
+		.footer-copy {
+			color: var(--muted);
+		}
+
+		.footer-links {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.footer-links a {
+			color: var(--text);
+		}
+
+		.footer-links a:hover,
+		.footer-links a:focus-visible {
+			color: #ff7a7a;
+			outline: none;
+		}
+
+		.copyright {
+			margin-top: 1.5rem;
+			color: #8c8c8c;
+			font-size: 0.92rem;
+		}
+
+		.fade-in {
+			opacity: 0;
+			transform: translateY(18px);
+			transition: opacity 0.6s ease, transform 0.6s ease;
+		}
+
+		.fade-in.is-visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		@media (min-width: 640px) {
+			.hero-actions {
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
+
+			.categories-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			.products-grid,
+			.stores-grid,
+			.footer-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (min-width: 900px) {
+			.section {
+				padding: 5.5rem 0;
+			}
+
+			.nav-toggle {
+				display: none;
+			}
+
+			.site-nav {
+				position: static;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: flex-end;
+				padding: 0;
+				border: 0;
+				border-radius: 0;
+				background: transparent;
+				box-shadow: none;
+			}
+
+			.site-nav a {
+				padding: 0.65rem 0.95rem;
+			}
+
+			.hero-panel {
+				display: grid;
+				grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.8fr);
+				align-items: end;
+				gap: 2rem;
+				padding: 3rem;
+			}
+
+			.hero-stats {
+				margin-top: 0;
+				grid-template-columns: 1fr;
+			}
+
+			.categories-grid {
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+			}
+
+			.products-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (min-width: 1120px) {
+			.products-grid {
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+			}
+		}
+	</style>
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-bar">
+			<a class="logo" href="#home" aria-label="ML Nutrition home">
+				<img src="IMG_6042.PNG" alt="ML Nutrition logo">
+				<span class="logo-text">ML Nutrition</span>
+			</a>
+			<button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+				<span></span>
+			</button>
+			<nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+				<a href="#home">Home</a>
+				<a href="#products">Products</a>
+				<a href="#stores">Stores</a>
+				<a href="#contact">Contact</a>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero section" id="home">
+			<div class="container">
+				<div class="hero-panel fade-in">
+					<div>
+						<span class="eyebrow">Premium Selection Since Day One</span>
+						<h1>The Premium Standard in Supplements</h1>
+						<p>Global Brands. Genuine Experience. Discover trusted sports nutrition, expert guidance, and a store environment built for serious goals.</p>
+						<div class="hero-actions">
+							<a class="button" href="#products">Shop Now</a>
+							<a class="button-secondary" href="#stores">Visit Store</a>
+						</div>
+					</div>
+					<div class="hero-stats">
+						<div class="stat-card">
+							<strong>100%</strong>
+							<span>Authentic products from trusted global brands</span>
+						</div>
+						<div class="stat-card">
+							<strong>2 Stores</strong>
+							<span>Serving Talegaon today and Akurdi soon</span>
+						</div>
+						<div class="stat-card">
+							<strong>6 Core</strong>
+							<span>Supplement categories curated for performance</span>
+						</div>
+						<div class="stat-card">
+							<strong>Direct Support</strong>
+							<span>Fast ordering and availability updates on WhatsApp</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="categories">
+			<div class="container">
+				<h2 class="section-heading fade-in">Featured Categories</h2>
+				<p class="section-copy fade-in">Targeted supplementation for strength, endurance, recovery, and everyday wellness.</p>
+				<div class="grid categories-grid">
+					<article class="category-card fade-in">
+						<span class="category-icon" aria-hidden="true">💪</span>
+						<h3>Protein</h3>
+						<p>Whey blends, isolates, and recovery formulas for lean muscle support.</p>
+					</article>
+					<article class="category-card fade-in">
+						<span class="category-icon" aria-hidden="true">⚡</span>
+						<h3>Creatine</h3>
+						<p>Performance-focused creatine options for explosive strength and power.</p>
+					</article>
+					<article class="category-card fade-in">
+						<span class="category-icon" aria-hidden="true">🔥</span>
+						<h3>Pre-Workout</h3>
+						<p>High-energy formulas to lock in focus, drive, and training intensity.</p>
+					</article>
+					<article class="category-card fade-in">
+						<span class="category-icon" aria-hidden="true">🏋️</span>
+						<h3>Mass Gainer</h3>
+						<p>Calorie-dense nutrition for size, strength, and consistent progress.</p>
+					</article>
+					<article class="category-card fade-in">
+						<span class="category-icon" aria-hidden="true">🌿</span>
+						<h3>Vitamins</h3>
+						<p>Daily health essentials to support immunity, recovery, and overall balance.</p>
+					</article>
+					<article class="category-card fade-in">
+						<span class="category-icon" aria-hidden="true">🎒</span>
+						<h3>Accessories</h3>
+						<p>Shakers, gym gear, and practical add-ons for a complete setup.</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="products">
+			<div class="container">
+				<h2 class="section-heading fade-in">Featured Products</h2>
+				<p class="section-copy fade-in">A premium mix of category leaders and high-demand essentials available through ML Nutrition.</p>
+				<div class="products-toolbar fade-in" role="toolbar" aria-label="Product category filters">
+					<button class="filter-button is-active" type="button" data-category="All">All</button>
+					<button class="filter-button" type="button" data-category="Protein">Protein</button>
+					<button class="filter-button" type="button" data-category="Creatine">Creatine</button>
+					<button class="filter-button" type="button" data-category="Pre-Workout">Pre-Workout</button>
+					<button class="filter-button" type="button" data-category="Mass Gainer">Mass Gainer</button>
+					<button class="filter-button" type="button" data-category="Vitamins">Vitamins</button>
+					<button class="filter-button" type="button" data-category="Accessories">Accessories</button>
+				</div>
+				<div id="products-content" class="fade-in">
+					<div class="products-feedback" aria-live="polite">
+						<div>
+							<div class="spinner" aria-hidden="true"></div>
+							<p>Loading products...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="stores">
+			<div class="container">
+				<h2 class="section-heading fade-in">Our Stores</h2>
+				<p class="section-copy fade-in">Visit ML Nutrition in person for expert recommendations, authentic products, and a better buying experience.</p>
+				<div class="grid stores-grid">
+					<article class="store-card fade-in">
+						<span class="store-badge">Open Now</span>
+						<h3>Talegaon</h3>
+						<p class="store-meta">ML Nutrition, Talegaon Dabhade, Pune, Maharashtra</p>
+						<p>Timings: 9:00 AM - 9:00 PM</p>
+						<a class="directions-link" href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Talegaon%20Dabhade" target="_blank" rel="noreferrer">Get Directions</a>
+					</article>
+					<article class="store-card fade-in">
+						<span class="store-badge coming-soon">Coming Soon</span>
+						<h3>Akurdi</h3>
+						<p class="store-meta">Upcoming ML Nutrition store in Akurdi, Pune, Maharashtra</p>
+						<p>Timings: Launching soon. Store details will be announced shortly.</p>
+						<a class="directions-link" href="https://www.google.com/maps/search/?api=1&query=Akurdi%20Pune" target="_blank" rel="noreferrer">View Area</a>
+					</article>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="footer" id="contact">
+		<div class="container">
+			<div class="footer-grid fade-in">
+				<div>
+					<div class="logo">
+						<img src="IMG_6042.PNG" alt="ML Nutrition logo">
+					</div>
+					<p class="footer-copy">Premium supplements, authentic brands, and a genuine store experience for serious fitness goals.</p>
+				</div>
+				<div class="footer-links">
+					<a href="https://instagram.com/themlnutrition" target="_blank" rel="noreferrer">Instagram: @themlnutrition</a>
+					<a href="https://wa.me/918329384588" target="_blank" rel="noreferrer">WhatsApp: 8329384588</a>
+				</div>
+			</div>
+			<p class="copyright">&copy; <span id="year"></span> ML Nutrition. All rights reserved.</p>
+		</div>
+	</footer>
+
+	<script>
+		const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17h4gGSIbSJZ6qMA0Xjt-2aLoxRT4ZTikjPdaaM6a_S4/gviz/tq?tqx=out:json';
+		const WHATSAPP_NUMBER = '918329384588';
+		const FALLBACK_PRODUCT_IMAGE = 'IMG_6042.PNG';
+		const CATEGORY_ORDER = ['All', 'Protein', 'Creatine', 'Pre-Workout', 'Mass Gainer', 'Vitamins', 'Accessories'];
+
+		const navToggle = document.querySelector('.nav-toggle');
+		const siteNav = document.querySelector('.site-nav');
+		const navLinks = document.querySelectorAll('.site-nav a');
+		const yearTarget = document.getElementById('year');
+		const animatedItems = document.querySelectorAll('.fade-in');
+		const productsContent = document.getElementById('products-content');
+		const filterButtons = document.querySelectorAll('.filter-button');
+
+		let allProducts = [];
+		let activeCategory = 'All';
+
+		if (yearTarget) {
+			yearTarget.textContent = new Date().getFullYear();
+		}
+
+		function normalizeProduct(product) {
+			const brand = product.brand || 'ML Nutrition';
+			const name = product.name || 'Untitled Product';
+			const category = product.category || 'Accessories';
+			const description = product.description || 'Premium supplement available at ML Nutrition.';
+			const priceRange = product.price_range || 'Price on request';
+			const imageUrl = product.image_url || FALLBACK_PRODUCT_IMAGE;
+			const inStock = String(product.in_stock || 'Yes').toLowerCase() !== 'no';
+			const initials = name
+				.split(/\s+/)
+				.filter(Boolean)
+				.slice(0, 2)
+				.map((part) => part[0].toUpperCase())
+				.join('') || 'ML';
+
+			return {
+				brand,
+				name,
+				category,
+				description,
+				priceRange,
+				imageUrl,
+				inStock,
+				initials
+			};
+		}
+
+		function createWhatsAppUrl(product) {
+			const message = `Hi ML Nutrition! I am interested in ${product.name} by ${product.brand}. Please share availability and exact price.`;
+			return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+		}
+
+		function productCardMarkup(product) {
+			const safeBrand = product.brand.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			const safeName = product.name.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			const safeDescription = product.description.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			const safePrice = product.priceRange.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			const imageMarkup = product.imageUrl
+				? `<img src="${product.imageUrl}" alt="${safeName}" loading="lazy" onerror="this.parentElement.classList.remove('has-image'); this.remove();">`
+				: '';
+
+			return `
+				<article class="product-card fade-in">
+					<div class="product-image ${product.imageUrl ? 'has-image' : ''}" data-label="${product.initials}">
+						${imageMarkup}
+					</div>
+					<div class="product-copy">
+						<span class="product-brand">${safeBrand}</span>
+						<h3>${safeName}</h3>
+						<p>${safeDescription}</p>
+						<div class="product-status">
+							<p class="price">${safePrice}</p>
+							${product.inStock ? '' : '<span class="out-of-stock">Out of Stock</span>'}
+						</div>
+						<a class="product-link whatsapp-link" href="${createWhatsAppUrl(product)}" target="_blank" rel="noreferrer">Buy on WhatsApp</a>
+					</div>
+				</article>
+			`;
+		}
+
+		function renderProducts(products = allProducts) {
+			if (!productsContent) {
+				return;
+			}
+
+			const visibleProducts = activeCategory === 'All'
+				? products
+				: products.filter((product) => product.category.toLowerCase() === activeCategory.toLowerCase());
+
+			if (!visibleProducts.length) {
+				productsContent.innerHTML = `
+					<div class="products-feedback" aria-live="polite">
+						<p>No products found</p>
+					</div>
+				`;
+				return;
+			}
+
+			productsContent.innerHTML = `<div class="grid products-grid">${visibleProducts.map(productCardMarkup).join('')}</div>`;
+			productsContent.querySelectorAll('.fade-in').forEach((item, index) => {
+				item.style.opacity = '1';
+				item.style.transform = 'translateY(0)';
+				item.style.transitionDelay = `${Math.min(index * 60, 240)}ms`;
+				item.classList.add('is-visible');
+			});
+		}
+
+		function setActiveCategory(category) {
+			activeCategory = category;
+			filterButtons.forEach((button) => {
+				button.classList.toggle('is-active', button.dataset.category === category);
+			});
+			renderProducts(allProducts);
+		}
+
+		function loadProducts() {
+			if (!productsContent) {
+				return;
+			}
+
+			fetch(SHEET_URL)
+				.then((res) => res.text())
+				.then((text) => {
+					const json = JSON.parse(text.substr(47).slice(0, -2));
+					const rows = json.table.rows;
+
+					const products = rows.map((row) => ({
+						id: row.c[0] && row.c[0].v,
+						name: row.c[1] && row.c[1].v,
+						brand: row.c[2] && row.c[2].v,
+						category: row.c[3] && row.c[3].v,
+						description: row.c[4] && row.c[4].v,
+						price_range: row.c[5] && row.c[5].v,
+						image_url: row.c[6] && row.c[6].v,
+						in_stock: row.c[7] && row.c[7].v
+					}));
+
+					allProducts = products
+						.filter((product) => product.name || product.brand || product.category || product.price_range)
+						.filter((product) => String(product.name || '').toLowerCase() !== 'name')
+						.map(normalizeProduct)
+						.filter((product) => CATEGORY_ORDER.includes(product.category) || product.category);
+
+					renderProducts(allProducts);
+				})
+				.catch((err) => {
+					productsContent.innerHTML = `
+						<div class="products-feedback" aria-live="polite">
+							<p>Unable to load products right now. Please try again shortly.</p>
+						</div>
+					`;
+					console.error('Error:', err);
+				});
+		}
+
+		filterButtons.forEach((button) => {
+			button.addEventListener('click', () => {
+				setActiveCategory(button.dataset.category || 'All');
+			});
+		});
+
+		if (navToggle && siteNav) {
+			navToggle.addEventListener('click', () => {
+				const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+				navToggle.setAttribute('aria-expanded', String(!isExpanded));
+				siteNav.classList.toggle('is-open');
+			});
+
+			navLinks.forEach((link) => {
+				link.addEventListener('click', () => {
+					navToggle.setAttribute('aria-expanded', 'false');
+					siteNav.classList.remove('is-open');
+				});
+			});
+		}
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-visible');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			threshold: 0.15
+		});
+
+		animatedItems.forEach((item, index) => {
+			item.style.transitionDelay = `${Math.min(index * 60, 240)}ms`;
+			observer.observe(item);
+		});
+
+		loadProducts();
+	</script>
+</body>
+</html>
