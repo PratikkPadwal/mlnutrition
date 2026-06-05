@@ -3,30 +3,28 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ML Nutrition | Premium Supplements</title>
-	<meta name="description" content="ML Nutrition offers premium supplements, trusted global brands, and a genuine in-store experience.">
+	<title>ML Nutrition | The Premium Standard in Supplements</title>
+	<meta name="description" content="ML Nutrition - Premium supplement store offering global brands, 100% authentic products, and expert guidance.">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Teko:wght@600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
 	<style>
-		:root {
-			--bg: #111111;
-			--surface: #171717;
-			--surface-alt: #1e1e1e;
-			--surface-soft: #242424;
-			--accent: #cc0000;
-			--accent-strong: #ff2020;
-			--text: #f5f5f5;
-			--muted: #b5b5b5;
-			--border: rgba(255, 255, 255, 0.08);
-			--shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-			--radius: 22px;
-			--radius-sm: 16px;
-			--max-width: 1180px;
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
 		}
 
-		* {
-			box-sizing: border-box;
+		:root {
+			--bg: #080808;
+			--surface: #111111;
+			--card: #161616;
+			--border: #222222;
+			--primary: #E31E24;
+			--glow: rgba(227, 30, 36, 0.15);
+			--white: #FFFFFF;
+			--grey: #888888;
+			--max-width: 1400px;
 		}
 
 		html {
@@ -34,531 +32,672 @@
 		}
 
 		body {
-			margin: 0;
-			font-family: "Poppins", sans-serif;
-			background:
-				radial-gradient(circle at top left, rgba(204, 0, 0, 0.18), transparent 28%),
-				radial-gradient(circle at 85% 10%, rgba(204, 0, 0, 0.12), transparent 24%),
-				var(--bg);
-			color: var(--text);
+			font-family: 'DM Sans', sans-serif;
+			background: var(--bg);
+			color: var(--white);
 			line-height: 1.6;
+			overflow-x: hidden;
 		}
 
-		img {
-			max-width: 100%;
-			display: block;
-		}
-
-		a {
-			color: inherit;
-			text-decoration: none;
-		}
-
-		button {
-			font: inherit;
-		}
-
-		.container {
-			width: min(calc(100% - 2rem), var(--max-width));
-			margin: 0 auto;
-		}
-
-		.section {
-			padding: 4.5rem 0;
-		}
-
-		.section-heading {
-			margin: 0 0 0.85rem;
-			font-size: clamp(1.8rem, 2vw + 1rem, 2.8rem);
-			line-height: 1.15;
-		}
-
-		.section-copy {
-			margin: 0 0 2rem;
-			max-width: 42rem;
-			color: var(--muted);
-		}
-
-		.site-header {
-			position: sticky;
+		/* NAVBAR */
+		.navbar {
+			position: fixed;
 			top: 0;
-			z-index: 20;
-			backdrop-filter: blur(14px);
-			background: rgba(17, 17, 17, 0.88);
-			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			left: 0;
+			right: 0;
+			z-index: 1000;
+			background: rgba(8, 8, 8, 0.85);
+			backdrop-filter: blur(20px);
+			border-bottom: 1px solid var(--primary);
+			animation: slideDown 0.6s ease;
 		}
 
-		.header-bar {
+		@keyframes slideDown {
+			from {
+				transform: translateY(-100%);
+			}
+			to {
+				transform: translateY(0);
+			}
+		}
+
+		.navbar-container {
+			max-width: var(--max-width);
+			margin: 0 auto;
+			padding: 1.2rem 1.5rem;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			gap: 1rem;
-			min-height: 4.75rem;
 		}
 
-		.logo {
-			display: inline-flex;
+		.logo-group {
+			display: flex;
 			align-items: center;
-			gap: 10px;
+			gap: 12px;
 		}
 
-		.logo img {
-			display: block;
-			height: 50px;
+		.logo-img {
+			height: 45px;
 			width: auto;
-			object-fit: contain;
 		}
 
 		.logo-text {
-			font-family: "Teko", sans-serif;
-			color: #ffffff;
-			font-size: 32px;
-			font-weight: 600;
-			letter-spacing: 4px;
-			line-height: 1;
-			text-transform: uppercase;
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 28px;
+			letter-spacing: 3px;
+			color: var(--white);
 		}
 
-		.footer .logo img {
-			height: 3.5rem;
-		}
-
-		.nav-toggle {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 2.85rem;
-			height: 2.85rem;
-			border: 1px solid var(--border);
-			border-radius: 999px;
-			background: transparent;
-			color: var(--text);
-			cursor: pointer;
-		}
-
-		.nav-toggle span,
-		.nav-toggle span::before,
-		.nav-toggle span::after {
-			display: block;
-			width: 1.15rem;
-			height: 2px;
-			border-radius: 999px;
-			background: currentColor;
-			position: relative;
-			transition: transform 0.25s ease, opacity 0.25s ease;
-			content: "";
-		}
-
-		.nav-toggle span::before {
-			position: absolute;
-			top: -0.38rem;
-			left: 0;
-		}
-
-		.nav-toggle span::after {
-			position: absolute;
-			top: 0.38rem;
-			left: 0;
-		}
-
-		.nav-toggle[aria-expanded="true"] span {
-			background: transparent;
-		}
-
-		.nav-toggle[aria-expanded="true"] span::before {
-			top: 0;
-			transform: rotate(45deg);
-		}
-
-		.nav-toggle[aria-expanded="true"] span::after {
-			top: 0;
-			transform: rotate(-45deg);
-		}
-
-		.site-nav {
-			position: absolute;
-			top: calc(100% + 0.75rem);
-			left: 1rem;
-			right: 1rem;
+		.nav-menu {
 			display: none;
-			flex-direction: column;
-			padding: 1rem;
+			gap: 2.5rem;
+			list-style: none;
+		}
+
+		.nav-menu a {
+			color: var(--grey);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s;
+			font-size: 15px;
+		}
+
+		.nav-menu a:hover {
+			color: var(--primary);
+		}
+
+		.lang-toggle {
+			display: flex;
+			gap: 0.5rem;
+			margin-left: 2rem;
+		}
+
+		.lang-btn {
+			padding: 6px 12px;
+			background: transparent;
 			border: 1px solid var(--border);
-			border-radius: 20px;
-			background: rgba(23, 23, 23, 0.97);
-			box-shadow: var(--shadow);
-		}
-
-		.site-nav.is-open {
-			display: flex;
-		}
-
-		.site-nav a {
-			padding: 0.9rem 1rem;
-			border-radius: 14px;
-			color: var(--muted);
-			transition: background-color 0.2s ease, color 0.2s ease;
-		}
-
-		.site-nav a:hover,
-		.site-nav a:focus-visible {
-			background: rgba(204, 0, 0, 0.16);
-			color: var(--text);
-			outline: none;
-		}
-
-		.hero {
-			padding: 4rem 0 3rem;
-		}
-
-		.hero-panel {
-			position: relative;
-			overflow: hidden;
-			border: 1px solid rgba(255, 255, 255, 0.06);
-			border-radius: 28px;
-			padding: 2rem;
-			background:
-				linear-gradient(135deg, rgba(204, 0, 0, 0.22), transparent 38%),
-				radial-gradient(circle at right top, rgba(204, 0, 0, 0.24), transparent 26%),
-				#131313;
-			box-shadow: var(--shadow);
-		}
-
-		.hero-panel::after {
-			content: "";
-			position: absolute;
-			inset: auto -10% -25% auto;
-			width: 15rem;
-			height: 15rem;
-			border-radius: 50%;
-			background: radial-gradient(circle, rgba(204, 0, 0, 0.28), transparent 65%);
-			pointer-events: none;
-		}
-
-		.eyebrow {
-			display: inline-flex;
-			align-items: center;
-			gap: 0.55rem;
-			margin-bottom: 1rem;
-			padding: 0.45rem 0.85rem;
-			border: 1px solid rgba(204, 0, 0, 0.2);
-			border-radius: 999px;
-			background: rgba(204, 0, 0, 0.09);
-			color: #ffd0d0;
-			font-size: 0.82rem;
-			letter-spacing: 0.06em;
-			text-transform: uppercase;
-		}
-
-		.hero h1 {
-			margin: 0;
-			max-width: 11ch;
-			font-size: clamp(2.5rem, 7vw, 5.4rem);
-			line-height: 0.96;
-			letter-spacing: -0.04em;
-		}
-
-		.hero p {
-			margin: 1.25rem 0 0;
-			max-width: 34rem;
-			color: var(--muted);
-			font-size: 1rem;
-		}
-
-		.hero-actions {
-			display: flex;
-			flex-direction: column;
-			gap: 0.9rem;
-			margin-top: 1.8rem;
-		}
-
-		.button,
-		.button-secondary,
-		.product-link,
-		.directions-link {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			gap: 0.55rem;
-			min-height: 3.15rem;
-			padding: 0.85rem 1.25rem;
-			border-radius: 999px;
+			color: var(--grey);
+			cursor: pointer;
+			transition: all 0.3s;
+			border-radius: 4px;
+			font-size: 14px;
 			font-weight: 600;
-			transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 		}
 
-		.button,
-		.product-link {
-			background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-			color: #ffffff;
-			box-shadow: 0 14px 30px rgba(204, 0, 0, 0.22);
+		.lang-btn:hover {
+			border-color: var(--primary);
 		}
 
-		.button-secondary,
-		.directions-link {
-			border: 1px solid rgba(255, 255, 255, 0.1);
-			background: rgba(255, 255, 255, 0.03);
-			color: var(--text);
+		.lang-btn.active {
+			background: var(--primary);
+			color: var(--white);
+			border-color: var(--primary);
 		}
 
-		.button:hover,
-		.button-secondary:hover,
-		.product-link:hover,
-		.directions-link:hover,
-		.button:focus-visible,
-		.button-secondary:focus-visible,
-		.product-link:focus-visible,
-		.directions-link:focus-visible {
-			transform: translateY(-2px);
+		/* Search Bar */
+		.search-container {
+			max-width: 600px;
+			margin: 0 auto 2rem;
+		}
+
+		.search-wrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 0.75rem 1rem;
+			transition: border-color 0.3s ease;
+		}
+
+		.search-wrapper:focus-within {
+			border-color: var(--primary);
+		}
+
+		.search-icon {
+			color: var(--grey);
+			font-size: 1.25rem;
+		}
+
+		.search-input {
+			flex: 1;
+			background: transparent;
+			border: none;
+			color: var(--white);
+			font-family: 'DM Sans', sans-serif;
+			font-size: 1rem;
 			outline: none;
 		}
 
-		.hero-stats {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 0.85rem;
-			margin-top: 2rem;
+		.search-input::placeholder {
+			color: var(--grey);
 		}
 
-		.stat-card {
-			padding: 1rem;
-			border: 1px solid rgba(255, 255, 255, 0.07);
-			border-radius: 18px;
-			background: rgba(255, 255, 255, 0.03);
+		.search-clear {
+			background: transparent;
+			border: none;
+			color: var(--grey);
+			cursor: pointer;
+			font-size: 1.25rem;
+			padding: 0;
+			display: none;
+			transition: color 0.3s ease;
 		}
 
-		.stat-card strong {
+		.search-clear.visible {
 			display: block;
-			font-size: 1.45rem;
 		}
 
-		.stat-card span {
-			color: var(--muted);
-			font-size: 0.92rem;
+		.search-clear:hover {
+			color: var(--primary);
 		}
 
-		.grid {
-			display: grid;
-			gap: 1rem;
+		.no-results {
+			text-align: center;
+			padding: 3rem 1.5rem;
+			color: var(--grey);
 		}
 
-		.categories-grid,
-		.products-grid,
-		.stores-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.category-card,
-		.product-card,
-		.store-card {
-			height: 100%;
-			border: 1px solid var(--border);
-			border-radius: var(--radius);
-			background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
-			box-shadow: var(--shadow);
-		}
-
-		.category-card {
-			padding: 1.3rem;
-			transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
-		}
-
-		.category-card:hover,
-		.category-card:focus-within {
-			transform: translateY(-4px);
-			border-color: rgba(204, 0, 0, 0.5);
-			background: linear-gradient(180deg, rgba(204, 0, 0, 0.12), rgba(255, 255, 255, 0.02));
-		}
-
-		.category-icon {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 3rem;
-			height: 3rem;
-			border-radius: 18px;
-			background: rgba(204, 0, 0, 0.16);
-			font-size: 1.45rem;
-		}
-
-		.category-card h3,
-		.product-card h3,
-		.store-card h3 {
-			margin: 1rem 0 0.35rem;
-			font-size: 1.15rem;
-		}
-
-		.category-card p,
-		.product-card p,
-		.store-card p,
-		.product-meta,
-		.store-meta {
-			margin: 0;
-			color: var(--muted);
-		}
-
-		.product-card {
-			padding: 1rem;
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-		}
-
-		.products-toolbar {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.75rem;
+		.no-results p {
+			font-size: 1.1rem;
 			margin-bottom: 1.5rem;
 		}
 
-		.filter-button {
-			padding: 0.7rem 1rem;
-			border: 1px solid rgba(255, 255, 255, 0.1);
-			border-radius: 999px;
-			background: rgba(255, 255, 255, 0.03);
-			color: var(--muted);
-			cursor: pointer;
-			transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+		.no-results .whatsapp-btn {
+			display: inline-block;
+			background: #25D366;
+			color: var(--white);
+			padding: 0.75rem 1.5rem;
+			border-radius: 8px;
+			text-decoration: none;
+			font-weight: 600;
+			transition: transform 0.3s ease;
 		}
 
-		.filter-button:hover,
-		.filter-button:focus-visible,
-		.filter-button.is-active {
-			background: rgba(204, 0, 0, 0.14);
-			border-color: rgba(204, 0, 0, 0.45);
-			color: #ffffff;
-			outline: none;
-			transform: translateY(-1px);
+		.no-results .whatsapp-btn:hover {
+			transform: translateY(-2px);
+		}
+
+		/* Stock Badge */
+		.stock-badge {
+			position: absolute;
+			top: 12px;
+			right: 12px;
+			padding: 0.4rem 0.75rem;
+			border-radius: 6px;
+			font-size: 0.75rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			z-index: 2;
+		}
+
+		.stock-badge.in-stock {
+			background: rgba(34, 197, 94, 0.15);
+			color: #22C55E;
+			border: 1px solid rgba(34, 197, 94, 0.3);
+		}
+
+		.stock-badge.out-of-stock {
+			background: rgba(239, 68, 68, 0.15);
+			color: #EF4444;
+			border: 1px solid rgba(239, 68, 68, 0.3);
+		}
+
+		.mobile-toggle {
+			display: block;
+			background: none;
+			border: none;
+			cursor: pointer;
+		}
+
+		.mobile-toggle span {
+			display: block;
+			width: 25px;
+			height: 2px;
+			background: var(--white);
+			margin: 5px 0;
+			transition: 0.3s;
+		}
+
+		/* HERO SECTION */
+		.hero {
+			min-height: 100vh;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: 
+				radial-gradient(circle at 20% 50%, var(--glow), transparent 50%),
+				radial-gradient(circle at 80% 50%, var(--glow), transparent 50%),
+				linear-gradient(135deg, #0a0a0a 0%, #050505 100%);
+			padding: 0 1.5rem;
+			margin-top: 70px;
+		}
+
+		.hero::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+			pointer-events: none;
+		}
+
+		.hero-content {
+			text-align: center;
+			position: relative;
+			z-index: 10;
+			animation: fadeUp 0.8s ease 0.2s backwards;
+		}
+
+		@keyframes fadeUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.hero-eyebrow {
+			color: var(--grey);
+			font-size: 14px;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+			margin-bottom: 1.5rem;
+		}
+
+		.hero-headline {
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: clamp(48px, 12vw, 120px);
+			line-height: 0.95;
+			letter-spacing: 2px;
+			margin-bottom: 1.5rem;
+			text-shadow: 0 0 40px var(--glow);
+			background: linear-gradient(to bottom, var(--white), #999);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			transition: font-size 0.3s ease, line-height 0.3s ease, letter-spacing 0.3s ease;
+		}
+
+		.hero-headline.marathi {
+			font-family: 'Tiro Devanagari Marathi', serif;
+			font-size: clamp(2rem, 5vw, 4rem);
+			line-height: 1.4;
+			letter-spacing: 0;
+		}
+
+		.hero-pride {
+			font-family: 'Tiro Devanagari Marathi', serif;
+			font-size: 1.1rem;
+			color: var(--primary);
+			font-style: italic;
+			line-height: 1.6;
+			margin: 15px 0;
+			opacity: 0;
+			max-height: 0;
+			overflow: hidden;
+			transition: opacity 0.4s ease, max-height 0.4s ease, margin 0.4s ease;
+		}
+
+		.hero-pride.visible {
+			opacity: 1;
+			max-height: 100px;
+			margin: 15px 0;
+		}
+
+		.hero-subtext {
+			font-size: clamp(18px, 3vw, 24px);
+			color: var(--grey);
+			margin-bottom: 3rem;
+			font-weight: 300;
+		}
+
+		.hero-cta {
+			display: flex;
+			gap: 1.5rem;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-bottom: 4rem;
+		}
+
+		.btn {
+			padding: 16px 40px;
+			font-size: 15px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			text-decoration: none;
+			border: none;
+			cursor: pointer;
+			transition: all 0.3s;
+			border-radius: 4px;
+			display: inline-block;
+		}
+
+		.btn-primary {
+			background: var(--primary);
+			color: var(--white);
+			box-shadow: 0 8px 24px rgba(227, 30, 36, 0.3);
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 12px 32px rgba(227, 30, 36, 0.4);
+		}
+
+		.btn-outline {
+			background: transparent;
+			color: var(--white);
+			border: 2px solid var(--white);
+		}
+
+		.btn-outline:hover {
+			background: var(--white);
+			color: var(--bg);
+		}
+
+		.hero-stats {
+			display: flex;
+			gap: 2rem;
+			justify-content: center;
+			flex-wrap: wrap;
+			padding: 2rem;
+			background: rgba(22, 22, 22, 0.5);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			backdrop-filter: blur(10px);
+		}
+
+		.stat-item {
+			text-align: center;
+		}
+
+		.stat-item strong {
+			display: block;
+			font-size: 24px;
+			color: var(--primary);
+			font-family: 'Bebas Neue', sans-serif;
+		}
+
+		.stat-item span {
+			font-size: 13px;
+			color: var(--grey);
+		}
+
+		/* MARQUEE */
+		.marquee {
+			background: var(--surface);
+			padding: 1.5rem 0;
+			overflow: hidden;
+			border-top: 1px solid var(--border);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.marquee-content {
+			display: flex;
+			animation: scroll 30s linear infinite;
+			white-space: nowrap;
+		}
+
+		@keyframes scroll {
+			0% {
+				transform: translateX(0);
+			}
+			100% {
+				transform: translateX(-50%);
+			}
+		}
+
+		.marquee-item {
+			padding: 0 3rem;
+			color: var(--grey);
+			font-size: 16px;
+			font-weight: 500;
+			display: inline-flex;
+			align-items: center;
+			gap: 3rem;
+		}
+
+		.marquee-item::after {
+			content: '●';
+			color: var(--primary);
+		}
+
+		/* SECTION COMMON */
+		.section {
+			padding: 6rem 1.5rem;
+			max-width: var(--max-width);
+			margin: 0 auto;
+		}
+
+		.section-header {
+			text-align: center;
+			margin-bottom: 4rem;
+		}
+
+		.section-title {
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: clamp(40px, 6vw, 70px);
+			letter-spacing: 2px;
+			margin-bottom: 1rem;
+		}
+
+		.section-subtitle {
+			color: var(--grey);
+			font-size: 18px;
+			max-width: 600px;
+			margin: 0 auto;
+		}
+
+		/* CATEGORIES */
+		.categories-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.category-card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 2.5rem;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s;
+		}
+
+		.category-card:hover {
+			transform: translateY(-8px);
+			border-color: var(--primary);
+			box-shadow: 0 8px 32px var(--glow);
+		}
+
+		.category-icon {
+			font-size: 60px;
+			margin-bottom: 1.5rem;
+			display: block;
+		}
+
+		.category-name {
+			font-size: 24px;
+			font-weight: 700;
+			font-family: 'Bebas Neue', sans-serif;
+			letter-spacing: 1px;
+		}
+
+		/* PRODUCTS */
+		.filter-tabs {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-bottom: 3rem;
+		}
+
+		.filter-btn {
+			padding: 10px 24px;
+			background: var(--card);
+			border: 1px solid var(--border);
+			color: var(--grey);
+			cursor: pointer;
+			transition: all 0.3s;
+			border-radius: 50px;
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		.filter-btn:hover,
+		.filter-btn.active {
+			background: var(--primary);
+			color: var(--white);
+			border-color: var(--primary);
+		}
+
+		.products-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			gap: 2rem;
+		}
+
+		.product-card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			overflow: hidden;
+			transition: all 0.3s;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+		}
+
+		.product-card:hover {
+			transform: translateY(-8px);
+			border-color: var(--primary);
+			box-shadow: 0 8px 32px var(--glow);
 		}
 
 		.product-image {
+			width: 100%;
+			height: 280px;
+			background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
 			position: relative;
-			min-height: 14rem;
 			overflow: hidden;
-			border-radius: 20px;
-			background:
-				radial-gradient(circle at top, rgba(204, 0, 0, 0.28), transparent 38%),
-				linear-gradient(180deg, #252525, #111111);
-			border: 1px solid rgba(255, 255, 255, 0.06);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.product-image img {
 			width: 100%;
 			height: 100%;
-			min-height: 14rem;
 			object-fit: cover;
 		}
 
-		.product-image.has-image::before,
-		.product-image.has-image::after {
-			display: none;
-		}
-
-		.product-image::before {
-			content: "";
-			position: absolute;
-			inset: 14% 25%;
-			border-radius: 24px;
-			background: linear-gradient(180deg, #3c3c3c, #1a1a1a);
-			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 26px 34px rgba(0, 0, 0, 0.26);
-		}
-
-		.product-image::after {
-			content: attr(data-label);
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			width: 5.5rem;
-			height: 5.5rem;
+		.product-image .placeholder {
+			width: 140px;
+			height: 140px;
+			background: linear-gradient(135deg, var(--primary), #b31117);
+			border-radius: 50%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			border-radius: 50%;
-			background: linear-gradient(135deg, var(--accent), #8d0000);
-			color: #fff;
-			font-weight: 700;
-			letter-spacing: 0.04em;
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 48px;
+			color: var(--white);
+			letter-spacing: 2px;
+		}
+
+		.product-info {
+			padding: 1.5rem;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
 		}
 
 		.product-brand {
-			display: inline-flex;
-			width: fit-content;
-			padding: 0.38rem 0.72rem;
-			border-radius: 999px;
-			background: rgba(204, 0, 0, 0.12);
-			color: #ffb0b0;
-			font-size: 0.82rem;
-			font-weight: 600;
-			letter-spacing: 0.04em;
+			font-size: 12px;
+			color: var(--primary);
+			font-weight: 700;
 			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-bottom: 0.5rem;
 		}
 
-		.product-copy {
-			display: flex;
-			flex-direction: column;
-			gap: 0.75rem;
+		.product-name {
+			font-size: 18px;
+			font-weight: 700;
+			margin-bottom: 0.75rem;
+			color: var(--white);
+		}
+
+		.product-desc {
+			font-size: 14px;
+			color: var(--grey);
+			margin-bottom: 1rem;
 			flex: 1;
 		}
 
-		.price {
-			color: #ffffff;
+		.product-price {
+			font-size: 20px;
 			font-weight: 700;
-			font-size: 1.05rem;
+			color: var(--white);
+			margin-bottom: 1rem;
 		}
 
-		.product-status {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			gap: 0.75rem;
-			flex-wrap: wrap;
+		.product-price .currency {
+			color: var(--primary);
 		}
 
-		.out-of-stock {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0.35rem 0.7rem;
-			border-radius: 999px;
-			background: rgba(255, 167, 38, 0.16);
-			color: #ffcf85;
-			font-size: 0.8rem;
-			font-weight: 600;
-			letter-spacing: 0.04em;
-			text-transform: uppercase;
-		}
-
-		.product-link.whatsapp-link {
-			background: linear-gradient(135deg, #119c4a, #25d366);
-			box-shadow: 0 14px 30px rgba(37, 211, 102, 0.2);
-		}
-
-		.products-feedback {
-			display: grid;
-			place-items: center;
-			min-height: 14rem;
-			padding: 2rem;
-			border: 1px solid var(--border);
-			border-radius: var(--radius);
-			background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+		.btn-whatsapp {
+			background: linear-gradient(135deg, #25D366, #128C7E);
+			color: var(--white);
+			padding: 14px 24px;
 			text-align: center;
-			box-shadow: var(--shadow);
+			text-decoration: none;
+			border-radius: 6px;
+			font-weight: 600;
+			font-size: 14px;
+			transition: all 0.3s;
+			display: block;
+			border: none;
+			cursor: pointer;
 		}
 
-		.products-feedback p {
-			margin: 0;
-			color: var(--muted);
+		.btn-whatsapp:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+		}
+
+		.btn-whatsapp.disabled {
+			background: var(--surface);
+			color: var(--grey);
+			cursor: not-allowed;
+			pointer-events: none;
+			transform: none;
+			box-shadow: none;
+		}
+
+		.loading,
+		.no-products {
+			text-align: center;
+			padding: 4rem 2rem;
+			color: var(--grey);
 		}
 
 		.spinner {
-			width: 2.75rem;
-			height: 2.75rem;
-			border: 3px solid rgba(255, 255, 255, 0.08);
-			border-top-color: var(--accent);
+			width: 50px;
+			height: 50px;
+			border: 3px solid var(--border);
+			border-top-color: var(--primary);
 			border-radius: 50%;
-			animation: spin 0.9s linear infinite;
-			margin-bottom: 1rem;
+			animation: spin 0.8s linear infinite;
+			margin: 0 auto 1rem;
 		}
 
 		@keyframes spin {
@@ -567,501 +706,1000 @@
 			}
 		}
 
+		/* WHY ML NUTRITION */
+		.features-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+			gap: 2rem;
+		}
+
+		.feature-card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 2.5rem;
+			text-align: center;
+			transition: all 0.3s;
+		}
+
+		.feature-card:hover {
+			border-color: var(--primary);
+			box-shadow: 0 8px 32px var(--glow);
+		}
+
+		.feature-icon {
+			font-size: 50px;
+			margin-bottom: 1.5rem;
+			display: block;
+			filter: drop-shadow(0 0 20px var(--glow));
+		}
+
+		.feature-title {
+			font-size: 22px;
+			font-weight: 700;
+			margin-bottom: 1rem;
+		}
+
+		.feature-desc {
+			color: var(--grey);
+			font-size: 15px;
+			line-height: 1.6;
+		}
+
+		/* STORES */
+		.stores-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+			gap: 2rem;
+		}
+
 		.store-card {
-			padding: 1.3rem;
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 2.5rem;
 		}
 
 		.store-badge {
-			display: inline-flex;
-			width: fit-content;
-			padding: 0.42rem 0.75rem;
-			border-radius: 999px;
-			background: rgba(255, 255, 255, 0.06);
-			color: var(--muted);
-			font-size: 0.8rem;
+			display: inline-block;
+			padding: 6px 16px;
+			border-radius: 50px;
+			font-size: 12px;
+			font-weight: 700;
 			text-transform: uppercase;
-			letter-spacing: 0.06em;
+			margin-bottom: 1.5rem;
+		}
+
+		.store-badge.open {
+			background: rgba(46, 213, 115, 0.2);
+			color: #2eD573;
 		}
 
 		.store-badge.coming-soon {
-			background: rgba(204, 0, 0, 0.14);
-			color: #ffb6b6;
+			background: rgba(255, 168, 0, 0.2);
+			color: #FFA800;
 		}
 
-		.footer {
-			padding: 2rem 0 3rem;
-			border-top: 1px solid rgba(255, 255, 255, 0.06);
+		.store-name {
+			font-size: 28px;
+			font-weight: 700;
+			margin-bottom: 1rem;
+			font-family: 'Bebas Neue', sans-serif;
+			letter-spacing: 1px;
 		}
 
-		.footer-grid {
-			display: grid;
+		.store-address {
+			color: var(--grey);
+			margin-bottom: 1rem;
+			font-size: 15px;
+		}
+
+		.store-timing {
+			color: var(--grey);
+			margin-bottom: 1.5rem;
+			font-size: 14px;
+		}
+
+		.store-actions {
+			display: flex;
 			gap: 1rem;
+			flex-wrap: wrap;
 		}
 
-		.footer-copy {
-			color: var(--muted);
+		.btn-map {
+			flex: 1;
+			min-width: 140px;
+			padding: 12px 20px;
+			background: transparent;
+			border: 1px solid var(--border);
+			color: var(--white);
+			text-decoration: none;
+			text-align: center;
+			border-radius: 6px;
+			font-weight: 600;
+			font-size: 14px;
+			transition: all 0.3s;
+			display: inline-block;
+		}
+
+		.btn-map:hover {
+			border-color: var(--primary);
+			background: var(--primary);
+		}
+
+		/* FOOTER */
+		.footer {
+			background: #050505;
+			border-top: 2px solid var(--primary);
+			padding: 4rem 1.5rem 2rem;
+		}
+
+		.footer-container {
+			max-width: var(--max-width);
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 3rem;
+			margin-bottom: 3rem;
+		}
+
+		.footer-logo-text {
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 32px;
+			letter-spacing: 2px;
+			margin-bottom: 1rem;
+		}
+
+		.footer-tagline {
+			color: var(--grey);
+			font-size: 15px;
+			line-height: 1.6;
+		}
+
+		.footer-title {
+			font-size: 18px;
+			font-weight: 700;
+			margin-bottom: 1.5rem;
 		}
 
 		.footer-links {
-			display: flex;
-			flex-direction: column;
-			gap: 0.75rem;
+			list-style: none;
+		}
+
+		.footer-links li {
+			margin-bottom: 0.75rem;
 		}
 
 		.footer-links a {
-			color: var(--text);
+			color: var(--grey);
+			text-decoration: none;
+			transition: color 0.3s;
+			font-size: 15px;
 		}
 
-		.footer-links a:hover,
-		.footer-links a:focus-visible {
-			color: #ff7a7a;
-			outline: none;
+		.footer-links a:hover {
+			color: var(--primary);
 		}
 
-		.copyright {
-			margin-top: 1.5rem;
-			color: #8c8c8c;
-			font-size: 0.92rem;
+		.footer-bottom {
+			text-align: center;
+			padding-top: 2rem;
+			border-top: 1px solid var(--border);
+			color: var(--grey);
+			font-size: 14px;
+			max-width: var(--max-width);
+			margin: 0 auto;
 		}
 
-		.fade-in {
-			opacity: 0;
-			transform: translateY(18px);
-			transition: opacity 0.6s ease, transform 0.6s ease;
+		/* Instagram Section */
+		.instagram-section {
+			background: var(--bg);
+			padding: 5rem 1.5rem;
 		}
 
-		.fade-in.is-visible {
-			opacity: 1;
-			transform: translateY(0);
+		.instagram-header {
+			text-align: center;
+			margin-bottom: 3rem;
 		}
 
-		@media (min-width: 640px) {
-			.hero-actions {
-				flex-direction: row;
-				flex-wrap: wrap;
+		.instagram-header h2 {
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: clamp(2.5rem, 5vw, 4rem);
+			margin-bottom: 0.5rem;
+			color: var(--white);
+		}
+
+		.instagram-handle {
+			color: var(--primary);
+			font-size: 1.2rem;
+			font-weight: 500;
+		}
+
+		.instagram-widget {
+			max-width: 1200px;
+			margin: 0 auto 3rem;
+		}
+
+		.instagram-cta {
+			text-align: center;
+		}
+
+		.instagram-btn {
+			display: inline-block;
+			background: transparent;
+			color: var(--primary);
+			border: 2px solid var(--primary);
+			padding: 1rem 2.5rem;
+			font-weight: 700;
+			font-size: 0.875rem;
+			letter-spacing: 1px;
+			border-radius: 8px;
+			text-decoration: none;
+			transition: all 0.3s ease;
+		}
+
+		.instagram-btn:hover {
+			background: var(--primary);
+			color: var(--white);
+			transform: translateY(-2px);
+		}
+
+		/* RESPONSIVE */
+		@media (min-width: 768px) {
+			.nav-menu {
+				display: flex;
 			}
 
-			.categories-grid {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-
-			.products-grid,
-			.stores-grid,
-			.footer-grid {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-		}
-
-		@media (min-width: 900px) {
-			.section {
-				padding: 5.5rem 0;
-			}
-
-			.nav-toggle {
+			.mobile-toggle {
 				display: none;
 			}
+		}
 
-			.site-nav {
-				position: static;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				justify-content: flex-end;
-				padding: 0;
-				border: 0;
-				border-radius: 0;
-				background: transparent;
-				box-shadow: none;
-			}
-
-			.site-nav a {
-				padding: 0.65rem 0.95rem;
-			}
-
-			.hero-panel {
-				display: grid;
-				grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.8fr);
-				align-items: end;
-				gap: 2rem;
-				padding: 3rem;
+		@media (max-width: 767px) {
+			.hero {
+				padding: 4rem 1.5rem;
 			}
 
 			.hero-stats {
-				margin-top: 0;
-				grid-template-columns: 1fr;
+				flex-direction: column;
+				gap: 1rem;
 			}
 
-			.categories-grid {
-				grid-template-columns: repeat(3, minmax(0, 1fr));
-			}
-
-			.products-grid {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
+			.section {
+				padding: 4rem 1.5rem;
 			}
 		}
 
-		@media (min-width: 1120px) {
-			.products-grid {
-				grid-template-columns: repeat(4, minmax(0, 1fr));
-			}
+		/* FADE IN ANIMATION */
+		.fade-in {
+			opacity: 0;
+			transform: translateY(20px);
+			transition: opacity 0.6s ease, transform 0.6s ease;
+		}
+
+		.fade-in.visible {
+			opacity: 1;
+			transform: translateY(0);
 		}
 	</style>
 </head>
 <body>
-	<header class="site-header">
-		<div class="container header-bar">
-			<a class="logo" href="#home" aria-label="ML Nutrition home">
-				<img src="IMG_6042.PNG" alt="ML Nutrition logo">
-				<span class="logo-text">ML Nutrition</span>
-			</a>
-			<button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="navbar-container">
+			<div class="logo-group">
+				<img src="IMG_6042.PNG" alt="ML Nutrition" class="logo-img">
+				<div class="logo-text">ML NUTRITION</div>
+			</div>
+			<ul class="nav-menu">
+				<li><a href="#home" data-i18n="nav.home">HOME</a></li>
+				<li><a href="#categories" data-i18n="nav.categories">CATEGORIES</a></li>
+				<li><a href="#products" data-i18n="nav.products">PRODUCTS</a></li>
+				<li><a href="#why-ml" data-i18n="nav.whyMl">WHY ML</a></li>
+				<li><a href="#stores" data-i18n="nav.stores">STORES</a></li>
+				<li><a href="#contact" data-i18n="nav.contact">CONTACT</a></li>
+			</ul>
+			<div class="lang-toggle">
+				<button class="lang-btn active" data-lang="en">EN</button>
+				<button class="lang-btn" data-lang="mr">मर</button>
+			</div>
+			<button class="mobile-toggle" aria-label="Toggle menu">
+				<span></span>
+				<span></span>
 				<span></span>
 			</button>
-			<nav class="site-nav" id="site-nav" aria-label="Primary navigation">
-				<a href="#home">Home</a>
-				<a href="#products">Products</a>
-				<a href="#stores">Stores</a>
-				<a href="#contact">Contact</a>
-			</nav>
 		</div>
-	</header>
+	</nav>
 
-	<main>
-		<section class="hero section" id="home">
-			<div class="container">
-				<div class="hero-panel fade-in">
-					<div>
-						<span class="eyebrow">Premium Selection Since Day One</span>
-						<h1>The Premium Standard in Supplements</h1>
-						<p>Global Brands. Genuine Experience. Discover trusted sports nutrition, expert guidance, and a store environment built for serious goals.</p>
-						<div class="hero-actions">
-							<a class="button" href="#products">Shop Now</a>
-							<a class="button-secondary" href="#stores">Visit Store</a>
-						</div>
-					</div>
-					<div class="hero-stats">
-						<div class="stat-card">
-							<strong>100%</strong>
-							<span>Authentic products from trusted global brands</span>
-						</div>
-						<div class="stat-card">
-							<strong>2 Stores</strong>
-							<span>Serving Talegaon today and Akurdi soon</span>
-						</div>
-						<div class="stat-card">
-							<strong>6 Core</strong>
-							<span>Supplement categories curated for performance</span>
-						</div>
-						<div class="stat-card">
-							<strong>Direct Support</strong>
-							<span>Fast ordering and availability updates on WhatsApp</span>
-						</div>
-					</div>
+	<!-- HERO -->
+	<section class="hero" id="home">
+		<div class="hero-content">
+			<div class="hero-eyebrow" data-i18n="hero.eyebrow">PREMIUM SELECTION SINCE DAY ONE</div>
+			<h1 class="hero-headline" data-i18n="hero.headline">THE PREMIUM STANDARD IN SUPPLEMENTS</h1>
+			<p class="hero-pride" id="heroPride">मराठी माणसांनी, मराठी माणसांसाठी — कारण आपल्या माणसांना फक्त qualityच द्यायचं.</p>
+			<p class="hero-subtext" data-i18n="hero.subtext">Global Brands. Genuine Experience.</p>
+			<div class="hero-cta">
+				<a href="#products" class="btn btn-primary" data-i18n="hero.shopNow">SHOP NOW</a>
+				<a href="#stores" class="btn btn-outline" data-i18n="hero.visitStore">VISIT STORE</a>
+			</div>
+			<div class="hero-stats">
+				<div class="stat-item">
+					<strong>500+</strong>
+					<span data-i18n="hero.stats.products">Products</span>
+				</div>
+				<div class="stat-item">
+					<strong>2</strong>
+					<span data-i18n="hero.stats.stores">Stores</span>
+				</div>
+				<div class="stat-item">
+					<strong>100%</strong>
+					<span data-i18n="hero.stats.authentic">Authentic</span>
+				</div>
+				<div class="stat-item">
+					<strong data-i18n="hero.stats.directLabel">DIRECT</strong>
+					<span data-i18n="hero.stats.directText">Brand Purchase</span>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
-		<section class="section" id="categories">
-			<div class="container">
-				<h2 class="section-heading fade-in">Featured Categories</h2>
-				<p class="section-copy fade-in">Targeted supplementation for strength, endurance, recovery, and everyday wellness.</p>
-				<div class="grid categories-grid">
-					<article class="category-card fade-in">
-						<span class="category-icon" aria-hidden="true">💪</span>
-						<h3>Protein</h3>
-						<p>Whey blends, isolates, and recovery formulas for lean muscle support.</p>
-					</article>
-					<article class="category-card fade-in">
-						<span class="category-icon" aria-hidden="true">⚡</span>
-						<h3>Creatine</h3>
-						<p>Performance-focused creatine options for explosive strength and power.</p>
-					</article>
-					<article class="category-card fade-in">
-						<span class="category-icon" aria-hidden="true">🔥</span>
-						<h3>Pre-Workout</h3>
-						<p>High-energy formulas to lock in focus, drive, and training intensity.</p>
-					</article>
-					<article class="category-card fade-in">
-						<span class="category-icon" aria-hidden="true">🏋️</span>
-						<h3>Mass Gainer</h3>
-						<p>Calorie-dense nutrition for size, strength, and consistent progress.</p>
-					</article>
-					<article class="category-card fade-in">
-						<span class="category-icon" aria-hidden="true">🌿</span>
-						<h3>Vitamins</h3>
-						<p>Daily health essentials to support immunity, recovery, and overall balance.</p>
-					</article>
-					<article class="category-card fade-in">
-						<span class="category-icon" aria-hidden="true">🎒</span>
-						<h3>Accessories</h3>
-						<p>Shakers, gym gear, and practical add-ons for a complete setup.</p>
-					</article>
+	<!-- MARQUEE -->
+	<div class="marquee">
+		<div class="marquee-content">
+			<div class="marquee-item">MuscleBlaze</div>
+			<div class="marquee-item">Optimum Nutrition</div>
+			<div class="marquee-item">Dymatize</div>
+			<div class="marquee-item">BSN</div>
+			<div class="marquee-item">Scitec</div>
+			<div class="marquee-item">Redcon1</div>
+			<div class="marquee-item">Raw Nutrition</div>
+			<div class="marquee-item">Trained by JP</div>
+			<div class="marquee-item">Applied Nutrition</div>
+			<div class="marquee-item">MuscleBlaze</div>
+			<div class="marquee-item">Optimum Nutrition</div>
+			<div class="marquee-item">Dymatize</div>
+			<div class="marquee-item">BSN</div>
+			<div class="marquee-item">Scitec</div>
+			<div class="marquee-item">Redcon1</div>
+			<div class="marquee-item">Raw Nutrition</div>
+			<div class="marquee-item">Trained by JP</div>
+			<div class="marquee-item">Applied Nutrition</div>
+		</div>
+	</div>
+
+	<!-- CATEGORIES -->
+	<section class="section fade-in" id="categories">
+		<div class="section-header">
+			<h2 class="section-title" data-i18n="categories.title">SHOP BY CATEGORY</h2>
+			<p class="section-subtitle" data-i18n="categories.subtitle">Targeted supplementation for strength, endurance, recovery, and everyday wellness</p>
+		</div>
+		<div class="categories-grid">
+			<div class="category-card">
+				<span class="category-icon">💪</span>
+				<div class="category-name">PROTEIN</div>
+			</div>
+			<div class="category-card">
+				<span class="category-icon">⚡</span>
+				<div class="category-name">CREATINE</div>
+			</div>
+			<div class="category-card">
+				<span class="category-icon">🔥</span>
+				<div class="category-name">PRE-WORKOUT</div>
+			</div>
+			<div class="category-card">
+				<span class="category-icon">🏋️</span>
+				<div class="category-name">MASS GAINER</div>
+			</div>
+			<div class="category-card">
+				<span class="category-icon">🌿</span>
+				<div class="category-name">VITAMINS</div>
+			</div>
+			<div class="category-card">
+				<span class="category-icon">🎒</span>
+				<div class="category-name">ACCESSORIES</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- PRODUCTS -->
+	<section class="section fade-in" id="products">
+		<div class="section-header">
+			<h2 class="section-title" data-i18n="products.title">FEATURED PRODUCTS</h2>
+			<p class="section-subtitle" data-i18n="products.subtitle">Premium supplements from the world's most trusted brands</p>
+		</div>
+		
+		<!-- Search Bar -->
+		<div class="search-container">
+			<div class="search-wrapper">
+				<span class="search-icon">🔍</span>
+				<input 
+					type="text" 
+					class="search-input" 
+					id="productSearch"
+					placeholder="Search products, brands..."
+					data-i18n-placeholder="products.searchPlaceholder"
+				/>
+				<button class="search-clear" id="searchClear">✕</button>
+			</div>
+		</div>
+		
+		<div class="filter-tabs">
+			<button class="filter-btn active" data-category="All" data-i18n="products.filters.all">ALL</button>
+			<button class="filter-btn" data-category="Protein" data-i18n="products.filters.protein">PROTEIN</button>
+			<button class="filter-btn" data-category="Creatine" data-i18n="products.filters.creatine">CREATINE</button>
+			<button class="filter-btn" data-category="Pre-Workout" data-i18n="products.filters.preworkout">PRE-WORKOUT</button>
+			<button class="filter-btn" data-category="Mass Gainer" data-i18n="products.filters.massgainer">MASS GAINER</button>
+			<button class="filter-btn" data-category="Vitamins" data-i18n="products.filters.vitamins">VITAMINS</button>
+		</div>
+		<div id="products-container">
+			<div class="loading">
+				<div class="spinner"></div>
+				<p>Loading premium products...</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- WHY ML NUTRITION -->
+	<section class="section fade-in" id="why-ml">
+		<div class="section-header">
+			<h2 class="section-title" data-i18n="whyMl.title">WHY ML NUTRITION</h2>
+			<p class="section-subtitle" data-i18n="whyMl.subtitle">The premium standard in supplement retail</p>
+		</div>
+		<div class="features-grid">
+			<div class="feature-card">
+				<span class="feature-icon">🔒</span>
+				<h3 class="feature-title" data-i18n="whyMl.feature1Title">100% Authenticated</h3>
+				<p class="feature-desc" data-i18n="whyMl.feature1Desc">Direct brand purchase with invoice proof. Every product is verified and traceable.</p>
+			</div>
+			<div class="feature-card">
+				<span class="feature-icon">🌍</span>
+				<h3 class="feature-title" data-i18n="whyMl.feature2Title">Rare Global Brands</h3>
+				<p class="feature-desc" data-i18n="whyMl.feature2Desc">Brands you see on international athletes. Premium selection not found elsewhere.</p>
+			</div>
+			<div class="feature-card">
+				<span class="feature-icon">💬</span>
+				<h3 class="feature-title" data-i18n="whyMl.feature3Title">Free Guidance</h3>
+				<p class="feature-desc" data-i18n="whyMl.feature3Desc">We build your stack based on your goal. Expert advice at no extra cost.</p>
+			</div>
+			<div class="feature-card">
+				<span class="feature-icon">⚡</span>
+				<h3 class="feature-title" data-i18n="whyMl.feature4Title">Always Fresh Stock</h3>
+				<p class="feature-desc" data-i18n="whyMl.feature4Desc">Regular restocks, never outdated inventory. Quality guaranteed.</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Instagram Section -->
+	<section class="instagram-section" id="instagram">
+		<div class="instagram-header">
+			<h2 data-i18n="instagram.title">FOLLOW OUR JOURNEY</h2>
+			<p class="instagram-handle">@themlnutrition on Instagram</p>
+		</div>
+		<div class="instagram-widget">
+			<behold-widget feed-id="jiy0m8JRbGAaKYlYNY2T"></behold-widget>
+		</div>
+		<div class="instagram-cta">
+			<a href="https://www.instagram.com/themlnutrition" target="_blank" class="instagram-btn" data-i18n="instagram.followBtn">
+				FOLLOW US ON INSTAGRAM
+			</a>
+		</div>
+	</section>
+
+	<!-- STORES -->
+	<section class="section fade-in" id="stores">
+		<div class="section-header">
+			<h2 class="section-title">OUR STORES</h2>
+			<p class="section-subtitle">Visit us in person for expert recommendations and authentic products</p>
+		</div>
+		<div class="stores-grid">
+			<div class="store-card">
+				<span class="store-badge open">NOW OPEN</span>
+				<h3 class="store-name">ML NUTRITION TALEGAON</h3>
+				<p class="store-address">Talegaon Dabhade, Pune, Maharashtra</p>
+				<p class="store-timing">Timings: 9:00 AM - 9:00 PM</p>
+				<div class="store-actions">
+					<a href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Talegaon%20Dabhade" target="_blank" class="btn-map">GET DIRECTIONS</a>
+					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20to%20visit%20your%20Talegaon%20store." target="_blank" class="btn-whatsapp">WHATSAPP</a>
 				</div>
 			</div>
-		</section>
-
-		<section class="section" id="products">
-			<div class="container">
-				<h2 class="section-heading fade-in">Featured Products</h2>
-				<p class="section-copy fade-in">A premium mix of category leaders and high-demand essentials available through ML Nutrition.</p>
-				<div class="products-toolbar fade-in" role="toolbar" aria-label="Product category filters">
-					<button class="filter-button is-active" type="button" data-category="All">All</button>
-					<button class="filter-button" type="button" data-category="Protein">Protein</button>
-					<button class="filter-button" type="button" data-category="Creatine">Creatine</button>
-					<button class="filter-button" type="button" data-category="Pre-Workout">Pre-Workout</button>
-					<button class="filter-button" type="button" data-category="Mass Gainer">Mass Gainer</button>
-					<button class="filter-button" type="button" data-category="Vitamins">Vitamins</button>
-					<button class="filter-button" type="button" data-category="Accessories">Accessories</button>
-				</div>
-				<div id="products-content" class="fade-in">
-					<div class="products-feedback" aria-live="polite">
-						<div>
-							<div class="spinner" aria-hidden="true"></div>
-							<p>Loading products...</p>
-						</div>
-					</div>
+			<div class="store-card">
+				<span class="store-badge coming-soon">COMING SOON</span>
+				<h3 class="store-name">ML NUTRITION AKURDI</h3>
+				<p class="store-address">Akurdi, Pune, Maharashtra</p>
+				<p class="store-timing">Opening Soon. Stay tuned for updates.</p>
+				<div class="store-actions">
+					<a href="https://www.google.com/maps/search/?api=1&query=Akurdi%20Pune" target="_blank" class="btn-map">VIEW AREA</a>
+					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20updates%20about%20your%20Akurdi%20store." target="_blank" class="btn-whatsapp">NOTIFY ME</a>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
-		<section class="section" id="stores">
-			<div class="container">
-				<h2 class="section-heading fade-in">Our Stores</h2>
-				<p class="section-copy fade-in">Visit ML Nutrition in person for expert recommendations, authentic products, and a better buying experience.</p>
-				<div class="grid stores-grid">
-					<article class="store-card fade-in">
-						<span class="store-badge">Open Now</span>
-						<h3>Talegaon</h3>
-						<p class="store-meta">ML Nutrition, Talegaon Dabhade, Pune, Maharashtra</p>
-						<p>Timings: 9:00 AM - 9:00 PM</p>
-						<a class="directions-link" href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Talegaon%20Dabhade" target="_blank" rel="noreferrer">Get Directions</a>
-					</article>
-					<article class="store-card fade-in">
-						<span class="store-badge coming-soon">Coming Soon</span>
-						<h3>Akurdi</h3>
-						<p class="store-meta">Upcoming ML Nutrition store in Akurdi, Pune, Maharashtra</p>
-						<p>Timings: Launching soon. Store details will be announced shortly.</p>
-						<a class="directions-link" href="https://www.google.com/maps/search/?api=1&query=Akurdi%20Pune" target="_blank" rel="noreferrer">View Area</a>
-					</article>
-				</div>
-			</div>
-		</section>
-	</main>
-
+	<!-- FOOTER -->
 	<footer class="footer" id="contact">
-		<div class="container">
-			<div class="footer-grid fade-in">
-				<div>
-					<div class="logo">
-						<img src="IMG_6042.PNG" alt="ML Nutrition logo">
-					</div>
-					<p class="footer-copy">Premium supplements, authentic brands, and a genuine store experience for serious fitness goals.</p>
-				</div>
-				<div class="footer-links">
-					<a href="https://instagram.com/themlnutrition" target="_blank" rel="noreferrer">Instagram: @themlnutrition</a>
-					<a href="https://wa.me/918329384588" target="_blank" rel="noreferrer">WhatsApp: 8329384588</a>
-				</div>
+		<div class="footer-container">
+			<div>
+				<div class="footer-logo-text">ML NUTRITION</div>
+				<p class="footer-tagline" data-i18n="footer.tagline">Premium supplements, authentic brands, and a genuine store experience for serious fitness goals.</p>
 			</div>
-			<p class="copyright">&copy; <span id="year"></span> ML Nutrition. All rights reserved.</p>
+			<div>
+				<h4 class="footer-title" data-i18n="footer.quickLinks">QUICK LINKS</h4>
+				<ul class="footer-links">
+					<li><a href="#home" data-i18n="nav.home">Home</a></li>
+					<li><a href="#categories" data-i18n="nav.categories">Categories</a></li>
+					<li><a href="#products" data-i18n="nav.products">Products</a></li>
+					<li><a href="#stores" data-i18n="nav.stores">Stores</a></li>
+				</ul>
+			</div>
+			<div>
+				<h4 class="footer-title" data-i18n="footer.contact">CONTACT</h4>
+				<ul class="footer-links">
+					<li><a href="https://instagram.com/themlnutrition" target="_blank">Instagram: @themlnutrition</a></li>
+					<li><a href="https://wa.me/918329384588" target="_blank">WhatsApp: 8329384588</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p data-i18n="footer.copyright">&copy; 2025 ML Nutrition. All rights reserved.</p>
 		</div>
 	</footer>
 
+	<!-- Instagram Widget Script -->
 	<script>
+		(() => {
+			const d=document,s=d.createElement("script");
+			s.type="module";
+			s.src="https://w.behold.so/widget.js";
+			d.head.append(s);
+		})();
+	</script>
+
+	<script>
+		// GOOGLE SHEETS CONFIG
 		const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17h4gGSIbSJZ6qMA0Xjt-2aLoxRT4ZTikjPdaaM6a_S4/gviz/tq?tqx=out:json';
 		const WHATSAPP_NUMBER = '918329384588';
-		const FALLBACK_PRODUCT_IMAGE = 'IMG_6042.PNG';
-		const CATEGORY_ORDER = ['All', 'Protein', 'Creatine', 'Pre-Workout', 'Mass Gainer', 'Vitamins', 'Accessories'];
-
-		const navToggle = document.querySelector('.nav-toggle');
-		const siteNav = document.querySelector('.site-nav');
-		const navLinks = document.querySelectorAll('.site-nav a');
-		const yearTarget = document.getElementById('year');
-		const animatedItems = document.querySelectorAll('.fade-in');
-		const productsContent = document.getElementById('products-content');
-		const filterButtons = document.querySelectorAll('.filter-button');
 
 		let allProducts = [];
 		let activeCategory = 'All';
+		let currentLang = localStorage.getItem('mlnutrition-lang') || 'en';
+		let searchQuery = '';
 
-		if (yearTarget) {
-			yearTarget.textContent = new Date().getFullYear();
-		}
-
-		function normalizeProduct(product) {
-			const brand = product.brand || 'ML Nutrition';
-			const name = product.name || 'Untitled Product';
-			const category = product.category || 'Accessories';
-			const description = product.description || 'Premium supplement available at ML Nutrition.';
-			const priceRange = product.price_range || 'Price on request';
-			const imageUrl = product.image_url || FALLBACK_PRODUCT_IMAGE;
-			const inStock = String(product.in_stock || 'Yes').toLowerCase() !== 'no';
-			const initials = name
-				.split(/\s+/)
-				.filter(Boolean)
-				.slice(0, 2)
-				.map((part) => part[0].toUpperCase())
-				.join('') || 'ML';
-
-			return {
-				brand,
-				name,
-				category,
-				description,
-				priceRange,
-				imageUrl,
-				inStock,
-				initials
-			};
-		}
-
-		function createWhatsAppUrl(product) {
-			const message = `Hi ML Nutrition! I am interested in ${product.name} by ${product.brand}. Please share availability and exact price.`;
-			return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-		}
-
-		function productCardMarkup(product) {
-			const safeBrand = product.brand.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			const safeName = product.name.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			const safeDescription = product.description.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			const safePrice = product.priceRange.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			const imageMarkup = product.imageUrl
-				? `<img src="${product.imageUrl}" alt="${safeName}" loading="lazy" onerror="this.parentElement.classList.remove('has-image'); this.remove();">`
-				: '';
-
-			return `
-				<article class="product-card fade-in">
-					<div class="product-image ${product.imageUrl ? 'has-image' : ''}" data-label="${product.initials}">
-						${imageMarkup}
-					</div>
-					<div class="product-copy">
-						<span class="product-brand">${safeBrand}</span>
-						<h3>${safeName}</h3>
-						<p>${safeDescription}</p>
-						<div class="product-status">
-							<p class="price">${safePrice}</p>
-							${product.inStock ? '' : '<span class="out-of-stock">Out of Stock</span>'}
-						</div>
-						<a class="product-link whatsapp-link" href="${createWhatsAppUrl(product)}" target="_blank" rel="noreferrer">Buy on WhatsApp</a>
-					</div>
-				</article>
-			`;
-		}
-
-		function renderProducts(products = allProducts) {
-			if (!productsContent) {
-				return;
+		// TRANSLATIONS
+		const translations = {
+			en: {
+				nav: {
+					home: 'HOME',
+					categories: 'CATEGORIES',
+					products: 'PRODUCTS',
+					whyMl: 'WHY ML',
+					stores: 'STORES',
+					contact: 'CONTACT'
+				},
+				hero: {
+					eyebrow: 'PREMIUM SELECTION SINCE DAY ONE',
+					headline: 'THE PREMIUM STANDARD IN SUPPLEMENTS',
+					subtext: 'Global Brands. Genuine Experience.',
+					shopNow: 'SHOP NOW',
+					visitStore: 'VISIT STORE',
+					stats: {
+						products: 'Products',
+						stores: 'Stores',
+						authentic: 'Authentic',
+						directLabel: 'DIRECT',
+						directText: 'Brand Purchase'
+					}
+				},
+				categories: {
+					title: 'SHOP BY CATEGORY',
+					subtitle: 'Targeted supplementation for strength, endurance, recovery, and everyday wellness'
+				},
+				products: {
+					title: 'FEATURED PRODUCTS',
+					subtitle: 'Premium supplements from the world\'s most trusted brands',
+					searchPlaceholder: 'Search products, brands...',
+					noResults: 'No products found. DM us on WhatsApp — we might have it in store! 💬',
+					whatsappSearch: 'Ask on WhatsApp',
+					buyWhatsapp: 'BUY ON WHATSAPP',
+					outOfStock: 'Out of Stock',
+					inStock: '✅ In Stock',
+					outOfStockBadge: '❌ Out of Stock',
+					filters: {
+						all: 'ALL',
+						protein: 'PROTEIN',
+						creatine: 'CREATINE',
+						preworkout: 'PRE-WORKOUT',
+						massgainer: 'MASS GAINER',
+						vitamins: 'VITAMINS'
+					},
+					whatsappMessage: 'Hi ML Nutrition! I am interested in {product} by {brand}. Please share availability and exact price.'
+				},
+					instagram: {
+						title: 'FOLLOW OUR JOURNEY',
+						followBtn: 'FOLLOW US ON INSTAGRAM'
+					},
+				whyMl: {
+					title: 'WHY ML NUTRITION',
+					subtitle: 'The premium standard in supplement retail',
+					feature1Title: '100% Authenticated',
+					feature1Desc: 'Direct brand purchase with invoice proof. Every product is verified and traceable.',
+					feature2Title: 'Rare Global Brands',
+					feature2Desc: 'Brands you see on international athletes. Premium selection not found elsewhere.',
+					feature3Title: 'Free Guidance',
+					feature3Desc: 'We build your stack based on your goal. Expert advice at no extra cost.',
+					feature4Title: 'Always Fresh Stock',
+					feature4Desc: 'Regular restocks, never outdated inventory. Quality guaranteed.'
+				},
+				stores: {
+					title: 'OUR STORES',
+					subtitle: 'Visit us in person for expert recommendations and authentic products',
+					nowOpen: 'NOW OPEN',
+					comingSoon: 'COMING SOON',
+					getDirections: 'GET DIRECTIONS',
+					whatsapp: 'WHATSAPP',
+					store1Timing: 'Timings: 9:00 AM - 9:00 PM',
+					store2Timing: 'Opening Soon. Stay tuned for updates.'
+				},
+				footer: {
+					tagline: 'Premium supplements, authentic brands, and a genuine store experience for serious fitness goals.',
+					quickLinks: 'QUICK LINKS',
+					contact: 'CONTACT',
+					copyright: '© 2025 ML Nutrition. All rights reserved.'
+				}
+			},
+			mr: {
+				nav: {
+					home: 'मुख्यपृष्ठ',
+					categories: 'श्रेणी',
+					products: 'उत्पादने',
+					whyMl: 'का ML',
+					stores: 'दुकाने',
+					contact: 'संपर्क'
+				},
+				hero: {
+					eyebrow: 'पहिल्या दिवसापासून प्रीमियम निवड',
+					headline: 'सप्लिमेंट्समधील सर्वोच्च दर्जा',
+					subtext: 'जागतिक ब्रँड्स. खरा अनुभव.',
+					shopNow: 'आता खरेदी करा',
+					visitStore: 'दुकान पहा',
+					stats: {
+						products: 'उत्पादने',
+						stores: 'दुकाने',
+						authentic: 'अस्सल',
+						directLabel: 'थेट',
+						directText: 'ब्रँडकडून खरेदी'
+					}
+				},
+				instagram: {
+					title: 'आमचा प्रवास फॉलो करा',
+					followBtn: 'इन्स्टाग्रामवर फॉलो करा'
+				},
+				categories: {
+					title: 'श्रेणीनुसार खरेदी करा',
+					subtitle: 'शक्ती, सहनशक्ती, पुनर्प्राप्ती आणि दैनंदिन आरोग्यासाठी लक्ष्यित पूरक'
+				},
+				products: {
+					title: 'निवडक उत्पादने',
+					subtitle: 'जगातील सर्वात विश्वासार्ह ब्रँड्सचे प्रीमियम सप्लिमेंट्स',
+					searchPlaceholder: 'उत्पादने, ब्रँड्स शोधा...',
+					noResults: 'उत्पादने सापडली नाहीत. व्हाट्सअॅपवर विचारा — आमच्या दुकानात असू शकते! 💬',
+					whatsappSearch: 'व्हाट्सअॅपवर विचारा',
+					buyWhatsapp: 'व्हाट्सअॅपवर खरेदी करा',
+					outOfStock: 'स्टॉक नाही',
+					inStock: '✅ स्टॉकमध्ये',
+					outOfStockBadge: '❌ स्टॉक नाही',
+					filters: {
+						all: 'सर्व',
+						protein: 'प्रोटीन',
+						creatine: 'क्रिएटिन',
+						preworkout: 'प्री-वर्कआउट',
+						massgainer: 'मास गेनर',
+						vitamins: 'जीवनसत्त्वे'
+					},
+					whatsappMessage: 'नमस्ते ML Nutrition! मला {product} ({brand}) बद्दल माहिती हवी आहे. उपलब्धता आणि किंमत सांगा.'
+				},
+				instagram: {
+					title: 'आमचा प्रवास फॉलो करा',
+					followBtn: 'इन्स्टाग्रामवर फॉलो करा'
+				},
+				whyMl: {
+					title: 'का ML NUTRITION',
+					subtitle: 'सप्लिमेंट रिटेलमधील प्रीमियम दर्जा',
+					feature1Title: '100% प्रमाणित',
+					feature1Desc: 'इनव्हॉइससह थेट ब्रँडकडून खरेदी. प्रत्येक उत्पादन सत्यापित आणि ट्रेस करण्यायोग्य आहे.',
+					feature2Title: 'दुर्मिळ जागतिक ब्रँड्स',
+					feature2Desc: 'आंतरराष्ट्रीय खेळाडू वापरतात ते ब्रँड्स. कुठेही न मिळणारी प्रीमियम निवड.',
+					feature3Title: 'मोफत मार्गदर्शन',
+					feature3Desc: 'तुमच्या ध्येयानुसार आम्ही तुमचा स्टॅक तयार करतो. कोणत्याही अतिरिक्त खर्चाशिवाय तज्ञ सल्ला.',
+					feature4Title: 'नेहमी ताजा स्टॉक',
+					feature4Desc: 'नियमित रिस्टॉक, कधीही जुना साठा नाही. गुणवत्तेची हमी.'
+				},
+				stores: {
+					title: 'आमची दुकाने',
+					subtitle: 'तज्ञ शिफारसी आणि अस्सल उत्पादनांसाठी आम्हाला भेट द्या',
+					nowOpen: 'आता उघडे',
+					comingSoon: 'लवकरच येत आहे',
+					getDirections: 'दिशा मिळवा',
+					whatsapp: 'व्हाट्सअॅप करा',
+					store1Timing: 'वेळ: सकाळी ९:०० - रात्री ९:००',
+					store2Timing: 'लवकरच उघडत आहे. अपडेट्ससाठी तयार रहा.'
+				},
+				footer: {
+					tagline: 'गंभीर फिटनेस लक्ष्यांसाठी प्रीमियम सप्लिमेंट्स, अस्सल ब्रँड्स आणि खरा स्टोअर अनुभव.',
+					quickLinks: 'द्रुत दुवे',
+					contact: 'संपर्क',
+					copyright: '© २०२५ ML Nutrition. सर्व हक्क राखीव.'
+				}
 			}
+		};
 
-			const visibleProducts = activeCategory === 'All'
-				? products
-				: products.filter((product) => product.category.toLowerCase() === activeCategory.toLowerCase());
-
-			if (!visibleProducts.length) {
-				productsContent.innerHTML = `
-					<div class="products-feedback" aria-live="polite">
-						<p>No products found</p>
-					</div>
-				`;
-				return;
-			}
-
-			productsContent.innerHTML = `<div class="grid products-grid">${visibleProducts.map(productCardMarkup).join('')}</div>`;
-			productsContent.querySelectorAll('.fade-in').forEach((item, index) => {
-				item.style.opacity = '1';
-				item.style.transform = 'translateY(0)';
-				item.style.transitionDelay = `${Math.min(index * 60, 240)}ms`;
-				item.classList.add('is-visible');
-			});
-		}
-
-		function setActiveCategory(category) {
-			activeCategory = category;
-			filterButtons.forEach((button) => {
-				button.classList.toggle('is-active', button.dataset.category === category);
-			});
-			renderProducts(allProducts);
-		}
-
+		// FETCH AND RENDER PRODUCTS
 		function loadProducts() {
-			if (!productsContent) {
-				return;
-			}
-
 			fetch(SHEET_URL)
-				.then((res) => res.text())
-				.then((text) => {
+				.then(res => res.text())
+				.then(text => {
 					const json = JSON.parse(text.substr(47).slice(0, -2));
 					const rows = json.table.rows;
 
-					const products = rows.map((row) => ({
-						id: row.c[0] && row.c[0].v,
-						name: row.c[1] && row.c[1].v,
-						brand: row.c[2] && row.c[2].v,
-						category: row.c[3] && row.c[3].v,
-						description: row.c[4] && row.c[4].v,
-						price_range: row.c[5] && row.c[5].v,
-						image_url: row.c[6] && row.c[6].v,
-						in_stock: row.c[7] && row.c[7].v
+					const products = rows.map(row => ({
+						id: row.c[0]?.v,
+						name: row.c[1]?.v,
+						brand: row.c[2]?.v,
+						category: row.c[3]?.v,
+						description: row.c[4]?.v,
+						price_range: row.c[5]?.v,
+						image_url: row.c[6]?.v,
+						in_stock: row.c[7]?.v
 					}));
 
-					allProducts = products
-						.filter((product) => product.name || product.brand || product.category || product.price_range)
-						.filter((product) => String(product.name || '').toLowerCase() !== 'name')
-						.map(normalizeProduct)
-						.filter((product) => CATEGORY_ORDER.includes(product.category) || product.category);
-
+					allProducts = products.filter(p => p.name && p.name.toLowerCase() !== 'name');
 					renderProducts(allProducts);
 				})
-				.catch((err) => {
-					productsContent.innerHTML = `
-						<div class="products-feedback" aria-live="polite">
-							<p>Unable to load products right now. Please try again shortly.</p>
+				.catch(err => {
+					document.getElementById('products-container').innerHTML = `
+						<div class="no-products">
+							<p>Unable to load products. Please try again later.</p>
 						</div>
 					`;
 					console.error('Error:', err);
 				});
 		}
 
-		filterButtons.forEach((button) => {
-			button.addEventListener('click', () => {
-				setActiveCategory(button.dataset.category || 'All');
-			});
-		});
+		function renderProducts(productsToShow) {
+			const container = document.getElementById('products-container');
+			
+			if (!productsToShow || productsToShow.length === 0) {
+				const noResultsMsg = translations[currentLang].products.noResults;
+				const whatsappBtnText = translations[currentLang].products.whatsappSearch;
+				container.innerHTML = `
+					<div class="no-results">
+						<p>${noResultsMsg}</p>
+						<a href="https://wa.me/918329384588" class="whatsapp-btn" target="_blank">${whatsappBtnText}</a>
+					</div>
+				`;
+				return;
+			}
 
-		if (navToggle && siteNav) {
-			navToggle.addEventListener('click', () => {
-				const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-				navToggle.setAttribute('aria-expanded', String(!isExpanded));
-				siteNav.classList.toggle('is-open');
-			});
+			const html = productsToShow.map(product => {
+				const name = product.name || 'Product';
+				const brand = product.brand || 'ML Nutrition';
+				const description = product.description || 'Premium supplement';
+				const price = product.price_range || 'Price on request';
+				const imageUrl = product.image_url;
+				const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+				
+				const whatsappTemplate = translations[currentLang].products.whatsappMessage;
+				const whatsappText = whatsappTemplate.replace('{product}', name).replace('{brand}', brand);
+				const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`;
+				const buyBtnText = translations[currentLang].products.buyWhatsapp;
+				const outOfStockText = translations[currentLang].products.outOfStock;
+				const inStockText = translations[currentLang].products.inStock;
+				const outOfStockBadgeText = translations[currentLang].products.outOfStockBadge;
 
-			navLinks.forEach((link) => {
-				link.addEventListener('click', () => {
-					navToggle.setAttribute('aria-expanded', 'false');
-					siteNav.classList.remove('is-open');
-				});
-			});
+				const isInStock = product.in_stock === 'Yes';
+				const stockBadge = isInStock 
+					? `<div class="stock-badge in-stock">${inStockText}</div>`
+					: `<div class="stock-badge out-of-stock">${outOfStockBadgeText}</div>`;
+				
+				const buttonClass = isInStock ? 'btn-whatsapp' : 'btn-whatsapp disabled';
+				const buttonText = isInStock ? buyBtnText : outOfStockText;
+
+				return `
+					<div class="product-card">
+						${stockBadge}
+						<div class="product-image">
+							${imageUrl ? 
+								`<img src="${imageUrl}" alt="${name}" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">` : 
+								`<div class="placeholder">${initials}</div>`
+							}
+						</div>
+						<div class="product-info">
+							<div class="product-brand">${brand}</div>
+							<h3 class="product-name">${name}</h3>
+							<p class="product-desc">${description}</p>
+							<div class="product-price"><span class="currency">₹</span>${price}</div>
+							${isInStock ? 
+								`<a href="${whatsappUrl}" target="_blank" class="${buttonClass}">${buttonText}</a>` :
+								`<button class="${buttonClass}" disabled>${buttonText}</button>`
+							}
+						</div>
+					</div>
+				`;
+			}).join('');
+
+			container.innerHTML = `<div class="products-grid">${html}</div>`;
 		}
 
+		function filterProducts(category) {
+			activeCategory = category;
+			document.querySelectorAll('.filter-btn').forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.category === category);
+			});
+			applyFilters();
+		}
+
+		function applyFilters() {
+			let filtered = activeCategory === 'All' 
+				? allProducts 
+				: allProducts.filter(p => p.category === activeCategory);
+			
+			// Apply search filter
+			if (searchQuery.trim()) {
+				const query = searchQuery.toLowerCase();
+				filtered = filtered.filter(p => 
+					p.name.toLowerCase().includes(query) ||
+					p.brand.toLowerCase().includes(query) ||
+					p.category.toLowerCase().includes(query)
+				);
+			}
+			
+			renderProducts(filtered);
+		}
+
+		function handleSearch(value) {
+			searchQuery = value;
+			const clearBtn = document.getElementById('searchClear');
+			
+			if (value.trim()) {
+				clearBtn.classList.add('visible');
+			} else {
+				clearBtn.classList.remove('visible');
+			}
+			
+			applyFilters();
+		}
+
+		function clearSearch() {
+			const searchInput = document.getElementById('productSearch');
+			searchInput.value = '';
+			searchQuery = '';
+			document.getElementById('searchClear').classList.remove('visible');
+			applyFilters();
+		}
+
+		// EVENT LISTENERS
+		document.querySelectorAll('.filter-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				filterProducts(btn.dataset.category);
+			});
+		});
+
+		// SCROLL ANIMATIONS
+		const observerOptions = {
+			threshold: 0.1,
+			rootMargin: '0px 0px -50px 0px'
+		};
+
 		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
+			entries.forEach(entry => {
 				if (entry.isIntersecting) {
-					entry.target.classList.add('is-visible');
-					observer.unobserve(entry.target);
+					entry.target.classList.add('visible');
 				}
 			});
-		}, {
-			threshold: 0.15
+		}, observerOptions);
+
+		document.querySelectorAll('.fade-in').forEach(el => {
+			observer.observe(el);
 		});
 
-		animatedItems.forEach((item, index) => {
-			item.style.transitionDelay = `${Math.min(index * 60, 240)}ms`;
-			observer.observe(item);
+		// SMOOTH SCROLL
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				e.preventDefault();
+				const target = document.querySelector(this.getAttribute('href'));
+				if (target) {
+					target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}
+			});
 		});
 
+		// LANGUAGE SWITCHING
+		function getNestedTranslation(obj, path) {
+			return path.split('.').reduce((current, key) => current?.[key], obj);
+		}
+
+		function switchLanguage(lang) {
+			currentLang = lang;
+			localStorage.setItem('mlnutrition-lang', lang);
+
+			// Handle hero headline font switching
+			const heroHeadline = document.querySelector('.hero-headline');
+			const heroPride = document.getElementById('heroPride');
+			
+			if (lang === 'mr') {
+				heroHeadline.classList.add('marathi');
+				if (heroPride) heroPride.classList.add('visible');
+			} else {
+				heroHeadline.classList.remove('marathi');
+				if (heroPride) heroPride.classList.remove('visible');
+			}
+
+			// Update all elements with data-i18n
+			document.querySelectorAll('[data-i18n]').forEach(element => {
+				const key = element.getAttribute('data-i18n');
+				const translation = getNestedTranslation(translations[lang], key);
+				
+				if (translation) {
+					element.style.opacity = '0';
+					element.style.transition = 'opacity 0.2s ease';
+					
+					setTimeout(() => {
+						element.textContent = translation;
+						element.style.opacity = '1';
+						
+						// Apply Tiro Devanagari Marathi to Devanagari text
+						if (lang === 'mr' && /[\u0900-\u097F]/.test(translation)) {
+							element.style.fontFamily = "'Tiro Devanagari Marathi', serif";
+						} else if (lang === 'en') {
+							element.style.fontFamily = '';
+						}
+					}, 200);
+				}
+			});
+
+			// Update search placeholder
+			const searchInput = document.getElementById('productSearch');
+			if (searchInput) {
+				const placeholderKey = searchInput.getAttribute('data-i18n-placeholder');
+				if (placeholderKey) {
+					const placeholder = getNestedTranslation(translations[lang], placeholderKey);
+					if (placeholder) searchInput.placeholder = placeholder;
+				}
+			}
+
+			// Update language buttons
+			document.querySelectorAll('.lang-btn').forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.lang === lang);
+			});
+
+			// Re-render products with new language
+			if (allProducts.length > 0) {
+				applyFilters();
+			}
+		}
+
+		// Language toggle event listeners
+		document.querySelectorAll('.lang-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				switchLanguage(btn.dataset.lang);
+			});
+		});
+
+		// Search functionality
+		const searchInput = document.getElementById('productSearch');
+		const searchClear = document.getElementById('searchClear');
+		
+		if (searchInput) {
+			searchInput.addEventListener('input', (e) => handleSearch(e.target.value));
+		}
+		
+		if (searchClear) {
+			searchClear.addEventListener('click', clearSearch);
+		}
+
+		// Initialize language on page load
+		switchLanguage(currentLang);
+
+		// LOAD PRODUCTS ON PAGE LOAD
 		loadProducts();
 	</script>
 </body>
