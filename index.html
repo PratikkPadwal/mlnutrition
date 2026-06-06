@@ -281,10 +281,10 @@
 		.stock-badge {
 			position: absolute;
 			top: 12px;
-			right: 12px;
-			padding: 0.4rem 0.75rem;
-			border-radius: 6px;
-			font-size: 0.75rem;
+			left: 12px;
+			padding: 6px 12px;
+			border-radius: 20px;
+			font-size: 11px;
 			font-weight: 700;
 			text-transform: uppercase;
 			letter-spacing: 0.5px;
@@ -405,12 +405,22 @@
 			line-height: 0.95;
 			letter-spacing: 2px;
 			margin-bottom: 1.5rem;
+			color: var(--white);
 			text-shadow: 0 0 40px var(--glow);
 			background: linear-gradient(to bottom, var(--white), #999);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			background-clip: text;
 			transition: font-size 0.3s ease, line-height 0.3s ease, letter-spacing 0.3s ease;
+		}
+		
+		/* Fallback for browsers that don't support background-clip: text */
+		@supports not (background-clip: text) or not (-webkit-background-clip: text) {
+			.hero-headline {
+				-webkit-text-fill-color: var(--white);
+				color: var(--white);
+				background: none;
+			}
 		}
 
 		.hero-headline.marathi {
@@ -565,10 +575,7 @@
 			padding: 6rem 1.5rem;
 			max-width: var(--max-width);
 			margin: 0 auto;
-		}
-
-		.section-header {
-			text-align: center;
+		scroll-margin-top: 90px;
 			margin-bottom: 4rem;
 		}
 
@@ -665,42 +672,43 @@
 
 		.products-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-			gap: 2rem;
+			grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+			gap: 1.5rem;
 		}
 
 		.product-card {
 			background: var(--card);
 			border: 1px solid var(--border);
-			border-radius: 12px;
+			border-radius: 16px;
 			overflow: hidden;
-			transition: all 0.3s;
+			transition: all 0.3s ease;
 			display: flex;
 			flex-direction: column;
 			position: relative;
 		}
 
 		.product-card:hover {
-			transform: translateY(-8px);
+			transform: translateY(-4px);
 			border-color: var(--primary);
-			box-shadow: 0 8px 32px var(--glow);
+			box-shadow: 0 8px 32px var(--glow), 0 4px 16px rgba(0,0,0,0.2);
 		}
 
 		.product-image {
 			width: 100%;
-			height: 280px;
+			aspect-ratio: 1 / 1;
 			background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
 			position: relative;
 			overflow: hidden;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			padding: 1.5rem;
 		}
 
 		.product-image img {
 			width: 100%;
 			height: 100%;
-			object-fit: cover;
+			object-fit: contain;
 		}
 
 		.product-image .placeholder {
@@ -734,24 +742,29 @@
 		}
 
 		.product-name {
-			font-size: 18px;
-			font-weight: 700;
+			font-size: 16px;
+			font-weight: 600;
 			margin-bottom: 0.75rem;
 			color: var(--white);
+			line-height: 1.4;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			min-height: 44px;
 		}
 
 		.product-desc {
-			font-size: 14px;
-			color: var(--grey);
-			margin-bottom: 1rem;
-			flex: 1;
+			display: none;
 		}
 
 		.product-price {
-			font-size: 20px;
+			font-size: 22px;
 			font-weight: 700;
 			color: var(--white);
 			margin-bottom: 1rem;
+			padding-top: 1rem;
+			border-top: 1px solid var(--border);
 		}
 
 		.product-price .currency {
@@ -759,23 +772,33 @@
 		}
 
 		.btn-whatsapp {
-			background: linear-gradient(135deg, #25D366, #128C7E);
+			background: #25D366;
 			color: var(--white);
-			padding: 14px 24px;
+			padding: 12px 20px;
 			text-align: center;
 			text-decoration: none;
-			border-radius: 6px;
+			border-radius: 8px;
 			font-weight: 600;
 			font-size: 14px;
-			transition: all 0.3s;
-			display: block;
+			transition: all 0.3s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
 			border: none;
 			cursor: pointer;
 		}
 
 		.btn-whatsapp:hover {
+			background: #20BD5A;
 			transform: translateY(-2px);
-			box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+			box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+		}
+
+		.btn-whatsapp svg {
+			width: 18px;
+			height: 18px;
+			fill: currentColor;
 		}
 
 		.btn-whatsapp.disabled {
@@ -808,6 +831,162 @@
 			to {
 				transform: rotate(360deg);
 			}
+		}
+
+		/* VIEW ALL BUTTON */
+		.view-all-container {
+			text-align: center;
+			margin-top: 3rem;
+			padding-bottom: 2rem;
+		}
+
+		.btn-view-all {
+			background: linear-gradient(135deg, var(--primary), #b31117);
+			color: var(--white);
+			padding: 16px 48px;
+			border: none;
+			border-radius: 50px;
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 18px;
+			letter-spacing: 2px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			display: inline-flex;
+			align-items: center;
+			gap: 12px;
+			box-shadow: 0 4px 20px var(--glow);
+		}
+
+		.btn-view-all:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 30px var(--glow);
+		}
+
+		.btn-view-all svg {
+			transition: transform 0.3s ease;
+		}
+
+		.btn-view-all:hover svg {
+			transform: translateX(5px);
+		}
+
+		/* PRODUCTS MODAL */
+		.products-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 9999;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+		}
+
+		.products-modal.active {
+			display: flex;
+		}
+
+		.modal-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.9);
+			backdrop-filter: blur(10px);
+			animation: fadeIn 0.3s ease;
+		}
+
+		.modal-content {
+			position: relative;
+			background: var(--bg);
+			border: 1px solid var(--primary);
+			border-radius: 20px;
+			width: 100%;
+			max-width: 1400px;
+			max-height: 90vh;
+			display: flex;
+			flex-direction: column;
+			animation: slideUp 0.4s ease;
+			box-shadow: 0 20px 60px rgba(227, 30, 36, 0.3);
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		@keyframes slideUp {
+			from {
+				transform: translateY(50px);
+				opacity: 0;
+			}
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+
+		.modal-header {
+			padding: 30px;
+			border-bottom: 1px solid var(--border);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.modal-title {
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 32px;
+			letter-spacing: 4px;
+			color: var(--white);
+			margin: 0;
+		}
+
+		.modal-close {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 50%;
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--grey);
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.modal-close:hover {
+			background: var(--primary);
+			color: var(--white);
+			border-color: var(--primary);
+			transform: rotate(90deg);
+		}
+
+		.modal-body {
+			padding: 30px;
+			overflow-y: auto;
+			flex: 1;
+		}
+
+		.modal-body::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		.modal-body::-webkit-scrollbar-track {
+			background: var(--surface);
+		}
+
+		.modal-body::-webkit-scrollbar-thumb {
+			background: var(--primary);
+			border-radius: 4px;
+		}
+
+		.modal-body::-webkit-scrollbar-thumb:hover {
+			background: #b31117;
 		}
 
 		/* WHY ML NUTRITION - Compact */
@@ -867,9 +1046,11 @@
 			font-family: 'DM Sans', sans-serif;
 			font-size: 12px;
 			line-height: 1.4;
-			white-space: nowrap;
+			max-height: 2.8em;
 			overflow: hidden;
-			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
 		}
 
 		/* STORES */
@@ -1150,21 +1331,17 @@
 				line-height: 1.1;
 				margin-bottom: 1rem;
 			}
-
-			.hero-subtext {
-				font-size: 14px;
-				margin-bottom: 2rem;
+		
+		/* Mobile fallback for browsers that don't support background-clip: text */
+		@supports not (background-clip: text) or not (-webkit-background-clip: text) {
+			.hero-headline {
+				-webkit-text-fill-color: var(--white);
+				color: var(--white);
 			}
+		}
 
-			.hero-cta {
-				flex-direction: column;
-				width: 100%;
-				margin-bottom: 2.5rem;
-			}
-
-			.btn {
-				width: 100%;
-				text-align: center;
+		.hero-subtext {
+			font-size: 14px;
 			}
 
 			.hero-stats {
@@ -1205,7 +1382,8 @@
 			}
 
 			.products-grid {
-				grid-template-columns: 1fr;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1rem;
 			}
 
 			.product-card {
@@ -1213,11 +1391,33 @@
 			}
 
 			.product-image {
-				height: 200px;
+				padding: 1rem;
 			}
 
 			.product-image img {
 				object-fit: contain;
+			}
+
+			.product-info {
+				padding: 1rem;
+			}
+
+			.product-name {
+				font-size: 14px;
+				min-height: 40px;
+			}
+
+			.product-brand {
+				font-size: 11px;
+			}
+
+			.product-price {
+				font-size: 18px;
+			}
+
+			.btn-whatsapp {
+				padding: 10px 16px;
+				font-size: 13px;
 			}
 
 			.search-container {
@@ -1456,7 +1656,7 @@
 			<p class="hero-pride" id="heroPride">मराठी माणसांनी, मराठी माणसांसाठी — कारण आपल्या माणसांना फक्त qualityच द्यायचं.</p>
 			<p class="hero-subtext" data-i18n="hero.subtext">Global Brands. Genuine Experience.</p>
 			<div class="hero-cta">
-				<a href="#products" class="btn btn-primary" data-i18n="hero.shopNow">SHOP NOW</a>
+				<a href="products.html" class="btn btn-primary" data-i18n="hero.shopNow">SHOP NOW</a>
 				<a href="#stores" class="btn btn-outline" data-i18n="hero.visitStore">VISIT STORE</a>
 			</div>
 			<div class="hero-stats">
@@ -1511,38 +1711,25 @@
 			<p class="section-subtitle" data-i18n="products.subtitle">Premium supplements from the world's most trusted brands</p>
 		</div>
 		
-		<!-- Search Bar -->
-		<div class="search-container">
-			<div class="search-wrapper">
-				<span class="search-icon">🔍</span>
-				<input 
-					type="text" 
-					class="search-input" 
-					id="productSearch"
-					placeholder="Search products, brands..."
-					data-i18n-placeholder="products.searchPlaceholder"
-				/>
-				<button class="search-clear" id="searchClear">✕</button>
-			</div>
-		</div>
-		
-		<!-- Category Filters -->
-		<div class="category-filters">
-			<button class="category-btn active" data-category="All" data-i18n="products.filters.all">ALL</button>
-			<button class="category-btn" data-category="Protein" data-i18n="products.filters.protein">PROTEIN</button>
-			<button class="category-btn" data-category="Creatine" data-i18n="products.filters.creatine">CREATINE</button>
-			<button class="category-btn" data-category="Pre-Workout" data-i18n="products.filters.preworkout">PRE-WORKOUT</button>
-			<button class="category-btn" data-category="Mass Gainer" data-i18n="products.filters.massgainer">MASS GAINER</button>
-			<button class="category-btn" data-category="Vitamins" data-i18n="products.filters.vitamins">VITAMINS</button>
-			<button class="category-btn" data-category="Accessories" data-i18n="products.filters.accessories">ACCESSORIES</button>
-		</div>
 		<div id="products-container">
 			<div class="loading">
 				<div class="spinner"></div>
 				<p>Loading premium products...</p>
 			</div>
 		</div>
+		
+		<!-- View All Button -->
+		<div class="view-all-container">
+			<a href="products.html" class="btn-view-all">
+				<span>VIEW ALL PRODUCTS</span>
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</a>
+		</div>
 	</section>
+
+
 
 	<!-- WHY ML NUTRITION -->
 	<section class="why-ml-compact fade-in" id="why-ml">
@@ -1590,28 +1777,38 @@
 	<!-- STORES -->
 	<section class="section fade-in" id="stores">
 		<div class="section-header">
-			<h2 class="section-title">OUR STORES</h2>
-			<p class="section-subtitle">Visit us in person for expert recommendations and authentic products</p>
+			<h2 class="section-title" data-i18n="stores.title">OUR STORES</h2>
+			<p class="section-subtitle" data-i18n="stores.subtitle">Visit us in person for expert recommendations and authentic products</p>
 		</div>
 		<div class="stores-grid">
 			<div class="store-card">
-				<span class="store-badge open">NOW OPEN</span>
+				<span class="store-badge open" data-i18n="stores.nowOpen">NOW OPEN</span>
 				<h3 class="store-name">ML NUTRITION TALEGAON</h3>
 				<p class="store-address">Talegaon Dabhade, Pune, Maharashtra</p>
-				<p class="store-timing">Timings: 9:00 AM - 9:00 PM</p>
+				<p class="store-timing" data-i18n="stores.store1Timing">Timings: 9:00 AM - 9:00 PM</p>
 				<div class="store-actions">
-					<a href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Talegaon%20Dabhade" target="_blank" class="btn-map">GET DIRECTIONS</a>
-					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20to%20visit%20your%20Talegaon%20store." target="_blank" class="btn-whatsapp">WHATSAPP</a>
+					<a href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Talegaon%20Dabhade" target="_blank" class="btn-map" data-i18n="stores.getDirections">GET DIRECTIONS</a>
+					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20to%20visit%20your%20Talegaon%20store." target="_blank" class="btn-whatsapp">
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+						</svg>
+						<span data-i18n="stores.whatsapp">WHATSAPP</span>
+					</a>
 				</div>
 			</div>
 			<div class="store-card">
-				<span class="store-badge coming-soon">COMING SOON</span>
+				<span class="store-badge coming-soon" data-i18n="stores.comingSoon">COMING SOON</span>
 				<h3 class="store-name">ML NUTRITION AKURDI</h3>
 				<p class="store-address">Akurdi, Pune, Maharashtra</p>
-				<p class="store-timing">Opening Soon. Stay tuned for updates.</p>
+				<p class="store-timing" data-i18n="stores.store2Timing">Opening Soon. Stay tuned for updates.</p>
 				<div class="store-actions">
-					<a href="https://www.google.com/maps/search/?api=1&query=Akurdi%20Pune" target="_blank" class="btn-map">VIEW AREA</a>
-					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20updates%20about%20your%20Akurdi%20store." target="_blank" class="btn-whatsapp">NOTIFY ME</a>
+					<a href="https://www.google.com/maps/search/?api=1&query=Akurdi%20Pune" target="_blank" class="btn-map" data-i18n="stores.getDirections">GET DIRECTIONS</a>
+					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20updates%20about%20your%20Akurdi%20store." target="_blank" class="btn-whatsapp">
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+						</svg>
+						<span data-i18n="stores.whatsapp">WHATSAPP</span>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -1850,11 +2047,14 @@
 						description: row.c[4]?.v,
 						price_range: row.c[5]?.v,
 						image_url: row.c[6]?.v,
-						in_stock: row.c[7]?.v
+						in_stock: row.c[7]?.v,
+						featured: row.c[8]?.v
 					}));
 
 					allProducts = products.filter(p => p.name && p.name.toLowerCase() !== 'name');
-					renderProducts(allProducts);
+					// Show only featured products initially
+					const featuredProducts = allProducts.filter(p => p.featured === 'Yes');
+					renderProducts(featuredProducts);
 				})
 				.catch(err => {
 					document.getElementById('products-container').innerHTML = `
@@ -1920,7 +2120,12 @@
 							<p class="product-desc">${description}</p>
 							<div class="product-price"><span class="currency">₹</span>${price}</div>
 							${isInStock ? 
-								`<a href="${whatsappUrl}" target="_blank" class="${buttonClass}">${buttonText}</a>` :
+								`<a href="${whatsappUrl}" target="_blank" class="${buttonClass}">
+									<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+										<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+									</svg>
+									${buttonText}
+								</a>` :
 								`<button class="${buttonClass}" disabled>${buttonText}</button>`
 							}
 						</div>
@@ -1941,9 +2146,13 @@ applyFilters();
 }
 
 		function applyFilters() {
-			let filtered = activeCategory === 'All' 
-				? allProducts 
-				: allProducts.filter(p => p.category === activeCategory);
+			// On homepage, only show featured products
+			let filtered = allProducts.filter(p => p.featured === 'Yes');
+			
+			// Then apply category filter if not 'All'
+			if (activeCategory !== 'All') {
+				filtered = filtered.filter(p => p.category === activeCategory);
+			}
 			
 			// Apply search filter
 			if (searchQuery.trim()) {
@@ -1979,12 +2188,150 @@ applyFilters();
 			applyFilters();
 		}
 
-		// EVENT LISTENERS
-		document.querySelectorAll('.filter-btn').forEach(btn => {
-			btn.addEventListener('click', () => {
-				filterProducts(btn.dataset.category);
+		// MODAL FUNCTIONALITY
+		let modalOpen = false;
+		let modalActiveCategory = 'All';
+		let modalSearchQuery = '';
+
+		function openProductsModal() {
+			modalOpen = true;
+			const modal = document.getElementById('productsModal');
+			modal.classList.add('active');
+			document.body.style.overflow = 'hidden';
+			
+			// Reset filters
+			modalActiveCategory = 'All';
+			modalSearchQuery = '';
+			document.getElementById('modalProductSearch').value = '';
+			document.getElementById('modalSearchClear').classList.remove('visible');
+			
+			// Update category buttons in modal
+			document.querySelectorAll('.modal-content .category-btn').forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.category === 'All');
 			});
-		});
+			
+			renderModalProducts(allProducts);
+		}
+
+		function closeProductsModal() {
+			modalOpen = false;
+			const modal = document.getElementById('productsModal');
+			modal.classList.remove('active');
+			document.body.style.overflow = '';
+		}
+
+		function renderModalProducts(productsToShow) {
+			const container = document.getElementById('modalProductsContainer');
+			
+			if (!productsToShow || productsToShow.length === 0) {
+				container.innerHTML = `
+					<div class="no-results">
+						<p>No products found matching your criteria.</p>
+					</div>
+				`;
+				return;
+			}
+
+			const html = productsToShow.map(product => {
+				const name = product.name || 'Product';
+				const brand = product.brand || 'ML Nutrition';
+				const description = product.description || 'Premium supplement';
+				const price = product.price_range || 'Price on request';
+				const imageUrl = product.image_url;
+				const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+				
+				const whatsappTemplate = translations[currentLang].products.whatsappMessage;
+				const whatsappText = whatsappTemplate.replace('{product}', name).replace('{brand}', brand);
+				const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`;
+				const buyBtnText = translations[currentLang].products.buyWhatsapp;
+				const outOfStockText = translations[currentLang].products.outOfStock;
+				const inStockText = translations[currentLang].products.inStock;
+				const outOfStockBadgeText = translations[currentLang].products.outOfStockBadge;
+
+				const isInStock = product.in_stock === 'Yes';
+				const stockBadge = isInStock 
+					? `<div class="stock-badge in-stock">${inStockText}</div>`
+					: `<div class="stock-badge out-of-stock">${outOfStockBadgeText}</div>`;
+				
+				const buttonClass = isInStock ? 'btn-whatsapp' : 'btn-whatsapp disabled';
+				const buttonText = isInStock ? buyBtnText : outOfStockText;
+
+				return `
+					<div class="product-card">
+						${stockBadge}
+						<div class="product-image">
+							${imageUrl ? 
+								`<img src="${imageUrl}" alt="${name}" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">` : 
+								`<div class="placeholder">${initials}</div>`
+							}
+						</div>
+						<div class="product-info">
+							<div class="product-brand">${brand}</div>
+							<h3 class="product-name">${name}</h3>
+							<p class="product-desc">${description}</p>
+							<div class="product-price"><span class="currency">₹</span>${price}</div>
+							${isInStock ? 
+								`<a href="${whatsappUrl}" target="_blank" class="${buttonClass}">
+									<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+										<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+									</svg>
+									${buttonText}
+								</a>` :
+								`<button class="${buttonClass}" disabled>${buttonText}</button>`
+							}
+						</div>
+					</div>
+				`;
+			}).join('');
+
+			container.innerHTML = `<div class="products-grid">${html}</div>`;
+		}
+
+		function filterModalProducts(category) {
+			modalActiveCategory = category;
+			document.querySelectorAll('.modal-content .category-btn').forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.category === category);
+			});
+			applyModalFilters();
+		}
+
+		function applyModalFilters() {
+			let filtered = modalActiveCategory === 'All' 
+				? allProducts 
+				: allProducts.filter(p => p.category === modalActiveCategory);
+			
+			if (modalSearchQuery.trim()) {
+				const query = modalSearchQuery.toLowerCase();
+				filtered = filtered.filter(p => 
+					p.name.toLowerCase().includes(query) ||
+					p.brand.toLowerCase().includes(query) ||
+					p.category.toLowerCase().includes(query)
+				);
+			}
+			
+			renderModalProducts(filtered);
+		}
+
+		function handleModalSearch(value) {
+			modalSearchQuery = value;
+			const clearBtn = document.getElementById('modalSearchClear');
+			
+			if (value.trim()) {
+				clearBtn.classList.add('visible');
+			} else {
+				clearBtn.classList.remove('visible');
+			}
+			
+			applyModalFilters();
+		}
+
+		function clearModalSearch() {
+			const searchInput = document.getElementById('modalProductSearch');
+			searchInput.value = '';
+			modalSearchQuery = '';
+			document.getElementById('modalSearchClear').classList.remove('visible');
+			applyModalFilters();
+		}
 
 		// SCROLL ANIMATIONS
 		const observerOptions = {
