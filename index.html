@@ -5,6 +5,97 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ML Nutrition | The Premium Standard in Supplements</title>
 	<meta name="description" content="ML Nutrition - Premium supplement store offering global brands, 100% authentic products, and expert guidance.">
+
+	<!-- Open Graph (WhatsApp, Facebook, Instagram, LinkedIn) -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="ML Nutrition">
+	<meta property="og:title" content="ML Nutrition | The Premium Standard in Supplements">
+	<meta property="og:description" content="Premium supplement store offering global brands, 100% authentic products, and expert guidance.">
+	<meta property="og:url" content="https://www.mlnutrition.in/">
+	<meta property="og:image" content="https://www.mlnutrition.in/IMG_6042.PNG">
+	<meta property="og:image:alt" content="ML Nutrition">
+	<meta property="og:locale" content="en_IN">
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="ML Nutrition | The Premium Standard in Supplements">
+	<meta name="twitter:description" content="Premium supplement store offering global brands, 100% authentic products, and expert guidance.">
+	<meta name="twitter:image" content="https://www.mlnutrition.in/IMG_6042.PNG">
+
+	<!-- SEO: Structured Data (Organization + Stores) -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "Organization",
+				"@id": "https://www.mlnutrition.in/#organization",
+				"name": "ML Nutrition",
+				"url": "https://www.mlnutrition.in/",
+				"logo": "https://www.mlnutrition.in/IMG_6042.PNG",
+				"description": "Premium supplement store offering global brands, 100% authentic products, and expert guidance.",
+				"sameAs": [
+					"https://instagram.com/themlnutrition"
+				]
+			},
+			{
+				"@type": "Store",
+				"@id": "https://www.mlnutrition.in/#store-talegaon",
+				"name": "ML Nutrition Talegaon",
+				"parentOrganization": { "@id": "https://www.mlnutrition.in/#organization" },
+				"url": "https://www.mlnutrition.in/",
+				"image": "https://www.mlnutrition.in/IMG_6042.PNG",
+				"telephone": "+91-8329384588",
+				"priceRange": "₹₹",
+				"currenciesAccepted": "INR",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "Shop No. 3, Success Chambers, Near Bank of Baroda, Samson Nagar, Talegaon",
+					"addressLocality": "Pune",
+					"addressRegion": "Maharashtra",
+					"postalCode": "410507",
+					"addressCountry": "IN"
+				},
+				"openingHoursSpecification": [
+					{
+						"@type": "OpeningHoursSpecification",
+						"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+						"opens": "09:30",
+						"closes": "21:00"
+					}
+				]
+			},
+			{
+				"@type": "Store",
+				"@id": "https://www.mlnutrition.in/#store-akurdi",
+				"name": "ML Nutrition Akurdi",
+				"parentOrganization": { "@id": "https://www.mlnutrition.in/#organization" },
+				"url": "https://www.mlnutrition.in/",
+				"image": "https://www.mlnutrition.in/IMG_6042.PNG",
+				"telephone": "+91-8329384588",
+				"priceRange": "₹₹",
+				"currenciesAccepted": "INR",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "Shop No. 10, ABC Junction, Near Akurdi Railway Station, Pradhikaran, Nigdi",
+					"addressLocality": "Pune",
+					"addressRegion": "Maharashtra",
+					"postalCode": "411044",
+					"addressCountry": "IN"
+				},
+				"openingHoursSpecification": [
+					{
+						"@type": "OpeningHoursSpecification",
+						"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+						"opens": "09:30",
+						"closes": "21:00"
+					}
+				]
+			}
+		]
+	}
+	</script>
+
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
@@ -672,8 +763,8 @@
 
 		.products-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-			gap: 1.5rem;
+			grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+			gap: 1rem;
 		}
 
 		.product-card {
@@ -702,7 +793,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			padding: 1.5rem;
+			padding: 0.85rem;
 		}
 
 		.product-image img {
@@ -712,46 +803,46 @@
 		}
 
 		.product-image .placeholder {
-			width: 140px;
-			height: 140px;
+			width: 90px;
+			height: 90px;
 			background: linear-gradient(135deg, var(--primary), #b31117);
 			border-radius: 50%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			font-family: 'Bebas Neue', sans-serif;
-			font-size: 48px;
+			font-size: 30px;
 			color: var(--white);
 			letter-spacing: 2px;
 		}
 
 		.product-info {
-			padding: 1.5rem;
+			padding: 0.9rem;
 			flex: 1;
 			display: flex;
 			flex-direction: column;
 		}
 
 		.product-brand {
-			font-size: 12px;
+			font-size: 11px;
 			color: var(--primary);
 			font-weight: 700;
 			text-transform: uppercase;
 			letter-spacing: 1px;
-			margin-bottom: 0.5rem;
+			margin-bottom: 0.3rem;
 		}
 
 		.product-name {
-			font-size: 16px;
+			font-size: 13px;
 			font-weight: 600;
-			margin-bottom: 0.75rem;
+			margin-bottom: 0.5rem;
 			color: var(--white);
 			line-height: 1.4;
 			display: -webkit-box;
 			-webkit-line-clamp: 2;
 			-webkit-box-orient: vertical;
 			overflow: hidden;
-			min-height: 44px;
+			min-height: 36px;
 		}
 
 		.product-desc {
@@ -759,11 +850,11 @@
 		}
 
 		.product-price {
-			font-size: 22px;
+			font-size: 17px;
 			font-weight: 700;
 			color: var(--white);
-			margin-bottom: 1rem;
-			padding-top: 1rem;
+			margin-bottom: 0.6rem;
+			padding-top: 0.6rem;
 			border-top: 1px solid var(--border);
 		}
 
@@ -774,12 +865,12 @@
 		.btn-whatsapp {
 			background: #25D366;
 			color: var(--white);
-			padding: 12px 20px;
+			padding: 9px 12px;
 			text-align: center;
 			text-decoration: none;
 			border-radius: 8px;
 			font-weight: 600;
-			font-size: 14px;
+			font-size: 12.5px;
 			transition: all 0.3s ease;
 			display: flex;
 			align-items: center;
@@ -1297,6 +1388,8 @@
 
 			.logo-group {
 				gap: 8px;
+				min-width: 0;
+				flex-shrink: 1;
 			}
 
 			.logo-text {
@@ -1304,11 +1397,33 @@
 			}
 
 			.logo-img {
-				height: 24px;
+				height: 22px;
+				flex-shrink: 0;
 			}
 
 			.logo-text-img {
-				height: 32px;
+				height: auto;
+				width: 120px;
+				max-width: 32vw;
+				object-fit: contain;
+			}
+
+			.nav-actions {
+				flex-shrink: 0;
+				gap: 0.2rem;
+			}
+
+			.ml-icon-btn {
+				padding: 5px;
+			}
+
+			.ml-icon-btn svg {
+				width: 20px;
+				height: 20px;
+			}
+
+			.lang-toggle {
+				display: none;
 			}
 
 			.lang-btn {
@@ -1621,15 +1736,25 @@
 				<li><a href="#stores" data-i18n="nav.stores">STORES</a></li>
 				<li><a href="#contact" data-i18n="nav.contact">CONTACT</a></li>
 			</ul>
-			<div class="lang-toggle">
-				<button class="lang-btn active" data-lang="en">EN</button>
-				<button class="lang-btn" data-lang="mr">मर</button>
+			<div class="nav-actions">
+				<button class="ml-icon-btn" id="wishlistBtn" aria-label="Wishlist">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+					<span class="nav-badge" id="wishlistBadge">0</span>
+				</button>
+				<button class="ml-icon-btn" id="cartBtn" aria-label="Cart">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+					<span class="nav-badge" id="cartBadge">0</span>
+				</button>
+				<div class="lang-toggle">
+					<button class="lang-btn active" data-lang="en">EN</button>
+					<button class="lang-btn" data-lang="mr">मर</button>
+				</div>
+				<button class="mobile-toggle" aria-label="Toggle menu">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
 			</div>
-			<button class="mobile-toggle" aria-label="Toggle menu">
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
 		</div>
 	</nav>
 
@@ -1785,7 +1910,7 @@
 				<span class="store-badge open" data-i18n="stores.nowOpen">NOW OPEN</span>
 				<h3 class="store-name">ML NUTRITION TALEGAON</h3>
 				<p class="store-address">Talegaon Dabhade, Pune, Maharashtra</p>
-				<p class="store-timing" data-i18n="stores.store1Timing">Timings: 9:00 AM - 9:00 PM</p>
+				<p class="store-timing" data-i18n="stores.store1Timing">Timings: 9:30 AM - 9:00 PM</p>
 				<div class="store-actions">
 					<a href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Talegaon%20Dabhade" target="_blank" class="btn-map" data-i18n="stores.getDirections">GET DIRECTIONS</a>
 					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20to%20visit%20your%20Talegaon%20store." target="_blank" class="btn-whatsapp">
@@ -1797,13 +1922,13 @@
 				</div>
 			</div>
 			<div class="store-card">
-				<span class="store-badge coming-soon" data-i18n="stores.comingSoon">COMING SOON</span>
+				<span class="store-badge open" data-i18n="stores.nowOpen">NOW OPEN</span>
 				<h3 class="store-name">ML NUTRITION AKURDI</h3>
 				<p class="store-address">Akurdi, Pune, Maharashtra</p>
-				<p class="store-timing" data-i18n="stores.store2Timing">Opening Soon. Stay tuned for updates.</p>
+				<p class="store-timing" data-i18n="stores.store2Timing">Timings: 9:30 AM - 9:00 PM</p>
 				<div class="store-actions">
-					<a href="https://www.google.com/maps/search/?api=1&query=Akurdi%20Pune" target="_blank" class="btn-map" data-i18n="stores.getDirections">GET DIRECTIONS</a>
-					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20updates%20about%20your%20Akurdi%20store." target="_blank" class="btn-whatsapp">
+					<a href="https://www.google.com/maps/search/?api=1&query=ML%20Nutrition%20Akurdi%20Pradhikaran%20Nigdi%20Pune" target="_blank" class="btn-map" data-i18n="stores.getDirections">GET DIRECTIONS</a>
+					<a href="https://wa.me/918329384588?text=Hi%20ML%20Nutrition!%20I%20want%20to%20visit%20your%20Akurdi%20store." target="_blank" class="btn-whatsapp">
 						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
 						</svg>
@@ -1935,8 +2060,8 @@
 					comingSoon: 'COMING SOON',
 					getDirections: 'GET DIRECTIONS',
 					whatsapp: 'WHATSAPP',
-					store1Timing: 'Timings: 9:00 AM - 9:00 PM',
-					store2Timing: 'Opening Soon. Stay tuned for updates.'
+					store1Timing: 'Timings: 9:30 AM - 9:00 PM',
+					store2Timing: 'Timings: 9:30 AM - 9:00 PM'
 				},
 				footer: {
 					tagline: 'Premium supplements, authentic brands, and a genuine store experience for serious fitness goals.',
@@ -2019,8 +2144,8 @@
 					comingSoon: 'लवकरच येत आहे',
 					getDirections: 'दिशा मिळवा',
 					whatsapp: 'व्हाट्सअॅप करा',
-					store1Timing: 'वेळ: सकाळी ९:०० - रात्री ९:००',
-					store2Timing: 'लवकरच उघडत आहे. अपडेट्ससाठी तयार रहा.'
+					store1Timing: 'वेळ: सकाळी ९:३० - रात्री ९:००',
+					store2Timing: 'वेळ: सकाळी ९:३० - रात्री ९:००'
 				},
 				footer: {
 					tagline: 'गंभीर फिटनेस लक्ष्यांसाठी प्रीमियम सप्लिमेंट्स, अस्सल ब्रँड्स आणि खरा स्टोअर अनुभव.',
@@ -2134,6 +2259,7 @@
 			}).join('');
 
 			container.innerHTML = `<div class="products-grid">${html}</div>`;
+			if (window.MLStore) { MLStore.decorateCards(productsToShow); }
 		}
 
 		function filterProducts(category) {
@@ -2444,6 +2570,9 @@ applyFilters();
 			if (allProducts.length > 0) {
 				applyFilters();
 			}
+
+			// Refresh cart/wishlist labels
+			if (window.MLStore) MLStore.refreshLang();
 		}
 
 		// Language toggle event listeners
@@ -2504,5 +2633,6 @@ applyFilters();
 		// LOAD PRODUCTS ON PAGE LOAD
 		loadProducts();
 	</script>
+	<script src="cart.js"></script>
 </body>
 </html>
