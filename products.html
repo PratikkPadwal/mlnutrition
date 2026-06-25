@@ -5,6 +5,97 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>All Products | ML Nutrition</title>
 	<meta name="description" content="Browse our complete collection of premium supplements from top international brands.">
+
+	<!-- Open Graph (WhatsApp, Facebook, Instagram, LinkedIn) -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="ML Nutrition">
+	<meta property="og:title" content="All Products | ML Nutrition">
+	<meta property="og:description" content="Browse our complete collection of premium supplements from top international brands.">
+	<meta property="og:url" content="https://www.mlnutrition.in/products.html">
+	<meta property="og:image" content="https://www.mlnutrition.in/IMG_6042.PNG">
+	<meta property="og:image:alt" content="ML Nutrition">
+	<meta property="og:locale" content="en_IN">
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="All Products | ML Nutrition">
+	<meta name="twitter:description" content="Browse our complete collection of premium supplements from top international brands.">
+	<meta name="twitter:image" content="https://www.mlnutrition.in/IMG_6042.PNG">
+
+	<!-- SEO: Structured Data (Organization + Stores) -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "Organization",
+				"@id": "https://www.mlnutrition.in/#organization",
+				"name": "ML Nutrition",
+				"url": "https://www.mlnutrition.in/",
+				"logo": "https://www.mlnutrition.in/IMG_6042.PNG",
+				"description": "Premium supplement store offering global brands, 100% authentic products, and expert guidance.",
+				"sameAs": [
+					"https://instagram.com/themlnutrition"
+				]
+			},
+			{
+				"@type": "Store",
+				"@id": "https://www.mlnutrition.in/#store-talegaon",
+				"name": "ML Nutrition Talegaon",
+				"parentOrganization": { "@id": "https://www.mlnutrition.in/#organization" },
+				"url": "https://www.mlnutrition.in/",
+				"image": "https://www.mlnutrition.in/IMG_6042.PNG",
+				"telephone": "+91-8329384588",
+				"priceRange": "₹₹",
+				"currenciesAccepted": "INR",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "Shop No. 3, Success Chambers, Near Bank of Baroda, Samson Nagar, Talegaon",
+					"addressLocality": "Pune",
+					"addressRegion": "Maharashtra",
+					"postalCode": "410507",
+					"addressCountry": "IN"
+				},
+				"openingHoursSpecification": [
+					{
+						"@type": "OpeningHoursSpecification",
+						"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+						"opens": "09:30",
+						"closes": "21:00"
+					}
+				]
+			},
+			{
+				"@type": "Store",
+				"@id": "https://www.mlnutrition.in/#store-akurdi",
+				"name": "ML Nutrition Akurdi",
+				"parentOrganization": { "@id": "https://www.mlnutrition.in/#organization" },
+				"url": "https://www.mlnutrition.in/",
+				"image": "https://www.mlnutrition.in/IMG_6042.PNG",
+				"telephone": "+91-8329384588",
+				"priceRange": "₹₹",
+				"currenciesAccepted": "INR",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "Shop No. 10, ABC Junction, Near Akurdi Railway Station, Pradhikaran, Nigdi",
+					"addressLocality": "Pune",
+					"addressRegion": "Maharashtra",
+					"postalCode": "411044",
+					"addressCountry": "IN"
+				},
+				"openingHoursSpecification": [
+					{
+						"@type": "OpeningHoursSpecification",
+						"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+						"opens": "09:30",
+						"closes": "21:00"
+					}
+				]
+			}
+		]
+	}
+	</script>
+
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
@@ -360,8 +451,8 @@
 		/* PRODUCTS GRID */
 		.products-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-			gap: 1.5rem;
+			grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+			gap: 1rem;
 		}
 
 		.product-card {
@@ -390,7 +481,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			padding: 1.5rem;
+			padding: 0.85rem;
 		}
 
 		.product-image img {
@@ -400,54 +491,54 @@
 		}
 
 		.product-image .placeholder {
-			width: 140px;
-			height: 140px;
+			width: 90px;
+			height: 90px;
 			background: linear-gradient(135deg, var(--primary), #b31117);
 			border-radius: 50%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			font-family: 'Bebas Neue', sans-serif;
-			font-size: 48px;
+			font-size: 30px;
 			color: var(--white);
 			letter-spacing: 2px;
 		}
 
 		.product-info {
-			padding: 1.5rem;
+			padding: 0.9rem;
 			flex: 1;
 			display: flex;
 			flex-direction: column;
 		}
 
 		.product-brand {
-			font-size: 12px;
+			font-size: 11px;
 			color: var(--primary);
 			font-weight: 700;
 			text-transform: uppercase;
 			letter-spacing: 1px;
-			margin-bottom: 0.5rem;
+			margin-bottom: 0.3rem;
 		}
 
 		.product-name {
-			font-size: 16px;
+			font-size: 13px;
 			font-weight: 600;
-			margin-bottom: 0.75rem;
+			margin-bottom: 0.5rem;
 			color: var(--white);
 			line-height: 1.4;
 			display: -webkit-box;
 			-webkit-line-clamp: 2;
 			-webkit-box-orient: vertical;
 			overflow: hidden;
-			min-height: 44px;
+			min-height: 36px;
 		}
 
 		.product-price {
-			font-size: 22px;
+			font-size: 17px;
 			font-weight: 700;
 			color: var(--white);
-			margin-bottom: 1rem;
-			padding-top: 1rem;
+			margin-bottom: 0.6rem;
+			padding-top: 0.6rem;
 			border-top: 1px solid var(--border);
 		}
 
@@ -458,12 +549,12 @@
 		.btn-whatsapp {
 			background: #25D366;
 			color: var(--white);
-			padding: 12px 20px;
+			padding: 9px 12px;
 			text-align: center;
 			text-decoration: none;
 			border-radius: 8px;
 			font-weight: 600;
-			font-size: 14px;
+			font-size: 12.5px;
 			transition: all 0.3s ease;
 			display: flex;
 			align-items: center;
@@ -703,23 +794,47 @@
 		margin-top: 1rem;
 	}
 
+		@media (max-width: 768px) {
 			.navbar-container {
 				padding: 0.8rem 1rem;
 			}
 
+			.logo-group {
+				min-width: 0;
+				flex-shrink: 0;
+			}
+
 			.logo-img {
-				height: 24px;
+				height: 22px;
+				flex-shrink: 0;
 			}
 
 			.logo-text-img {
-				height: 32px;
+				height: auto;
+				width: 110px;
+				max-width: 38vw;
+				object-fit: contain;
+			}
+
+			.nav-actions {
+				flex-shrink: 0;
+				gap: 0.2rem;
+			}
+
+			.ml-icon-btn {
+				padding: 5px;
+			}
+
+			.ml-icon-btn svg {
+				width: 20px;
+				height: 20px;
 			}
 
 			.nav-menu {
 				display: none;
 			}
 
-			.lang-toggle {
+			.nav-actions .lang-toggle {
 				display: none;
 			}
 
@@ -825,15 +940,25 @@
 				<li><a href="index.html#stores" data-i18n="nav.stores">STORES</a></li>
 				<li><a href="index.html#contact" data-i18n="nav.contact">CONTACT</a></li>
 			</ul>
-			<div class="lang-toggle">
-				<button class="lang-btn active" data-lang="en">EN</button>
-				<button class="lang-btn" data-lang="mr">मर</button>
+			<div class="nav-actions">
+				<button class="ml-icon-btn" id="wishlistBtn" aria-label="Wishlist">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+					<span class="nav-badge" id="wishlistBadge">0</span>
+				</button>
+				<button class="ml-icon-btn" id="cartBtn" aria-label="Cart">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+					<span class="nav-badge" id="cartBadge">0</span>
+				</button>
+				<div class="lang-toggle">
+					<button class="lang-btn active" data-lang="en">EN</button>
+					<button class="lang-btn" data-lang="mr">मर</button>
+				</div>
+				<button class="mobile-toggle" aria-label="Toggle menu">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
 			</div>
-			<button class="mobile-toggle" aria-label="Toggle menu">
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
 		</div>
 	</nav>
 
@@ -1152,6 +1277,9 @@
 			if (allProducts.length > 0) {
 				applyFilters();
 			}
+
+			// Refresh cart/wishlist labels
+			if (window.MLStore) MLStore.refreshLang();
 		}
 
 		// GOOGLE SHEETS CONFIG
@@ -1299,6 +1427,73 @@
 			return prices.length === 2 ? (prices[0] + prices[1]) / 2 : prices[0];
 		}
 
+		// SEO: build & inject Product structured data (JSON-LD) for the visible products.
+		// Designed for fixed prices (single value); falls back to a price range if needed.
+		function buildOffer(priceStr, inStock) {
+			const availability = inStock
+				? 'https://schema.org/InStock'
+				: 'https://schema.org/OutOfStock';
+			if (!priceStr || /request/i.test(priceStr)) return null;
+			const nums = (priceStr.match(/\d+/g) || []).map(Number);
+			if (nums.length === 0) return null;
+			if (nums.length === 1) {
+				return {
+					'@type': 'Offer',
+					priceCurrency: 'INR',
+					price: String(nums[0]),
+					availability: availability
+				};
+			}
+			// Range fallback (until prices are updated to a single value in the sheet)
+			return {
+				'@type': 'AggregateOffer',
+				priceCurrency: 'INR',
+				lowPrice: String(Math.min(...nums)),
+				highPrice: String(Math.max(...nums)),
+				availability: availability
+			};
+		}
+
+		function updateProductStructuredData(products) {
+			const pageUrl = 'https://www.mlnutrition.in/products.html';
+			const itemList = (products || []).map((product, i) => {
+				const item = {
+					'@type': 'Product',
+					name: product.name || 'Product',
+					brand: { '@type': 'Brand', name: product.brand || 'ML Nutrition' },
+					category: product.category || undefined,
+					url: pageUrl
+				};
+				if (product.image_url) item.image = product.image_url;
+				if (product.description) item.description = product.description;
+				const offer = buildOffer(product.price_range, product.in_stock === 'Yes');
+				if (offer) item.offers = offer;
+				return {
+					'@type': 'ListItem',
+					position: i + 1,
+					item: item
+				};
+			});
+
+			const data = {
+				'@context': 'https://schema.org',
+				'@type': 'ItemList',
+				name: 'ML Nutrition Products',
+				url: pageUrl,
+				numberOfItems: itemList.length,
+				itemListElement: itemList
+			};
+
+			let tag = document.getElementById('product-jsonld');
+			if (!tag) {
+				tag = document.createElement('script');
+				tag.type = 'application/ld+json';
+				tag.id = 'product-jsonld';
+				document.head.appendChild(tag);
+			}
+			tag.textContent = JSON.stringify(data);
+		}
+
 		// RENDER PRODUCTS
 		function renderProducts(products) {
 			const container = document.getElementById('productsContainer');
@@ -1361,6 +1556,10 @@
 			}).join('');
 
 			container.innerHTML = `<div class="products-grid">${html}</div>`;
+			if (window.MLStore) { MLStore.decorateCards(products); }
+
+			// SEO: inject Product structured data for the rendered list
+			updateProductStructuredData(products);
 
 			// Update products count
 			const countText = currentLang === 'mr' 
@@ -1587,5 +1786,6 @@
 		switchLanguage(currentLang); // Apply saved language preference
 		loadProducts();
 	</script>
+	<script src="cart.js"></script>
 </body>
 </html>
