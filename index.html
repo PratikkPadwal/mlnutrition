@@ -5,6 +5,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ML Nutrition | The Premium Standard in Supplements</title>
 	<meta name="description" content="ML Nutrition - Premium supplement store offering global brands, 100% authentic products, and expert guidance.">
+	<meta name="robots" content="index, follow">
+	<link rel="canonical" href="https://www.mlnutrition.in/">
+
+	<!-- Favicons & PWA -->
+	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="theme-color" content="#080808">
 
 	<!-- Open Graph (WhatsApp, Facebook, Instagram, LinkedIn) -->
 	<meta property="og:type" content="website">
@@ -98,6 +108,8 @@
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://docs.google.com">
+	<link rel="dns-prefetch" href="https://w.behold.so">
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
 	<style>
 		* {
@@ -2235,7 +2247,7 @@
 						${stockBadge}
 						<div class="product-image">
 							${imageUrl ? 
-								`<img src="${imageUrl}" alt="${name}" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">` : 
+								`<img src="${imageUrl}" alt="${name}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">` : 
 								`<div class="placeholder">${initials}</div>`
 							}
 						</div>
