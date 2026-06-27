@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Product | ML Nutrition</title>
+	<meta name="description" content="Premium supplements from ML Nutrition — 100% authentic, global brands, expert guidance.">
+	<meta name="robots" content="index, follow">
+	<link rel="canonical" href="https://www.mlnutrition.in/product.html">
+
+	<!-- Favicons & PWA -->
+	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="theme-color" content="#080808">
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="product">
+	<meta property="og:site_name" content="ML Nutrition">
+	<meta property="og:title" content="Product | ML Nutrition" id="ogTitle">
+	<meta property="og:description" content="Premium supplements from ML Nutrition." id="ogDesc">
+	<meta property="og:url" content="https://www.mlnutrition.in/product.html" id="ogUrl">
+	<meta property="og:image" content="https://www.mlnutrition.in/IMG_6042.PNG" id="ogImage">
+	<meta property="og:locale" content="en_IN">
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Product | ML Nutrition" id="twTitle">
+	<meta name="twitter:description" content="Premium supplements from ML Nutrition." id="twDesc">
+	<meta name="twitter:image" content="https://www.mlnutrition.in/IMG_6042.PNG" id="twImage">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://docs.google.com">
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
+
+	<!-- Product structured data (injected at runtime) -->
+	<script type="application/ld+json" id="productSchema"></script>
+
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+
+		:root {
+			--bg: #080808;
+			--surface: #111111;
+			--card: #161616;
+			--border: #222222;
+			--primary: #E31E24;
+			--glow: rgba(227, 30, 36, 0.15);
+			--white: #FFFFFF;
+			--grey: #888888;
+			--max-width: 1400px;
+		}
+
+		html { scroll-behavior: smooth; }
+
+		body {
+			font-family: 'DM Sans', sans-serif;
+			background: var(--bg);
+			color: var(--white);
+			line-height: 1.6;
+			overflow-x: hidden;
+			padding-top: 80px;
+		}
+
+		/* NAVBAR */
+		.navbar {
+			position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+			background: rgba(8, 8, 8, 0.95);
+			backdrop-filter: blur(20px);
+			border-bottom: 1px solid var(--primary);
+		}
+		.navbar-container {
+			max-width: var(--max-width); margin: 0 auto;
+			padding: 1.2rem 1.5rem;
+			display: flex; align-items: center; justify-content: space-between;
+		}
+		.logo-group { display: flex; align-items: center; gap: 12px; }
+		.logo-img { height: 32px; width: auto; }
+		.logo-text-img { height: 38px; width: auto; }
+		.nav-menu { display: flex; gap: 2.5rem; list-style: none; }
+		.nav-menu a {
+			color: var(--grey); text-decoration: none; font-weight: 600;
+			font-size: 14px; letter-spacing: 1px; transition: color 0.3s ease;
+		}
+		.nav-menu a:hover, .nav-menu a.active { color: var(--primary); }
+
+		.lang-toggle { display: flex; gap: 0.5rem; margin-left: 2rem; }
+		.lang-btn {
+			padding: 6px 12px; background: transparent; border: 1px solid var(--border);
+			color: var(--grey); cursor: pointer; transition: all 0.3s; border-radius: 4px;
+			font-size: 14px; font-weight: 600;
+		}
+		.lang-btn:hover { border-color: var(--primary); }
+		.lang-btn.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+
+		/* MOBILE NAV TOGGLE */
+		.mobile-toggle {
+			display: none; background: none; border: none; cursor: pointer;
+			position: relative; width: 30px; height: 25px;
+		}
+		.mobile-toggle span {
+			display: block; width: 25px; height: 2px; background: var(--white);
+			margin: 5px 0; transition: all 0.3s ease; position: absolute; left: 0;
+		}
+		.mobile-toggle span:nth-child(1) { top: 0; }
+		.mobile-toggle span:nth-child(2) { top: 8px; }
+		.mobile-toggle span:nth-child(3) { top: 16px; }
+		.mobile-toggle.active span:nth-child(1) { transform: rotate(45deg); top: 8px; }
+		.mobile-toggle.active span:nth-child(2) { opacity: 0; }
+		.mobile-toggle.active span:nth-child(3) { transform: rotate(-45deg); top: 8px; }
+
+		/* MOBILE MENU */
+		.mobile-menu {
+			position: fixed; top: 70px; left: 0; right: 0;
+			background: rgba(17, 17, 17, 0.98); backdrop-filter: blur(20px);
+			border-bottom: 1px solid var(--border);
+			max-height: 0; overflow: hidden; transition: max-height 0.3s ease; z-index: 9999;
+		}
+		.mobile-menu.active { max-height: 500px; }
+		.mobile-menu-list { list-style: none; padding: 1.5rem; }
+		.mobile-menu-list li { border-bottom: 1px solid var(--border); }
+		.mobile-menu-list li:last-child { border-bottom: none; }
+		.mobile-menu-list a {
+			display: block; color: var(--white); text-decoration: none;
+			padding: 1rem 0; font-weight: 500; font-size: 16px; transition: color 0.3s;
+		}
+		.mobile-menu-list a:hover { color: var(--primary); }
+		.mobile-menu-lang {
+			display: flex; gap: 0.5rem; padding: 1rem 0; justify-content: center;
+			border-top: 1px solid var(--border); margin-top: 1rem;
+		}
+
+		/* PAGE LAYOUT */
+		.detail-wrap { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+		/* BREADCRUMB */
+		.breadcrumb {
+			display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;
+			font-size: 13px; color: var(--grey); margin-bottom: 1.8rem;
+		}
+		.breadcrumb a { color: var(--grey); text-decoration: none; transition: color 0.2s; }
+		.breadcrumb a:hover { color: var(--primary); }
+		.breadcrumb .sep { opacity: 0.5; }
+		.breadcrumb .current { color: var(--white); }
+
+		/* DETAIL GRID */
+		.detail-grid {
+			display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+			gap: 3rem; align-items: start;
+		}
+
+		.detail-media {
+			background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+			border: 1px solid var(--border); border-radius: 18px;
+			aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+			overflow: hidden; padding: 2rem; position: sticky; top: 100px;
+		}
+		.detail-media img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.4s ease; }
+		.detail-media:hover img { transform: scale(1.06); }
+		.detail-media .placeholder {
+			width: 140px; height: 140px; border-radius: 50%;
+			background: linear-gradient(135deg, var(--primary), #b31117);
+			display: flex; align-items: center; justify-content: center;
+			font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--white); letter-spacing: 3px;
+		}
+
+		.detail-brand {
+			font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+			color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;
+		}
+		.detail-name {
+			font-family: 'Bebas Neue', sans-serif; font-size: 42px; line-height: 1.05;
+			letter-spacing: 1px; margin-bottom: 1rem;
+		}
+		.detail-badges { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+		.badge {
+			font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px;
+			border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 5px;
+		}
+		.badge.in { color: #25D366; border-color: rgba(37,211,102,0.4); }
+		.badge.out { color: var(--primary); border-color: rgba(227,30,36,0.4); }
+		.badge.trust { color: var(--grey); }
+
+		.detail-price {
+			font-size: 30px; font-weight: 700; color: var(--white); margin-bottom: 1.5rem;
+		}
+		.detail-price .currency { color: var(--primary); font-size: 22px; margin-right: 2px; }
+		.detail-price .req { font-size: 18px; color: var(--grey); font-weight: 600; }
+
+		.detail-section-label {
+			font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+			color: var(--grey); font-weight: 600; margin-bottom: 0.7rem;
+		}
+
+		.detail-desc { color: #cfcfcf; font-size: 15px; margin-bottom: 1.8rem; }
+
+		/* FLAVOURS */
+		.flavour-block { margin-bottom: 1.8rem; }
+		.flavour-options { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+		.flavour-chip {
+			padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border);
+			background: var(--card); color: var(--white); font-size: 14px; font-weight: 600;
+			cursor: pointer; transition: all 0.2s ease;
+		}
+		.flavour-chip:hover { border-color: var(--primary); }
+		.flavour-chip.active { background: var(--primary); border-color: var(--primary); }
+
+		/* QUANTITY */
+		.qty-block { margin-bottom: 1.8rem; }
+		.qty-selector {
+			display: inline-flex; align-items: center; border: 1px solid var(--border);
+			border-radius: 10px; overflow: hidden;
+		}
+		.qty-selector button {
+			width: 44px; height: 44px; background: var(--card); border: none; color: var(--white);
+			font-size: 20px; cursor: pointer; transition: background 0.2s;
+		}
+		.qty-selector button:hover { background: var(--primary); }
+		.qty-selector span { min-width: 50px; text-align: center; font-weight: 700; font-size: 16px; }
+
+		/* ACTIONS */
+		.detail-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.5rem; }
+		.btn-action {
+			display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+			padding: 14px 24px; border-radius: 12px; font-size: 15px; font-weight: 700;
+			cursor: pointer; border: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+		}
+		.btn-cart { background: var(--primary); color: #fff; flex: 1; min-width: 180px; }
+		.btn-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--glow); }
+		.btn-cart:disabled { background: var(--card); color: var(--grey); cursor: not-allowed; transform: none; box-shadow: none; }
+		.btn-wish {
+			background: transparent; color: var(--white); border: 1px solid var(--border); width: 54px; padding: 14px;
+		}
+		.btn-wish:hover { border-color: var(--primary); }
+		.btn-wish svg { width: 22px; height: 22px; }
+		.btn-wish.active { background: var(--primary); border-color: var(--primary); }
+		.btn-wish.active svg { fill: #fff; }
+		.btn-wa { background: #25D366; color: #fff; width: 100%; }
+		.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.35); }
+		.btn-wa svg { width: 20px; height: 20px; fill: currentColor; }
+
+		.detail-share { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.5rem; }
+		.share-label { font-size: 13px; color: var(--grey); }
+		.share-btn {
+			width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
+			background: var(--card); color: var(--white); cursor: pointer; display: flex;
+			align-items: center; justify-content: center; transition: all 0.2s;
+		}
+		.share-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+		.share-btn svg { width: 18px; height: 18px; }
+
+		/* RELATED */
+		.related-section { margin-top: 4rem; }
+		.related-title {
+			font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; margin-bottom: 1.5rem;
+		}
+		.related-grid {
+			display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.2rem;
+		}
+		.related-card {
+			background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+			overflow: hidden; text-decoration: none; color: inherit; transition: all 0.3s ease; display: flex; flex-direction: column;
+		}
+		.related-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 24px var(--glow); }
+		.related-img {
+			aspect-ratio: 1/1; background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+			display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: hidden;
+		}
+		.related-img img { width: 100%; height: 100%; object-fit: contain; }
+		.related-img .placeholder {
+			width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #b31117);
+			display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+		}
+		.related-info { padding: 0.9rem; }
+		.related-brand { font-size: 11px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.5px; }
+		.related-name { font-size: 14px; font-weight: 600; margin: 3px 0; line-height: 1.3; }
+		.related-price { font-size: 15px; font-weight: 700; color: var(--primary); }
+
+		/* SKELETON */
+		.skeleton { position: relative; overflow: hidden; background: var(--card); }
+		.skeleton::after {
+			content: ''; position: absolute; inset: 0;
+			background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+			transform: translateX(-100%); animation: shimmer 1.4s infinite;
+		}
+		@keyframes shimmer { 100% { transform: translateX(100%); } }
+		.sk-line { height: 16px; border-radius: 6px; margin-bottom: 12px; }
+		.sk-media { border-radius: 18px; aspect-ratio: 1/1; }
+
+		/* STATES */
+		.detail-message { text-align: center; padding: 5rem 1rem; }
+		.detail-message h2 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 1px; margin-bottom: 1rem; }
+		.detail-message p { color: var(--grey); margin-bottom: 1.6rem; }
+		.detail-message a {
+			display: inline-block; background: var(--primary); color: #fff; text-decoration: none;
+			padding: 12px 26px; border-radius: 10px; font-weight: 600;
+		}
+
+		@media (max-width: 900px) {
+			.detail-grid { grid-template-columns: 1fr; gap: 2rem; }
+			.detail-media { position: static; }
+		}
+
+		@media (max-width: 768px) {
+			.navbar-container { padding: 0.8rem 1rem; }
+			.logo-group { min-width: 0; flex-shrink: 0; }
+			.logo-img { height: 22px; flex-shrink: 0; }
+			.logo-text-img { height: auto; width: 110px; max-width: 38vw; object-fit: contain; }
+			.nav-actions { flex-shrink: 0; gap: 0.2rem; display: flex; align-items: center; }
+			.ml-icon-btn { padding: 5px; }
+			.ml-icon-btn svg { width: 20px; height: 20px; }
+			.nav-menu { display: none; }
+			.nav-actions .lang-toggle { display: none; }
+			.mobile-toggle { display: block; }
+			.detail-wrap { padding: 1.5rem 1rem 3rem; }
+			.detail-name { font-size: 32px; }
+			.detail-media { padding: 1.5rem; }
+		}
+	</style>
+</head>
+<body>
+	<!-- NAVBAR -->
+	<nav class="navbar">
+		<div class="navbar-container">
+			<a href="index.html" class="logo-group">
+				<img src="IMG_6042.PNG" alt="ML Nutrition Logo" class="logo-img">
+				<img src="ChatGPT Image Jun 5, 2026, 07_52_48 PM.png" alt="ML Nutrition" class="logo-text-img">
+			</a>
+			<ul class="nav-menu">
+				<li><a href="index.html" data-i18n="nav.home">HOME</a></li>
+				<li><a href="products.html" class="active" data-i18n="nav.products">PRODUCTS</a></li>
+				<li><a href="index.html#stores" data-i18n="nav.stores">STORES</a></li>
+				<li><a href="index.html#contact" data-i18n="nav.contact">CONTACT</a></li>
+			</ul>
+			<div class="nav-actions">
+				<button class="ml-icon-btn" id="wishlistBtn" aria-label="Wishlist">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+					<span class="nav-badge" id="wishlistBadge">0</span>
+				</button>
+				<button class="ml-icon-btn" id="cartBtn" aria-label="Cart">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+					<span class="nav-badge" id="cartBadge">0</span>
+				</button>
+				<div class="lang-toggle">
+					<button class="lang-btn active" data-lang="en">EN</button>
+					<button class="lang-btn" data-lang="mr">मर</button>
+				</div>
+				<button class="mobile-toggle" aria-label="Toggle menu">
+					<span></span><span></span><span></span>
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Mobile Menu -->
+	<div class="mobile-menu" id="mobileMenu">
+		<ul class="mobile-menu-list">
+			<li><a href="index.html" data-i18n="nav.home" class="mobile-menu-link">HOME</a></li>
+			<li><a href="products.html" class="active mobile-menu-link" data-i18n="nav.products">PRODUCTS</a></li>
+			<li><a href="index.html#stores" data-i18n="nav.stores" class="mobile-menu-link">STORES</a></li>
+			<li><a href="index.html#contact" data-i18n="nav.contact" class="mobile-menu-link">CONTACT</a></li>
+		</ul>
+		<div class="mobile-menu-lang">
+			<button class="lang-btn mobile-lang-btn" data-lang="en">EN</button>
+			<button class="lang-btn mobile-lang-btn" data-lang="mr">मर</button>
+		</div>
+	</div>
+
+	<!-- MAIN -->
+	<main class="detail-wrap">
+		<nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
+			<a href="index.html" data-i18n="nav.home">HOME</a>
+			<span class="sep">›</span>
+			<a href="products.html" data-i18n="nav.products">PRODUCTS</a>
+		</nav>
+
+		<div id="detailRoot">
+			<!-- Skeleton placeholder -->
+			<div class="detail-grid" id="skeleton">
+				<div class="skeleton sk-media"></div>
+				<div>
+					<div class="skeleton sk-line" style="width:30%"></div>
+					<div class="skeleton sk-line" style="width:80%;height:32px"></div>
+					<div class="skeleton sk-line" style="width:40%;height:28px"></div>
+					<div class="skeleton sk-line" style="width:100%"></div>
+					<div class="skeleton sk-line" style="width:90%"></div>
+					<div class="skeleton sk-line" style="width:60%"></div>
+					<div class="skeleton sk-line" style="width:100%;height:48px;margin-top:24px"></div>
+				</div>
+			</div>
+		</div>
+
+		<section class="related-section" id="relatedSection" style="display:none">
+			<h2 class="related-title" data-i18n="detail.related">YOU MAY ALSO LIKE</h2>
+			<div class="related-grid" id="relatedGrid"></div>
+		</section>
+	</main>
+
+	<script>
+		const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17h4gGSIbSJZ6qMA0Xjt-2aLoxRT4ZTikjPdaaM6a_S4/gviz/tq?tqx=out:json';
+		const WHATSAPP_NUMBER = '918329384588';
+		const SITE = 'https://www.mlnutrition.in';
+
+		let currentLang = localStorage.getItem('mlnutrition-lang') || 'en';
+
+		const translations = {
+			en: {
+				nav: { home: 'HOME', products: 'PRODUCTS', stores: 'STORES', contact: 'CONTACT' },
+				detail: {
+					related: 'YOU MAY ALSO LIKE',
+					flavour: 'Flavour',
+					quantity: 'Quantity',
+					addToCart: 'Add to Cart',
+					outOfStock: 'Out of Stock',
+					buyWhatsapp: 'Buy on WhatsApp',
+					inStock: 'In Stock',
+					authentic: '100% Authentic',
+					share: 'Share:',
+					description: 'Description',
+					selectFlavour: 'Please select a flavour',
+					linkCopied: 'Link copied!',
+					notFound: 'Product not found',
+					notFoundDesc: 'The product you are looking for is unavailable or may have been removed.',
+					loadError: 'Unable to load product',
+					loadErrorDesc: 'Please check your connection and try again.',
+					backToProducts: 'Back to Products',
+					priceRequest: 'Price on request'
+				}
+			},
+			mr: {
+				nav: { home: 'मुख्यपृष्ठ', products: 'उत्पादने', stores: 'स्टोअर्स', contact: 'संपर्क' },
+				detail: {
+					related: 'हे देखील आवडेल',
+					flavour: 'फ्लेवर',
+					quantity: 'संख्या',
+					addToCart: 'कार्टमध्ये टाका',
+					outOfStock: 'स्टॉक संपला',
+					buyWhatsapp: 'व्हाट्सअॅपवर खरेदी करा',
+					inStock: 'स्टॉकमध्ये',
+					authentic: '१००% अस्सल',
+					share: 'शेअर करा:',
+					description: 'वर्णन',
+					selectFlavour: 'कृपया फ्लेवर निवडा',
+					linkCopied: 'लिंक कॉपी झाली!',
+					notFound: 'उत्पादन सापडले नाही',
+					notFoundDesc: 'तुम्ही शोधत असलेले उत्पादन उपलब्ध नाही किंवा काढले गेले असावे.',
+					loadError: 'उत्पादन लोड करता आले नाही',
+					loadErrorDesc: 'कृपया तुमचे कनेक्शन तपासा आणि पुन्हा प्रयत्न करा.',
+					backToProducts: 'उत्पादनांकडे परत',
+					priceRequest: 'किंमत विचारणा'
+				}
+			}
+		};
+
+		function T(key) {
+			const parts = key.split('.');
+			let o = translations[currentLang];
+			for (const p of parts) { o = o && o[p]; }
+			return o != null ? o : key;
+		}
+		function getNested(obj, path) {
+			return path.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : null), obj);
+		}
+
+		/* ---------- State ---------- */
+		let allProducts = [];
+		let currentProduct = null;
+		let selectedFlavour = null;
+		let quantity = 1;
+
+		/* ---------- Helpers ---------- */
+		function esc(s) {
+			return String(s == null ? '' : s)
+				.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;');
+		}
+		function parsePriceNums(str) {
+			if (!str) return null;
+			const nums = String(str).match(/\d+/g);
+			if (!nums) return null;
+			const vals = nums.map(Number);
+			return { min: Math.min(...vals), max: Math.max(...vals) };
+		}
+		function getFlavours(p) {
+			if (!p || !p.flavours) return [];
+			return String(p.flavours).split(',').map(f => f.trim()).filter(Boolean);
+		}
+		function getQueryId() {
+			return new URLSearchParams(window.location.search).get('id');
+		}
+
+		/* ---------- Load ---------- */
+		function loadProduct() {
+			fetch(SHEET_URL)
+				.then(res => res.text())
+				.then(text => {
+					const json = JSON.parse(text.substr(47).slice(0, -2));
+					allProducts = json.table.rows.map(row => ({
+						id: row.c[0]?.v,
+						name: row.c[1]?.v,
+						brand: row.c[2]?.v,
+						category: row.c[3]?.v,
+						description: row.c[4]?.v,
+						price_range: row.c[5]?.v,
+						image_url: row.c[6]?.v,
+						in_stock: row.c[7]?.v,
+						featured: row.c[8]?.v,
+						flavours: row.c[9]?.v
+					})).filter(p => p.name && p.name.trim() && p.name.trim().toLowerCase() !== 'name');
+
+					const id = getQueryId();
+					currentProduct = allProducts.find(p => String(p.id) === String(id));
+
+					if (!currentProduct) {
+						renderMessage('notFound');
+						return;
+					}
+					if (window.MLStore) MLStore.registerProducts(allProducts);
+					const flavs = getFlavours(currentProduct);
+					selectedFlavour = flavs.length ? flavs[0] : null;
+					renderProduct();
+					renderRelated();
+					injectSchema();
+					updateMeta();
+				})
+				.catch(err => {
+					console.error('Error:', err);
+					renderMessage('loadError');
+				});
+		}
+
+		/* ---------- Render product ---------- */
+		function renderProduct() {
+			const p = currentProduct;
+			const root = document.getElementById('detailRoot');
+			const inStock = p.in_stock === 'Yes';
+			const initials = (p.name || 'P').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+			const priceP = parsePriceNums(p.price_range);
+			const priceHTML = priceP
+				? `<span class="currency">₹</span>${esc(p.price_range)}`
+				: `<span class="req">${esc(T('detail.priceRequest'))}</span>`;
+			const flavs = getFlavours(p);
+
+			const mediaInner = p.image_url
+				? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">`
+				: `<div class="placeholder">${initials}</div>`;
+
+			const flavourBlock = flavs.length ? `
+				<div class="flavour-block">
+					<div class="detail-section-label">${esc(T('detail.flavour'))}</div>
+					<div class="flavour-options" id="flavourOptions">
+						${flavs.map((f, i) => `<button class="flavour-chip${i === 0 ? ' active' : ''}" data-flavour="${esc(f)}">${esc(f)}</button>`).join('')}
+					</div>
+				</div>` : '';
+
+			const descBlock = p.description ? `
+				<div class="detail-section-label">${esc(T('detail.description'))}</div>
+				<p class="detail-desc">${esc(p.description)}</p>` : '';
+
+			root.innerHTML = `
+				<div class="detail-grid">
+					<div class="detail-media">${mediaInner}</div>
+					<div class="detail-info">
+						<div class="detail-brand">${esc(p.brand || 'ML Nutrition')}</div>
+						<h1 class="detail-name">${esc(p.name)}</h1>
+						<div class="detail-badges">
+							<span class="badge ${inStock ? 'in' : 'out'}">${inStock ? esc(T('detail.inStock')) : esc(T('detail.outOfStock'))}</span>
+							<span class="badge trust">✓ ${esc(T('detail.authentic'))}</span>
+						</div>
+						<div class="detail-price">${priceHTML}</div>
+						${descBlock}
+						${flavourBlock}
+						<div class="qty-block">
+							<div class="detail-section-label">${esc(T('detail.quantity'))}</div>
+							<div class="qty-selector">
+								<button id="qtyMinus" aria-label="Decrease quantity">−</button>
+								<span id="qtyValue">1</span>
+								<button id="qtyPlus" aria-label="Increase quantity">+</button>
+							</div>
+						</div>
+						<div class="detail-actions">
+							<button class="btn-action btn-cart" id="addCartBtn" ${inStock ? '' : 'disabled'}>
+								<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+								${inStock ? esc(T('detail.addToCart')) : esc(T('detail.outOfStock'))}
+							</button>
+							<button class="btn-action btn-wish" id="wishBtn" aria-label="Add to wishlist">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+							</button>
+						</div>
+						<button class="btn-action btn-wa" id="buyWaBtn">
+							<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+							${esc(T('detail.buyWhatsapp'))}
+						</button>
+						<div class="detail-share">
+							<span class="share-label">${esc(T('detail.share'))}</span>
+							<button class="share-btn" id="shareWa" aria-label="Share on WhatsApp">
+								<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+							</button>
+							<button class="share-btn" id="shareCopy" aria-label="Copy link">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+							</button>
+						</div>
+					</div>
+				</div>`;
+
+			// reset qty
+			quantity = 1;
+
+			// Update breadcrumb with category + product
+			updateBreadcrumb();
+
+			wireDetailEvents();
+			syncWishState();
+		}
+
+		function updateBreadcrumb() {
+			const p = currentProduct;
+			const bc = document.getElementById('breadcrumb');
+			const catLink = p.category
+				? `<a href="products.html">${esc(p.category)}</a><span class="sep">›</span>`
+				: '';
+			bc.innerHTML = `
+				<a href="index.html">${esc(T('nav.home'))}</a>
+				<span class="sep">›</span>
+				<a href="products.html">${esc(T('nav.products'))}</a>
+				<span class="sep">›</span>
+				${catLink}
+				<span class="current">${esc(p.name)}</span>`;
+		}
+
+		/* ---------- Events ---------- */
+		function wireDetailEvents() {
+			document.querySelectorAll('.flavour-chip').forEach(chip => {
+				chip.addEventListener('click', () => {
+					document.querySelectorAll('.flavour-chip').forEach(c => c.classList.remove('active'));
+					chip.classList.add('active');
+					selectedFlavour = chip.dataset.flavour;
+					syncWishState();
+				});
+			});
+
+			const minus = document.getElementById('qtyMinus');
+			const plus = document.getElementById('qtyPlus');
+			const val = document.getElementById('qtyValue');
+			if (minus && plus && val) {
+				minus.addEventListener('click', () => { if (quantity > 1) { quantity--; val.textContent = quantity; } });
+				plus.addEventListener('click', () => { if (quantity < 99) { quantity++; val.textContent = quantity; } });
+			}
+
+			const addBtn = document.getElementById('addCartBtn');
+			if (addBtn && currentProduct.in_stock === 'Yes') {
+				addBtn.addEventListener('click', () => {
+					if (window.MLStore) {
+						MLStore.addToCart(currentProduct.id, selectedFlavour, quantity);
+						MLStore.openCart();
+					}
+				});
+			}
+
+			const wishBtn = document.getElementById('wishBtn');
+			if (wishBtn) {
+				wishBtn.addEventListener('click', () => {
+					if (window.MLStore) {
+						MLStore.toggleWishlist(currentProduct.id, selectedFlavour);
+						syncWishState();
+					}
+				});
+			}
+
+			const buyWa = document.getElementById('buyWaBtn');
+			if (buyWa) buyWa.addEventListener('click', buyOnWhatsApp);
+
+			const shareWa = document.getElementById('shareWa');
+			if (shareWa) shareWa.addEventListener('click', shareWhatsApp);
+			const shareCopy = document.getElementById('shareCopy');
+			if (shareCopy) shareCopy.addEventListener('click', copyLink);
+		}
+
+		function syncWishState() {
+			const wishBtn = document.getElementById('wishBtn');
+			if (wishBtn && window.MLStore) {
+				wishBtn.classList.toggle('active', MLStore.isInWishlist(currentProduct.id, selectedFlavour));
+			}
+		}
+
+		function buyOnWhatsApp() {
+			const p = currentProduct;
+			const flav = selectedFlavour ? ` (${selectedFlavour})` : '';
+			const qtyStr = quantity > 1 ? ` x${quantity}` : '';
+			const msg = (currentLang === 'mr')
+				? `नमस्ते ML Nutrition! मला ${p.name}${flav}${qtyStr} (${p.brand}) हवे आहे. उपलब्धता आणि किंमत सांगा.`
+				: `Hi ML Nutrition! I am interested in ${p.name}${flav}${qtyStr} by ${p.brand}. Please share availability and exact price.`;
+			window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+		}
+
+		function shareWhatsApp() {
+			const url = `${SITE}/product.html?id=${encodeURIComponent(currentProduct.id)}`;
+			const text = `${currentProduct.name} — ML Nutrition\n${url}`;
+			if (navigator.share) {
+				navigator.share({ title: currentProduct.name, text: currentProduct.name, url }).catch(() => {});
+			} else {
+				window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+			}
+		}
+
+		function copyLink() {
+			const url = `${SITE}/product.html?id=${encodeURIComponent(currentProduct.id)}`;
+			const done = () => { if (window.MLStore && MLStore.toast) MLStore.toast(T('detail.linkCopied'), 'success'); };
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(url).then(done).catch(done);
+			} else {
+				const ta = document.createElement('textarea');
+				ta.value = url; document.body.appendChild(ta); ta.select();
+				try { document.execCommand('copy'); } catch (e) {}
+				document.body.removeChild(ta); done();
+			}
+		}
+
+		/* ---------- Related ---------- */
+		function renderRelated() {
+			const related = allProducts
+				.filter(p => p.category === currentProduct.category && String(p.id) !== String(currentProduct.id))
+				.slice(0, 5);
+			if (!related.length) return;
+			const grid = document.getElementById('relatedGrid');
+			grid.innerHTML = related.map(p => {
+				const initials = (p.name || 'P').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+				const img = p.image_url
+					? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">`
+					: `<div class="placeholder">${initials}</div>`;
+				const priceP = parsePriceNums(p.price_range);
+				const priceText = priceP ? `₹${esc(p.price_range)}` : esc(T('detail.priceRequest'));
+				return `
+					<a class="related-card" href="product.html?id=${encodeURIComponent(p.id)}">
+						<div class="related-img">${img}</div>
+						<div class="related-info">
+							<div class="related-brand">${esc(p.brand || 'ML Nutrition')}</div>
+							<div class="related-name">${esc(p.name)}</div>
+							<div class="related-price">${priceText}</div>
+						</div>
+					</a>`;
+			}).join('');
+			document.getElementById('relatedSection').style.display = 'block';
+		}
+
+		/* ---------- SEO ---------- */
+		function injectSchema() {
+			const p = currentProduct;
+			const url = `${SITE}/product.html?id=${encodeURIComponent(p.id)}`;
+			const inStock = p.in_stock === 'Yes';
+			const priceP = parsePriceNums(p.price_range);
+
+			const schema = {
+				'@context': 'https://schema.org/',
+				'@type': 'Product',
+				name: p.name,
+				image: p.image_url ? [p.image_url] : [`${SITE}/IMG_6042.PNG`],
+				description: p.description || `${p.name} by ${p.brand} — available at ML Nutrition.`,
+				brand: { '@type': 'Brand', name: p.brand || 'ML Nutrition' },
+				category: p.category || undefined,
+				url: url
+			};
+			const flavs = getFlavours(p);
+			if (flavs.length) {
+				schema.additionalProperty = flavs.map(f => ({
+					'@type': 'PropertyValue', name: 'Flavour', value: f
+				}));
+			}
+			if (priceP) {
+				const availability = inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock';
+				if (priceP.min === priceP.max) {
+					schema.offers = {
+						'@type': 'Offer', priceCurrency: 'INR', price: String(priceP.min),
+						availability, url, seller: { '@type': 'Organization', name: 'ML Nutrition' }
+					};
+				} else {
+					schema.offers = {
+						'@type': 'AggregateOffer', priceCurrency: 'INR',
+						lowPrice: String(priceP.min), highPrice: String(priceP.max),
+						availability, url, seller: { '@type': 'Organization', name: 'ML Nutrition' }
+					};
+				}
+			}
+			document.getElementById('productSchema').textContent = JSON.stringify(schema);
+		}
+
+		function updateMeta() {
+			const p = currentProduct;
+			const url = `${SITE}/product.html?id=${encodeURIComponent(p.id)}`;
+			const title = `${p.name} | ML Nutrition`;
+			const desc = (p.description || `${p.name} by ${p.brand}. 100% authentic supplements at ML Nutrition.`).slice(0, 160);
+			const img = p.image_url || `${SITE}/IMG_6042.PNG`;
+
+			document.title = title;
+			setMeta('name', 'description', desc);
+			setLink('canonical', url);
+			setProp('ogTitle', 'content', title);
+			setProp('ogDesc', 'content', desc);
+			setProp('ogUrl', 'content', url);
+			setProp('ogImage', 'content', img);
+			setProp('twTitle', 'content', title);
+			setProp('twDesc', 'content', desc);
+			setProp('twImage', 'content', img);
+		}
+		function setProp(id, attr, val) { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); }
+		function setMeta(attr, name, val) {
+			let el = document.querySelector(`meta[${attr}="${name}"]`);
+			if (el) el.setAttribute('content', val);
+		}
+		function setLink(rel, href) {
+			let el = document.querySelector(`link[rel="${rel}"]`);
+			if (el) el.setAttribute('href', href);
+		}
+
+		/* ---------- Messages ---------- */
+		function renderMessage(kind) {
+			const root = document.getElementById('detailRoot');
+			root.innerHTML = `
+				<div class="detail-message">
+					<h2>${esc(T('detail.' + kind))}</h2>
+					<p>${esc(T('detail.' + kind + 'Desc'))}</p>
+					<a href="products.html">${esc(T('detail.backToProducts'))}</a>
+				</div>`;
+		}
+
+		/* ---------- Language ---------- */
+		function switchLanguage(lang) {
+			currentLang = lang;
+			localStorage.setItem('mlnutrition-lang', lang);
+			document.documentElement.lang = lang;
+
+			document.querySelectorAll('[data-i18n]').forEach(el => {
+				const key = el.getAttribute('data-i18n');
+				const tr = getNested(translations[lang], key);
+				if (tr) {
+					el.textContent = tr;
+					if (lang === 'mr' && /[\u0900-\u097F]/.test(tr)) {
+						el.style.fontFamily = "'Tiro Devanagari Marathi', serif";
+					} else { el.style.fontFamily = ''; }
+				}
+			});
+
+			document.querySelectorAll('.lang-btn').forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.lang === lang);
+			});
+
+			if (currentProduct) {
+				renderProduct();
+				renderRelated();
+				updateMeta();
+			}
+			if (window.MLStore) MLStore.refreshLang();
+		}
+
+		/* ---------- Mobile menu ---------- */
+		const mobileToggle = document.querySelector('.mobile-toggle');
+		const mobileMenu = document.getElementById('mobileMenu');
+		function toggleMobileMenu() { mobileToggle.classList.toggle('active'); mobileMenu.classList.toggle('active'); }
+		function closeMobileMenu() { mobileToggle.classList.remove('active'); mobileMenu.classList.remove('active'); }
+		if (mobileToggle) mobileToggle.addEventListener('click', toggleMobileMenu);
+		document.querySelectorAll('.mobile-menu-link').forEach(l => l.addEventListener('click', closeMobileMenu));
+
+		document.querySelectorAll('.lang-btn').forEach(btn => {
+			btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
+		});
+
+		/* ---------- Init ---------- */
+		switchLanguage(currentLang);
+		loadProduct();
+	</script>
+	<script src="cart.js"></script>
+</body>
+</html>
