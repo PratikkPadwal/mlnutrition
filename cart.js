@@ -131,21 +131,39 @@
 		};
 	}
 
+	// Build a unique line key for a product + optional flavour.
+	function lineId(id, flavour) {
+		return flavour ? String(id) + '::' + flavour : String(id);
+	}
+	// Escape a string for safe use inside a single-quoted inline JS handler.
+	function jsq(s) {
+		return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+	}
+	// Escape a string for safe HTML text.
+	function esc(s) {
+		return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	}
+
 	/* ---------- Cart ops ---------- */
-	function addToCart(id) {
+	function addToCart(id, flavour, qty) {
 		const prod = findProduct(id);
 		if (!prod) return;
 		if (prod.in_stock && prod.in_stock !== 'Yes') {
 			showToast(t('outOfStock'), 'error');
 			return;
 		}
+		const addQty = Math.max(1, parseInt(qty, 10) || 1);
+		const key = lineId(id, flavour);
 		const cart = getCart();
-		const existing = cart.find(i => String(i.id) === String(id));
+		const existing = cart.find(i => String(i.id) === key);
 		if (existing) {
-			existing.qty += 1;
+			existing.qty += addQty;
 		} else {
 			const s = snapshot(prod);
-			s.qty = 1;
+			s.productId = prod.id;
+			s.id = key;
+			if (flavour) s.flavour = flavour;
+			s.qty = addQty;
 			cart.push(s);
 		}
 		saveCart(cart);
@@ -174,19 +192,25 @@
 	}
 
 	/* ---------- Wishlist ops ---------- */
-	function isInWishlist(id) {
-		return getWishlist().some(i => String(i.id) === String(id));
+	function isInWishlist(id, flavour) {
+		const key = lineId(id, flavour);
+		return getWishlist().some(i => String(i.id) === key);
 	}
-	function toggleWishlist(id) {
+	function toggleWishlist(id, flavour) {
 		const prod = findProduct(id);
 		if (!prod) return;
+		const key = lineId(id, flavour);
 		let wl = getWishlist();
-		if (isInWishlist(id)) {
-			wl = wl.filter(i => String(i.id) !== String(id));
+		if (isInWishlist(id, flavour)) {
+			wl = wl.filter(i => String(i.id) !== key);
 			saveWishlist(wl);
 			showToast(t('removedWish'));
 		} else {
-			wl.push(snapshot(prod));
+			const s = snapshot(prod);
+			s.productId = prod.id;
+			s.id = key;
+			if (flavour) s.flavour = flavour;
+			wl.push(s);
 			saveWishlist(wl);
 			showToast(t('addedWish'), 'success');
 			bump('wishlistBtn');
@@ -202,8 +226,27 @@
 		syncWishlistButtons();
 	}
 	function moveToCart(id) {
-		addToCart(id);
+		const item = getWishlist().find(i => String(i.id) === String(id));
+		if (!item) return;
+		if (item.in_stock && item.in_stock !== 'Yes') {
+			showToast(t('outOfStock'), 'error');
+			return;
+		}
+		const cart = getCart();
+		const existing = cart.find(i => String(i.id) === String(item.id));
+		if (existing) {
+			existing.qty += 1;
+		} else {
+			const s = Object.assign({}, item);
+			s.qty = 1;
+			cart.push(s);
+		}
+		saveCart(cart);
 		removeFromWishlist(id);
+		updateBadges();
+		renderCart();
+		showToast(t('addedCart'), 'success');
+		bump('cartBtn');
 	}
 
 	/* ---------- Badges & button sync ---------- */
@@ -242,20 +285,23 @@
 			: initials;
 		const priceP = parsePrice(item.price_range);
 		const priceText = priceP ? '₹' + item.price_range : t('priceRequest');
+		const idArg = jsq(item.id);
+		const flavourLine = item.flavour ? `<div class="ml-line-flavour">${esc(item.flavour)}</div>` : '';
 		const qtyControls = inCart
 			? `<div class="ml-qty">
-					<button onclick="MLStore.setQty('${item.id}',-1)" aria-label="Decrease">−</button>
+					<button onclick="MLStore.setQty('${idArg}',-1)" aria-label="Decrease">−</button>
 					<span>${item.qty}</span>
-					<button onclick="MLStore.setQty('${item.id}',1)" aria-label="Increase">+</button>
+					<button onclick="MLStore.setQty('${idArg}',1)" aria-label="Increase">+</button>
 				</div>`
-			: `<button class="ml-move-btn" onclick="MLStore.moveToCart('${item.id}')">${t('moveToCart')}</button>`;
-		const removeFn = inCart ? `MLStore.removeFromCart('${item.id}')` : `MLStore.removeFromWishlist('${item.id}')`;
+			: `<button class="ml-move-btn" onclick="MLStore.moveToCart('${idArg}')">${t('moveToCart')}</button>`;
+		const removeFn = inCart ? `MLStore.removeFromCart('${idArg}')` : `MLStore.removeFromWishlist('${idArg}')`;
 		return `
 			<div class="ml-line">
 				<div class="ml-line-img">${img}</div>
 				<div class="ml-line-info">
 					<div class="ml-line-brand">${item.brand}</div>
 					<div class="ml-line-name">${item.name}</div>
+					${flavourLine}
 					<div class="ml-line-price">${priceText}</div>
 					${qtyControls}
 				</div>
@@ -327,7 +373,8 @@
 		cart.forEach((item, idx) => {
 			const priceP = parsePrice(item.price_range);
 			const priceText = priceP ? '₹' + item.price_range : t('priceRequest');
-			msg += `${idx + 1}. ${item.name} (${item.brand}) — ${t('qty')}: ${item.qty} — ${priceText}\n`;
+			const flavourText = item.flavour ? ` [${item.flavour}]` : '';
+			msg += `${idx + 1}. ${item.name}${flavourText} (${item.brand}) — ${t('qty')}: ${item.qty} — ${priceText}\n`;
 		});
 		const tot = cartTotals();
 		if (tot.known) {
@@ -450,6 +497,7 @@
 		.ml-line-info{flex:1;min-width:0}
 		.ml-line-brand{font-size:11px;color:var(--grey,#888);text-transform:uppercase;letter-spacing:.5px}
 		.ml-line-name{font-size:14px;font-weight:600;color:var(--white,#fff);margin:2px 0 4px;line-height:1.3}
+		.ml-line-flavour{display:inline-block;font-size:11px;color:var(--white,#fff);background:var(--card,#161616);border:1px solid var(--border,#222);border-radius:6px;padding:2px 8px;margin-bottom:6px}
 		.ml-line-price{font-size:14px;font-weight:700;color:var(--primary,#E31E24);margin-bottom:.5rem}
 		.ml-line-remove{position:absolute;top:.9rem;right:0;background:none;border:none;color:var(--grey,#888);font-size:20px;cursor:pointer;line-height:1;transition:color .25s}
 		.ml-line-remove:hover{color:var(--primary,#E31E24)}
@@ -553,6 +601,7 @@
 		toggleWishlist, removeFromWishlist, moveToCart, isInWishlist,
 		openCart, closeCart, openWishlist, closeWishlist,
 		checkout, registerProducts, cardButtons, decorateCards,
-		updateBadges, syncWishlistButtons, refreshLang
+		updateBadges, syncWishlistButtons, refreshLang,
+		toast: showToast
 	};
 })();
