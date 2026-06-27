@@ -796,6 +796,20 @@
 			box-shadow: 0 8px 32px var(--glow), 0 4px 16px rgba(0,0,0,0.2);
 		}
 
+		.product-link {
+			text-decoration: none;
+			color: inherit;
+			display: block;
+		}
+
+		.product-link .product-name {
+			transition: color 0.2s ease;
+		}
+
+		.product-link:hover .product-name {
+			color: var(--primary);
+		}
+
 		.product-image {
 			width: 100%;
 			aspect-ratio: 1 / 1;
@@ -2185,10 +2199,11 @@
 						price_range: row.c[5]?.v,
 						image_url: row.c[6]?.v,
 						in_stock: row.c[7]?.v,
-						featured: row.c[8]?.v
+						featured: row.c[8]?.v,
+						flavours: row.c[9]?.v
 					}));
 
-					allProducts = products.filter(p => p.name && p.name.toLowerCase() !== 'name');
+					allProducts = products.filter(p => p.name && p.name.trim() && p.name.trim().toLowerCase() !== 'name');
 					// Show only featured products initially
 					const featuredProducts = allProducts.filter(p => p.featured === 'Yes');
 					renderProducts(featuredProducts);
@@ -2245,15 +2260,17 @@
 				return `
 					<div class="product-card">
 						${stockBadge}
-						<div class="product-image">
-							${imageUrl ? 
-								`<img src="${imageUrl}" alt="${name}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">` : 
-								`<div class="placeholder">${initials}</div>`
-							}
-						</div>
+						<a class="product-link" href="product.html?id=${encodeURIComponent(product.id)}" aria-label="${name}">
+							<div class="product-image">
+								${imageUrl ? 
+									`<img src="${imageUrl}" alt="${name}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">` : 
+									`<div class="placeholder">${initials}</div>`
+								}
+							</div>
+						</a>
 						<div class="product-info">
 							<div class="product-brand">${brand}</div>
-							<h3 class="product-name">${name}</h3>
+							<a class="product-link" href="product.html?id=${encodeURIComponent(product.id)}"><h3 class="product-name">${name}</h3></a>
 							<p class="product-desc">${description}</p>
 							<div class="product-price"><span class="currency">₹</span>${price}</div>
 							${isInStock ? 
