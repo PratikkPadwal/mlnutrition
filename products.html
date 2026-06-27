@@ -1383,7 +1383,7 @@
 			// Price filter
 			if (minPrice !== null || maxPrice !== null) {
 				products = products.filter(p => {
-					const priceStr = p.price_range;
+					const priceStr = p.price_range == null ? '' : String(p.price_range);
 					if (!priceStr || priceStr === 'Price on request') return false;
 					
 					const prices = priceStr.split('-').map(s => parseInt(s.replace(/[^\d]/g, '')));
@@ -1447,7 +1447,7 @@
 		}
 
 		function getAvgPrice(product) {
-			const priceStr = product.price_range;
+			const priceStr = product.price_range == null ? '' : String(product.price_range);
 			if (!priceStr || priceStr === 'Price on request') return Infinity;
 			const prices = priceStr.split('-').map(s => parseInt(s.replace(/[^\d]/g, '')));
 			return prices.length === 2 ? (prices[0] + prices[1]) / 2 : prices[0];
@@ -1459,6 +1459,7 @@
 			const availability = inStock
 				? 'https://schema.org/InStock'
 				: 'https://schema.org/OutOfStock';
+			priceStr = priceStr == null ? '' : String(priceStr);
 			if (!priceStr || /request/i.test(priceStr)) return null;
 			const nums = (priceStr.match(/\d+/g) || []).map(Number);
 			if (nums.length === 0) return null;
@@ -1490,7 +1491,7 @@
 					category: product.category || undefined,
 					url: pageUrl
 				};
-				if (product.image_url) item.image = product.image_url;
+				if (product.image_url) item.image = String(product.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim();
 				if (product.description) item.description = product.description;
 				const offer = buildOffer(product.price_range, product.in_stock === 'Yes');
 				if (offer) item.offers = offer;
@@ -1538,7 +1539,7 @@
 				const name = product.name || 'Product';
 				const brand = product.brand || 'ML Nutrition';
 				const price = product.price_range || 'Price on request';
-				const imageUrl = product.image_url;
+				const imageUrl = product.image_url ? String(product.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim() : '';
 				const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 				const productUrl = `product.html?id=${encodeURIComponent(product.id)}`;
 
