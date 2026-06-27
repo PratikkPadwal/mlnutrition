@@ -2238,7 +2238,7 @@
 				const brand = product.brand || 'ML Nutrition';
 				const description = product.description || 'Premium supplement';
 				const price = product.price_range || 'Price on request';
-				const imageUrl = product.image_url;
+				const imageUrl = product.image_url ? String(product.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim() : '';
 				const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 				
 				const whatsappTemplate = translations[currentLang].products.whatsappMessage;
