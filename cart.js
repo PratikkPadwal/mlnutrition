@@ -126,7 +126,7 @@
 			name: p.name || 'Product',
 			brand: p.brand || 'ML Nutrition',
 			price_range: p.price_range || '',
-			image_url: p.image_url || '',
+			image_url: p.image_url ? String(p.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim() : '',
 			in_stock: p.in_stock || ''
 		};
 	}
