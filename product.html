@@ -148,18 +148,17 @@
 
 		/* DETAIL GRID */
 		.detail-grid {
-			display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-			gap: 3rem; align-items: start;
+			display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+			gap: 3rem; align-items: start; max-width: 1100px; margin: 0 auto;
 		}
 
 		.detail-media {
 			background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
 			border: 1px solid var(--border); border-radius: 18px;
 			aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
-			overflow: hidden; padding: 2rem; position: sticky; top: 100px;
+			overflow: hidden; padding: 1.75rem; position: relative; width: 100%;
 		}
-		.detail-media img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.4s ease; }
-		.detail-media:hover img { transform: scale(1.06); }
+		.detail-media img { width: 100%; height: 100%; object-fit: contain; }
 		.detail-media .placeholder {
 			width: 140px; height: 140px; border-radius: 50%;
 			background: linear-gradient(135deg, var(--primary), #b31117);
@@ -167,12 +166,84 @@
 			font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--white); letter-spacing: 3px;
 		}
 
+		/* GALLERY */
+		.detail-gallery { position: sticky; top: 100px; }
+		.gallery-track { display: flex; width: 100%; height: 100%; transition: transform 0.35s ease; }
+		.gallery-slide {
+			min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+		}
+		.gallery-slide img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
+		.gallery-nav {
+			position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px;
+			border-radius: 50%; background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+			color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+			font-size: 24px; line-height: 1; z-index: 5; transition: all 0.2s; padding-bottom: 3px;
+		}
+		.gallery-nav:hover { background: var(--primary); border-color: var(--primary); }
+		.gallery-nav.prev { left: 10px; }
+		.gallery-nav.next { right: 10px; }
+		.gallery-zoom {
+			position: absolute; bottom: 12px; right: 12px; width: 38px; height: 38px; border-radius: 50%;
+			background: rgba(0,0,0,0.55); border: 1px solid var(--border); color: #fff; cursor: pointer;
+			display: flex; align-items: center; justify-content: center; z-index: 5; transition: all 0.2s;
+		}
+		.gallery-zoom:hover { background: var(--primary); border-color: var(--primary); }
+		.gallery-zoom svg { width: 18px; height: 18px; }
+		.gallery-thumbs { display: flex; gap: 0.6rem; margin-top: 0.9rem; flex-wrap: wrap; }
+		.gallery-thumb {
+			width: 64px; height: 64px; border-radius: 10px; border: 1px solid var(--border);
+			background: linear-gradient(135deg,#1a1a1a,#0d0d0d); padding: 6px; cursor: pointer;
+			overflow: hidden; transition: all 0.2s;
+		}
+		.gallery-thumb img { width: 100%; height: 100%; object-fit: contain; }
+		.gallery-thumb:hover { border-color: var(--primary); }
+		.gallery-thumb.active { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+		.gallery-single .gallery-nav,
+		.gallery-single .gallery-thumbs { display: none; }
+		.gallery-single .gallery-slide img { cursor: zoom-in; }
+
+		/* LIGHTBOX */
+		.lightbox {
+			position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000;
+			display: none; align-items: center; justify-content: center;
+		}
+		.lightbox.active { display: flex; }
+		.lightbox-img-wrap {
+			max-width: 92vw; max-height: 86vh; overflow: hidden; cursor: zoom-in; touch-action: none;
+			display: flex; align-items: center; justify-content: center;
+		}
+		.lightbox-img-wrap.zoomed { cursor: grab; }
+		.lightbox-img {
+			max-width: 92vw; max-height: 86vh; object-fit: contain;
+			transition: transform 0.12s ease; transform-origin: center center;
+			user-select: none; -webkit-user-drag: none;
+		}
+		.lightbox-close {
+			position: absolute; top: 18px; right: 24px; width: 44px; height: 44px; border-radius: 50%;
+			background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff;
+			font-size: 28px; line-height: 1; cursor: pointer; z-index: 10; transition: all 0.2s;
+		}
+		.lightbox-close:hover { background: var(--primary); border-color: var(--primary); }
+		.lightbox-nav {
+			position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px;
+			border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid var(--border);
+			color: #fff; font-size: 30px; line-height: 1; cursor: pointer; z-index: 10;
+			display: flex; align-items: center; justify-content: center; padding-bottom: 4px; transition: all 0.2s;
+		}
+		.lightbox-nav:hover { background: var(--primary); border-color: var(--primary); }
+		.lightbox-nav.prev { left: 20px; }
+		.lightbox-nav.next { right: 20px; }
+		.lightbox-counter {
+			position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+			color: var(--grey); font-size: 14px; letter-spacing: 1px; z-index: 10;
+		}
+
 		.detail-brand {
 			font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
 			color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;
 		}
 		.detail-name {
-			font-family: 'Bebas Neue', sans-serif; font-size: 42px; line-height: 1.05;
+			font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1.05;
 			letter-spacing: 1px; margin-bottom: 1rem;
 		}
 		.detail-badges { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
@@ -185,7 +256,7 @@
 		.badge.trust { color: var(--grey); }
 
 		.detail-price {
-			font-size: 30px; font-weight: 700; color: var(--white); margin-bottom: 1.5rem;
+			font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 1.5rem;
 		}
 		.detail-price .currency { color: var(--primary); font-size: 22px; margin-right: 2px; }
 		.detail-price .req { font-size: 18px; color: var(--grey); font-weight: 600; }
@@ -300,8 +371,8 @@
 		}
 
 		@media (max-width: 900px) {
-			.detail-grid { grid-template-columns: 1fr; gap: 2rem; }
-			.detail-media { position: static; }
+			.detail-grid { grid-template-columns: 1fr; gap: 2rem; max-width: 560px; }
+			.detail-gallery { position: static; max-width: 420px; margin: 0 auto; width: 100%; }
 		}
 
 		@media (max-width: 768px) {
@@ -399,6 +470,17 @@
 		</section>
 	</main>
 
+	<!-- Lightbox (zoomable image viewer) -->
+	<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Product image viewer">
+		<button class="lightbox-close" id="lbClose" aria-label="Close">×</button>
+		<button class="lightbox-nav prev" id="lbPrev" aria-label="Previous image">‹</button>
+		<div class="lightbox-img-wrap" id="lbWrap">
+			<img class="lightbox-img" id="lbImg" alt="" draggable="false">
+		</div>
+		<button class="lightbox-nav next" id="lbNext" aria-label="Next image">›</button>
+		<div class="lightbox-counter" id="lbCounter"></div>
+	</div>
+
 	<script>
 		const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17h4gGSIbSJZ6qMA0Xjt-2aLoxRT4ZTikjPdaaM6a_S4/gviz/tq?tqx=out:json';
 		const WHATSAPP_NUMBER = '918329384588';
@@ -470,6 +552,8 @@
 		let currentProduct = null;
 		let selectedFlavour = null;
 		let quantity = 1;
+		let galleryImages = [];
+		let galleryIndex = 0;
 
 		/* ---------- Helpers ---------- */
 		function esc(s) {
@@ -487,6 +571,226 @@
 		function getFlavours(p) {
 			if (!p || !p.flavours) return [];
 			return String(p.flavours).split(',').map(f => f.trim()).filter(Boolean);
+		}
+		function getImages(p) {
+			const arr = [];
+			// Split only on commas that start a NEW url (followed by http),
+			// so commas inside a single URL (e.g. width=750,height=750) are preserved.
+			const splitUrls = (v) => String(v).split(/,(?=\s*https?:\/\/)/).map(s => s.trim()).filter(Boolean);
+			// Column G (image_url) may hold one URL or several comma-separated URLs
+			if (p && p.image_url) {
+				splitUrls(p.image_url).forEach(u => arr.push(u));
+			}
+			// Optional extra column for more images
+			if (p && p.images) {
+				splitUrls(p.images).forEach(u => arr.push(u));
+			}
+			return [...new Set(arr.filter(Boolean))];
+		}
+		function firstImage(p) {
+			const imgs = getImages(p);
+			return imgs.length ? imgs[0] : '';
+		}
+
+		/* ---------- Gallery ---------- */
+		const ZOOM_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>';
+
+		function buildGalleryHTML(images, initials, name) {
+			if (!images.length) {
+				return `<div class="detail-media"><div class="placeholder">${initials}</div></div>`;
+			}
+			const single = images.length === 1 ? ' gallery-single' : '';
+			const slides = images.map((src, i) => `
+				<div class="gallery-slide">
+					<img src="${esc(src)}" alt="${esc(name)} - image ${i + 1}" decoding="async"
+						onerror="this.closest('.gallery-slide').innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">
+				</div>`).join('');
+			const thumbs = images.map((src, i) => `
+				<button class="gallery-thumb${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="View image ${i + 1}">
+					<img src="${esc(src)}" alt="" decoding="async">
+				</button>`).join('');
+			return `
+				<div class="gallery${single}" id="gallery">
+					<div class="detail-media" id="galleryStage">
+						<div class="gallery-track" id="galleryTrack">${slides}</div>
+						<button class="gallery-nav prev" id="galPrev" aria-label="Previous image">‹</button>
+						<button class="gallery-nav next" id="galNext" aria-label="Next image">›</button>
+						<button class="gallery-zoom" id="galZoom" aria-label="Zoom image">${ZOOM_ICON}</button>
+					</div>
+					<div class="gallery-thumbs" id="galleryThumbs">${thumbs}</div>
+				</div>`;
+		}
+
+		function goToSlide(i) {
+			const n = galleryImages.length;
+			if (!n) return;
+			galleryIndex = (i + n) % n;
+			const track = document.getElementById('galleryTrack');
+			if (track) track.style.transform = `translateX(-${galleryIndex * 100}%)`;
+			document.querySelectorAll('#galleryThumbs .gallery-thumb')
+				.forEach((t, idx) => t.classList.toggle('active', idx === galleryIndex));
+		}
+
+		function wireGallery() {
+			const stage = document.getElementById('galleryStage');
+			const track = document.getElementById('galleryTrack');
+			if (!stage || !track) return;
+
+			document.querySelectorAll('#galleryThumbs .gallery-thumb').forEach(t => {
+				t.addEventListener('click', () => goToSlide(parseInt(t.dataset.index, 10)));
+			});
+			const prev = document.getElementById('galPrev');
+			const next = document.getElementById('galNext');
+			if (prev) prev.addEventListener('click', () => goToSlide(galleryIndex - 1));
+			if (next) next.addEventListener('click', () => goToSlide(galleryIndex + 1));
+			const zoom = document.getElementById('galZoom');
+			if (zoom) zoom.addEventListener('click', () => openLightbox(galleryIndex));
+
+			track.querySelectorAll('img').forEach(img => {
+				img.addEventListener('click', () => openLightbox(galleryIndex));
+			});
+
+			// Swipe on the stage
+			let startX = 0, dx = 0, dragging = false;
+			stage.addEventListener('touchstart', e => {
+				startX = e.touches[0].clientX; dragging = true; dx = 0;
+			}, { passive: true });
+			stage.addEventListener('touchmove', e => {
+				if (dragging) dx = e.touches[0].clientX - startX;
+			}, { passive: true });
+			stage.addEventListener('touchend', () => {
+				if (!dragging) return;
+				dragging = false;
+				if (Math.abs(dx) > 40) goToSlide(galleryIndex + (dx < 0 ? 1 : -1));
+			});
+		}
+
+		/* ---------- Lightbox (zoom) ---------- */
+		let lbZoom = 1, lbX = 0, lbY = 0;
+
+		function applyLbTransform() {
+			const img = document.getElementById('lbImg');
+			const wrap = document.getElementById('lbWrap');
+			if (!img) return;
+			img.style.transform = `translate(${lbX}px, ${lbY}px) scale(${lbZoom})`;
+			if (wrap) wrap.classList.toggle('zoomed', lbZoom > 1);
+		}
+		function resetLbZoom() { lbZoom = 1; lbX = 0; lbY = 0; applyLbTransform(); }
+
+		function setLightboxImage() {
+			resetLbZoom();
+			const img = document.getElementById('lbImg');
+			img.src = galleryImages[galleryIndex];
+			img.alt = currentProduct ? currentProduct.name : '';
+			const counter = document.getElementById('lbCounter');
+			if (counter) counter.textContent = `${galleryIndex + 1} / ${galleryImages.length}`;
+			const multi = galleryImages.length > 1;
+			['lbPrev', 'lbNext'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el) el.style.display = multi ? '' : 'none';
+			});
+			goToSlide(galleryIndex);
+		}
+		function openLightbox(i) {
+			if (!galleryImages.length) return;
+			galleryIndex = i;
+			setLightboxImage();
+			const lb = document.getElementById('lightbox');
+			lb.classList.add('active');
+			lb.setAttribute('aria-hidden', 'false');
+			document.body.style.overflow = 'hidden';
+		}
+		function closeLightbox() {
+			const lb = document.getElementById('lightbox');
+			lb.classList.remove('active');
+			lb.setAttribute('aria-hidden', 'true');
+			document.body.style.overflow = '';
+		}
+		function lbGo(delta) {
+			galleryIndex = (galleryIndex + delta + galleryImages.length) % galleryImages.length;
+			setLightboxImage();
+		}
+
+		function wireLightbox() {
+			const lb = document.getElementById('lightbox');
+			if (!lb) return;
+			const wrap = document.getElementById('lbWrap');
+			const img = document.getElementById('lbImg');
+
+			document.getElementById('lbClose').addEventListener('click', closeLightbox);
+			document.getElementById('lbPrev').addEventListener('click', () => lbGo(-1));
+			document.getElementById('lbNext').addEventListener('click', () => lbGo(1));
+			lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+			// Wheel zoom
+			wrap.addEventListener('wheel', e => {
+				e.preventDefault();
+				lbZoom = Math.min(4, Math.max(1, lbZoom + (e.deltaY < 0 ? 0.25 : -0.25)));
+				if (lbZoom === 1) { lbX = 0; lbY = 0; }
+				applyLbTransform();
+			}, { passive: false });
+
+			// Double-click toggles zoom
+			img.addEventListener('dblclick', () => {
+				lbZoom = lbZoom > 1 ? 1 : 2.5; lbX = 0; lbY = 0; applyLbTransform();
+			});
+			// Single click zooms in when not zoomed
+			img.addEventListener('click', e => {
+				e.stopPropagation();
+				if (lbZoom <= 1) { lbZoom = 2.5; applyLbTransform(); }
+			});
+
+			// Mouse drag to pan
+			let panning = false, sx = 0, sy = 0;
+			wrap.addEventListener('mousedown', e => {
+				if (lbZoom <= 1) return;
+				panning = true; sx = e.clientX - lbX; sy = e.clientY - lbY; e.preventDefault();
+			});
+			window.addEventListener('mousemove', e => {
+				if (!panning) return; lbX = e.clientX - sx; lbY = e.clientY - sy; applyLbTransform();
+			});
+			window.addEventListener('mouseup', () => { panning = false; });
+
+			// Keyboard
+			document.addEventListener('keydown', e => {
+				if (!lb.classList.contains('active')) return;
+				if (e.key === 'Escape') closeLightbox();
+				else if (e.key === 'ArrowLeft') lbGo(-1);
+				else if (e.key === 'ArrowRight') lbGo(1);
+			});
+
+			// Touch: swipe, pinch-zoom, pan
+			let tStartX = 0, tDx = 0, pinchStart = 0, startZoom = 1, touchPan = false, psx = 0, psy = 0;
+			wrap.addEventListener('touchstart', e => {
+				if (e.touches.length === 2) {
+					pinchStart = Math.hypot(
+						e.touches[0].clientX - e.touches[1].clientX,
+						e.touches[0].clientY - e.touches[1].clientY);
+					startZoom = lbZoom;
+				} else if (e.touches.length === 1) {
+					if (lbZoom > 1) { touchPan = true; psx = e.touches[0].clientX - lbX; psy = e.touches[0].clientY - lbY; }
+					else { tStartX = e.touches[0].clientX; tDx = 0; }
+				}
+			}, { passive: true });
+			wrap.addEventListener('touchmove', e => {
+				if (e.touches.length === 2 && pinchStart) {
+					const d = Math.hypot(
+						e.touches[0].clientX - e.touches[1].clientX,
+						e.touches[0].clientY - e.touches[1].clientY);
+					lbZoom = Math.min(4, Math.max(1, startZoom * (d / pinchStart)));
+					applyLbTransform();
+				} else if (touchPan && lbZoom > 1) {
+					lbX = e.touches[0].clientX - psx; lbY = e.touches[0].clientY - psy; applyLbTransform();
+				} else if (lbZoom <= 1) {
+					tDx = e.touches[0].clientX - tStartX;
+				}
+			}, { passive: true });
+			wrap.addEventListener('touchend', () => {
+				if (touchPan) { touchPan = false; return; }
+				if (lbZoom <= 1 && Math.abs(tDx) > 40) lbGo(tDx < 0 ? 1 : -1);
+				if (lbZoom < 1.05) { lbZoom = 1; lbX = 0; lbY = 0; applyLbTransform(); }
+				pinchStart = 0;
+			});
 		}
 		function getQueryId() {
 			return new URLSearchParams(window.location.search).get('id');
@@ -508,7 +812,8 @@
 						image_url: row.c[6]?.v,
 						in_stock: row.c[7]?.v,
 						featured: row.c[8]?.v,
-						flavours: row.c[9]?.v
+						flavours: row.c[9]?.v,
+						images: row.c[10]?.v
 					})).filter(p => p.name && p.name.trim() && p.name.trim().toLowerCase() !== 'name');
 
 					const id = getQueryId();
@@ -544,9 +849,10 @@
 				: `<span class="req">${esc(T('detail.priceRequest'))}</span>`;
 			const flavs = getFlavours(p);
 
-			const mediaInner = p.image_url
-				? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">`
-				: `<div class="placeholder">${initials}</div>`;
+			const images = getImages(p);
+			galleryImages = images;
+			galleryIndex = 0;
+			const mediaInner = buildGalleryHTML(images, initials, p.name);
 
 			const flavourBlock = flavs.length ? `
 				<div class="flavour-block">
@@ -562,7 +868,7 @@
 
 			root.innerHTML = `
 				<div class="detail-grid">
-					<div class="detail-media">${mediaInner}</div>
+					<div class="detail-gallery">${mediaInner}</div>
 					<div class="detail-info">
 						<div class="detail-brand">${esc(p.brand || 'ML Nutrition')}</div>
 						<h1 class="detail-name">${esc(p.name)}</h1>
@@ -633,6 +939,7 @@
 
 		/* ---------- Events ---------- */
 		function wireDetailEvents() {
+			wireGallery();
 			document.querySelectorAll('.flavour-chip').forEach(chip => {
 				chip.addEventListener('click', () => {
 					document.querySelectorAll('.flavour-chip').forEach(c => c.classList.remove('active'));
@@ -728,8 +1035,9 @@
 			const grid = document.getElementById('relatedGrid');
 			grid.innerHTML = related.map(p => {
 				const initials = (p.name || 'P').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
-				const img = p.image_url
-					? `<img src="${esc(p.image_url)}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">`
+				const imgSrc = firstImage(p);
+				const img = imgSrc
+					? `<img src="${esc(imgSrc)}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">`
 					: `<div class="placeholder">${initials}</div>`;
 				const priceP = parsePriceNums(p.price_range);
 				const priceText = priceP ? `₹${esc(p.price_range)}` : esc(T('detail.priceRequest'));
@@ -752,12 +1060,13 @@
 			const url = `${SITE}/product.html?id=${encodeURIComponent(p.id)}`;
 			const inStock = p.in_stock === 'Yes';
 			const priceP = parsePriceNums(p.price_range);
+			const imgs = getImages(p);
 
 			const schema = {
 				'@context': 'https://schema.org/',
 				'@type': 'Product',
 				name: p.name,
-				image: p.image_url ? [p.image_url] : [`${SITE}/IMG_6042.PNG`],
+				image: imgs.length ? imgs : [`${SITE}/IMG_6042.PNG`],
 				description: p.description || `${p.name} by ${p.brand} — available at ML Nutrition.`,
 				brand: { '@type': 'Brand', name: p.brand || 'ML Nutrition' },
 				category: p.category || undefined,
@@ -792,7 +1101,7 @@
 			const url = `${SITE}/product.html?id=${encodeURIComponent(p.id)}`;
 			const title = `${p.name} | ML Nutrition`;
 			const desc = (p.description || `${p.name} by ${p.brand}. 100% authentic supplements at ML Nutrition.`).slice(0, 160);
-			const img = p.image_url || `${SITE}/IMG_6042.PNG`;
+			const img = firstImage(p) || `${SITE}/IMG_6042.PNG`;
 
 			document.title = title;
 			setMeta('name', 'description', desc);
@@ -869,6 +1178,7 @@
 
 		/* ---------- Init ---------- */
 		switchLanguage(currentLang);
+		wireLightbox();
 		loadProduct();
 	</script>
 	<script src="cart.js"></script>
