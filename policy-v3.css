@@ -1,0 +1,46 @@
+/* ML Nutrition • Policy document restyling. Content is preserved verbatim. */
+:root{--legal-ink:#242221;--legal-paper:#f6f4f0;--legal-red:#d91f29;--legal-line:#ded9d2}
+html{scroll-behavior:smooth}
+body{background:var(--legal-paper);color:#494442;font-family:'DM Sans',Arial,sans-serif;min-width:0}
+.policy-header{background:#111;color:white;border:0;border-bottom:1px solid #363232;padding:0 clamp(16px,4vw,48px);min-height:clamp(68px,6vw,90px);display:flex;gap:18px;align-items:center;justify-content:space-between}
+.policy-logo{display:flex;align-items:center;gap:11px;color:white!important;text-decoration:none!important;min-width:0}
+.policy-logo img{width:clamp(36px,5vw,60px);height:clamp(36px,5vw,60px);object-fit:contain;flex:0 0 auto}
+.policy-logo strong{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(25px,3.1vw,38px);line-height:.95;letter-spacing:.01em;white-space:nowrap}
+.policy-logo strong span{color:#f24b53}
+.policy-nav{display:flex;align-items:center;gap:clamp(12px,2.5vw,29px)}
+.policy-nav a{font-size:11px;letter-spacing:.045em;color:#eee!important;font-weight:800;white-space:nowrap}
+.policy-nav a:hover{color:#ff626b!important}
+.policy-nav a:last-child{background:var(--legal-red);padding:13px 17px}
+.policy-wrap{max-width:1000px;margin:0 auto;padding:clamp(39px,6vw,85px) clamp(18px,4.5vw,54px) clamp(62px,8vw,105px)}
+.policy-wrap h1{font-family:'Bebas Neue',Impact,sans-serif;color:#1c1918;font-size:clamp(52px,7.4vw,102px);line-height:.88;letter-spacing:-.015em;margin:0 0 13px;overflow-wrap:anywhere}
+.policy-wrap .updated{color:#9c302f;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:38px}
+.policy-wrap h2{font-family:'Bebas Neue',Impact,sans-serif;font-size:clamp(29px,3vw,41px);color:#211e1d;line-height:1.02;margin:40px 0 15px;padding-top:20px;border-top:1px solid var(--legal-line)}
+.policy-wrap p,.policy-wrap li{font-size:clamp(13px,1.2vw,15px);line-height:1.9;color:#57514d;margin-bottom:15px;overflow-wrap:anywhere}
+.policy-wrap ul{padding-left:24px;margin:10px 0 23px}
+.policy-wrap strong{color:#292421;font-weight:700}
+.policy-wrap a{color:#bf1c29;text-decoration:underline;text-underline-offset:3px}
+.contact-box{background:white;border:1px solid #ded8d1;border-left:4px solid var(--legal-red);border-radius:0;padding:clamp(20px,3vw,29px);margin-top:20px}
+.policy-foot{background:#111;color:#b1aaa6;text-align:center;border:0;padding:28px 18px;font-size:11px;letter-spacing:.04em}
+.policy-foot a{color:#fff;margin:0 9px;display:inline-block}
+@media(max-width:640px){
+ .policy-header{min-height:66px;gap:7px;padding:0 13px}
+ .policy-logo{gap:5px}
+ .policy-logo img{width:36px;height:38px}
+ .policy-logo strong{font-size:25px}
+ .policy-nav{gap:7px}
+ .policy-nav a{font-size:9px;letter-spacing:0}
+ .policy-nav a:first-child{display:none}
+ .policy-nav a:last-child{padding:12px 9px}
+ .policy-wrap{padding:48px 18px 75px}
+ .policy-wrap h1{font-size:clamp(51px,13vw,76px)}
+ .policy-wrap h2{font-size:31px;margin-top:35px}
+ .policy-wrap p,.policy-wrap li{font-size:13px;line-height:1.82}
+ .policy-wrap .updated{font-size:10px}
+ .contact-box{padding:18px}
+}
+@media(max-width:335px){
+ .policy-logo img{width:30px}
+ .policy-logo strong{font-size:21px}
+ .policy-nav a:last-child{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
