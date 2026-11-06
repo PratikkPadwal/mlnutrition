@@ -28,7 +28,11 @@
     protein: p => /protein|whey|isolate|casein/i.test([p.category,p.title].join(' ')) && !/bar|cookie|snack/i.test(p.category || ''),
     creatine: p => /creatine/i.test([p.category,p.title].join(' ')),
     preworkout: p => /pre.?workout|pre.?work.?out|pump formula/i.test([p.category,p.title].join(' ')),
-    gainer: p => /gainer|mass gain|weight gain/i.test([p.category,p.title].join(' '))
+    gainer: p => /gainer|mass gain|weight gain/i.test([p.product_type,p.title].join(' ')),
+    // Match the exact categories used by the current Google Sheets catalogue.
+    // Do not infer these from titles: food and accessory names can overlap with protein products.
+    essentials: p => /^essentials?$/i.test(String(p.product_type || '').trim()),
+    healthfood: p => /^health\s*foods?$/i.test(String(p.product_type || '').trim())
   };
 
   function el(tag, className, text){
@@ -136,7 +140,7 @@
   let isPaused = false;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.getElementById('motionToggle');
-  const categorySequence = ['protein','creatine','preworkout','gainer'];
+  const categorySequence = ['protein','creatine','preworkout','gainer','essentials','healthfood'];
 
   function eligible(category){
     return catalog.filter(p=>matches[category]?.(p) && getImage(p));
@@ -183,7 +187,7 @@
       const possibilities=eligible(category);
       const product=possibilities.find(p=>!used.has(p.id)) || null;
       if(product)used.add(product.id);
-      const labels={protein:['WHEY','PROTEIN'],creatine:['CREATINE','CREATINE'],preworkout:['PRE','PRE-WORKOUT'],gainer:['GAIN','MASS GAINER']};
+      const labels={protein:['WHEY','PROTEIN'],creatine:['CREATINE','CREATINE'],preworkout:['PRE','PRE-WORKOUT'],gainer:['GAIN','MASS GAINER'],essentials:['GEAR','ESSENTIALS'],healthfood:['FOOD','HEALTH FOOD']};
       writeShowcaseCard(card,product,labels[category][0],labels[category][1]);
       const index=card.querySelector('.showcase-index');
       if(index)index.textContent=String(i+1).padStart(2,'0')+' / '+labels[category][1];
