@@ -211,3 +211,256 @@ body.motion-paused .showcase-card,body.motion-paused .motion-ticker-track,body.m
   .goal-card{min-height:180px}
   .goal-name-long{font-size:clamp(24px,6vw,29px);letter-spacing:-.02em}
 }
+
+
+/* ==========================================================
+   V3 / TRUE RESPONSIVE LAYOUT
+   Fluid scales + viewport proportions; mobile is a touch-first
+   composition, not a shrunken desktop illustration.
+   ========================================================== */
+html{scroll-padding-top:clamp(70px,8vw,100px)}
+body{min-width:0}
+.container{width:min(calc(100% - clamp(32px,5vw,88px)),var(--max))}
+.header-inner{gap:clamp(12px,2vw,28px);min-width:0}
+.brand{flex:0 0 auto;max-width:45%;min-width:0}
+.brand-text{font-size:clamp(24px,2.3vw,32px)}
+.desktop-nav{gap:clamp(12px,2vw,32px);min-width:0}
+.desktop-nav a{white-space:nowrap;font-size:clamp(10px,.85vw,12px)}
+.header-actions{flex:0 0 auto;min-width:0}
+.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.96fr);min-height:clamp(540px,66svh,730px)}
+.hero-copy{min-width:0;padding-block:clamp(56px,7vw,100px);padding-right:clamp(14px,2vw,40px)}
+.hero h1{font-size:clamp(65px,8.3vw,132px);max-width:100%;overflow-wrap:normal}
+.hero-desc{font-size:clamp(13px,1vw,15px);max-width:min(100%,450px)}
+.hero-buttons{max-width:100%}
+.hero-buttons .btn{min-width:0}
+.hero-visual{min-width:0;min-height:clamp(540px,66svh,730px)}
+.showcase-stage{min-width:0}
+.showcase-card{min-width:0}
+.showcase-mobile-hint{display:none}
+.trust-item{min-width:0}
+.trust-item>div{min-width:0}
+.trust-item strong,.trust-item small{overflow-wrap:break-word}
+.section-heading{min-width:0}
+.section-heading>div{min-width:0}
+.section-heading h2,.story h2,.stores-intro h2{font-size:clamp(43px,5.6vw,81px);overflow-wrap:normal}
+.goal-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(9px,1vw,15px)}
+.goal-card{min-width:0;min-height:clamp(190px,17vw,240px)}
+.goal-name{font-size:clamp(32px,3.3vw,48px)}
+.goal-name-long{font-size:clamp(28px,3.15vw,43px);overflow-wrap:anywhere}
+.product-controls{gap:8px}
+.chip{min-height:44px}
+.products-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
+.product-card,.product-info,.product-photo{min-width:0}
+.product-title{overflow-wrap:anywhere}
+.proof-grid,.stores-grid,.footer-grid{min-width:0}
+.story-grid>*,.stores-grid>*,.footer-grid>*{min-width:0}
+.store-city{overflow-wrap:anywhere}
+.footer a,.footer-description{overflow-wrap:anywhere}
+#categories,#featured,#why-us,#stores{scroll-margin-top:95px}
+
+@media(max-width:1100px){
+  .container{width:min(calc(100% - 40px),var(--max))}
+  .hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)}
+  .showcase-intro h2{font-size:clamp(43px,6.2vw,76px)}
+  .hero h1{font-size:clamp(65px,8.7vw,105px)}
+  .trust-items{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trust-item:nth-child(2){border-right:0}
+  .trust-item{padding:18px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+  .trust-item:nth-child(n+3){border-bottom:0}
+  .products-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media(max-width:1020px){
+  .desktop-nav,.header-actions>.btn{display:none}
+  .menu-button{display:inline-flex;min-width:44px;min-height:44px}
+  .header-inner{height:76px;justify-content:space-between}
+  .brand{max-width:calc(100% - 62px);margin-left:-20px;min-width:0;padding-left:20px}
+  .brand img{width:56px;height:56px}
+  .brand-text{font-size:28px}
+  .header-actions{margin-left:auto}
+  .mobile-menu{max-height:min(70dvh,520px);overflow-y:auto}
+}
+
+@media(max-width:900px){
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);min-height:0}
+  .hero-copy{padding:clamp(45px,7vw,70px) 0 clamp(34px,5vw,56px)}
+  .hero h1{font-size:clamp(79px,12vw,116px)}
+  .hero-desc{max-width:580px}
+  .hero-visual{width:100%;min-height:clamp(425px,59vw,560px)}
+  .hero-vertical{display:none}
+  .section{padding:clamp(62px,8vw,83px) 0}
+  .story-grid{grid-template-columns:minmax(0,1fr);gap:35px}
+  .proof-grid{max-width:740px}
+  .stores-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer-grid{grid-template-columns:1.5fr 1fr 1fr}
+  .goal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .goal-card{min-height:200px}
+  .products-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* Portrait phones: full-size readable card carousel that can be swiped.
+   The initial viewport shows one card and a portion of the next. */
+@media(max-width:640px) and (orientation:portrait){
+  .container{width:calc(100% - 32px)}
+  .announcement{font-size:clamp(7px,2vw,9px);letter-spacing:.09em;line-height:1.5;min-height:31px;gap:2px}
+  .announcement span{margin-inline:clamp(3px,1.2vw,9px)}
+  .header-inner{height:clamp(64px,17vw,75px);gap:8px}
+  .brand{margin-left:-16px;padding:0 8px 0 13px;max-width:calc(100% - 56px);gap:7px;border-right-color:#333}
+  .brand img{width:clamp(32px,10vw,46px);height:clamp(38px,12vw,53px);flex:0 0 auto}
+  .brand-text{font-size:clamp(20px,5.7vw,27px);min-width:0;white-space:nowrap}
+  .brand-text small{font-size:clamp(5px,1.6vw,7px);letter-spacing:.11em}
+  .menu-button{width:44px;height:44px}
+  .hero-copy{padding:clamp(35px,9vw,56px) 0 clamp(24px,6vw,39px)}
+  .eyebrow{font-size:clamp(8px,2.1vw,10px);letter-spacing:.12em;line-height:1.6}
+  .eyebrow:before{width:19px}
+  .hero h1{font-size:clamp(60px,17.1vw,102px);line-height:.82;margin:20px 0 21px}
+  .hero-desc{font-size:clamp(12px,3.3vw,14px);line-height:1.65;margin-bottom:22px}
+  .hero-buttons{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.88fr);gap:8px;width:100%}
+  .hero-buttons .btn{width:100%;padding:0 8px;min-height:46px;font-size:clamp(8px,2.3vw,10px);letter-spacing:.025em;gap:6px;line-height:1.2;text-align:center}
+  .hero-micro{margin-top:20px;gap:8px 13px;font-size:10px}
+  .hero-micro strong{font-size:14px}
+  .hero-visual{height:auto;min-height:0;display:block;padding:0;overflow:hidden}
+  .hero-grid-lines{pointer-events:none}
+  .hero-edition{position:relative;display:block;left:auto;top:auto;padding:20px 16px 0;font-size:9px}
+  .showcase-intro{position:relative;left:auto;top:auto;padding:12px 16px 1px;z-index:2}
+  .showcase-intro h2{font-size:clamp(46px,13vw,71px);margin:10px 0 0}
+  .showcase-stage{position:relative;inset:auto;width:100%;display:flex;align-items:stretch;justify-content:flex-start;gap:12px;padding:24px 16px 23px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:16px;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;perspective:none;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.38) transparent}
+  .showcase-stage::-webkit-scrollbar{height:3px}
+  .showcase-stage::-webkit-scrollbar-thumb{background:rgba(255,255,255,.38)}
+  .showcase-card,.showcase-card-0,.showcase-card-1,.showcase-card-2{
+    flex:0 0 clamp(180px,61vw,270px);max-width:none;min-width:0;width:auto;
+    height:clamp(255px,78vw,335px);margin:0!important;
+    transform:none!important;animation:none!important;
+    scroll-snap-align:center;box-shadow:0 12px 25px rgba(0,0,0,.28);
+    transition:box-shadow .2s ease;border-radius:2px
+  }
+  .showcase-card:hover{transform:none!important;box-shadow:0 12px 25px rgba(0,0,0,.28)}
+  .showcase-index{padding:13px 12px 0;font-size:9px}
+  .showcase-photo{padding:8px 11px 0}
+  .showcase-photo img{max-height:210px}
+  .showcase-fallback{font-size:clamp(39px,9vw,61px)}
+  .showcase-caption{min-height:65px;padding:10px 12px}
+  .showcase-brand{font-size:9px}
+  .showcase-name{font-size:18px}
+  .showcase-bottom{position:relative;left:auto;right:auto;bottom:auto;padding:5px 16px 21px}
+  .showcase-footnote{font-size:8px;max-width:60%}
+  .showcase-mobile-hint{display:inline;font-size:9px;letter-spacing:.04em;font-weight:800;color:#fff}
+  .motion-toggle{display:none}
+  .motion-ticker{padding:11px 0}
+  .motion-ticker-set{gap:18px;padding-right:18px}
+  .motion-ticker-set span{font-size:18px}
+  .trust-items{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trust-item{align-items:flex-start;gap:7px;padding:14px 7px;min-height:84px}
+  .trust-icon{width:26px;height:26px;flex:0 0 26px;font-size:12px}
+  .trust-item strong{font-size:9px;line-height:1.45}
+  .trust-item small{font-size:9px;line-height:1.35}
+  .section{padding:clamp(51px,12vw,70px) 0}
+  .section-heading{margin-bottom:23px}
+  .section-heading h2{font-size:clamp(43px,12vw,67px);line-height:.88}
+  .section-heading p{font-size:12px;line-height:1.65;margin-top:12px}
+  .goal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .goal-card{min-height:clamp(161px,49vw,212px);padding:clamp(11px,3vw,18px)}
+  .goal-num{font-size:10px}
+  .goal-name{font-size:clamp(26px,7.5vw,38px);letter-spacing:-.01em}
+  .goal-name-long{font-size:clamp(24px,6.6vw,35px)}
+  .goal-detail{font-size:clamp(9px,2.5vw,11px);line-height:1.35}
+  .goal-arrow{right:12px;top:10px}
+  .product-controls{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity;gap:7px;padding:2px 0 12px;margin:7px 0 20px;touch-action:pan-x;-webkit-overflow-scrolling:touch}
+  .chip{flex:0 0 auto;scroll-snap-align:start;min-height:42px;padding:10px 15px;white-space:nowrap}
+  .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .product-photo{aspect-ratio:1/1}
+  .product-info{padding:13px 11px}
+  .product-title{font-size:clamp(16px,4.8vw,21px);line-height:1.08;min-height:40px}
+  .product-brand{font-size:9px}
+  .product-meta{font-size:9px;min-height:25px;margin-bottom:10px}
+  .card-bottom{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .product-price{font-size:12px;margin-bottom:0}
+  .product-open{padding:7px 0;font-size:10px}
+  .story-grid{padding:60px 0;gap:27px}
+  .story h2{font-size:clamp(53px,14vw,78px)}
+  .story p{font-size:12px}
+  .proof-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .proof-tile{min-height:130px;padding:14px}
+  .proof-tile strong{font-size:clamp(31px,9.5vw,46px)}
+  .proof-tile span{font-size:10px}
+  .stores-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+  .store-card{padding:clamp(20px,6vw,29px)}
+  .store-city{font-size:clamp(42px,12vw,58px)}
+  .bottom-inner{display:block;min-height:0;padding:45px 0}
+  .bottom-inner h2{font-size:clamp(44px,12vw,66px)}
+  .bottom-inner .btn{margin-top:20px}
+  .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 18px}
+  .footer-grid>div:first-child{grid-column:1/-1}
+  .footer-description{font-size:12px}
+  .footer-bottom{font-size:10px}
+}
+
+@media(max-width:350px) and (orientation:portrait){
+  .brand-text{font-size:19px}
+  .brand-text small{font-size:5px}
+  .brand img{width:31px}
+  .hero h1{font-size:clamp(54px,16.5vw,62px)}
+  .hero-buttons{grid-template-columns:1fr}
+  .hero-buttons .btn{min-height:45px;font-size:10px}
+  .hero-micro{gap:5px 9px;font-size:9px}
+  .goal-name{font-size:25px}
+  .goal-name-long{font-size:22px}
+  .goal-card{padding:10px;min-height:169px}
+  .products-grid{grid-template-columns:minmax(0,1fr)}
+  .product-card{display:grid;grid-template-columns:44% minmax(0,1fr)}
+  .product-photo{aspect-ratio:1;align-self:stretch}
+  .product-info{padding:12px}
+  .product-title{min-height:0;font-size:20px}
+  .card-bottom{margin-top:12px}
+}
+
+/* Landscape phones and low-height tablets should not waste a full screen
+   on a stacked hero. The catalogue showcase remains swipeable. */
+@media(min-width:641px) and (max-width:900px) and (orientation:landscape) and (max-height:600px){
+  .hero-grid{grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);min-height:0}
+  .hero-copy{padding:23px 18px 25px 0}
+  .hero h1{font-size:clamp(54px,8vw,77px);margin:15px 0 16px}
+  .hero-desc{font-size:11px;line-height:1.45;margin-bottom:13px}
+  .eyebrow{font-size:8px}
+  .hero-buttons{gap:7px}
+  .hero-buttons .btn{padding:0 10px;min-height:42px;font-size:9px;letter-spacing:.03em;gap:7px}
+  .hero-micro{margin-top:15px;gap:10px;font-size:9px}
+  .hero-visual{min-height:clamp(320px,65vh,440px)}
+  .showcase-intro{left:20px;top:53px}
+  .showcase-intro h2{font-size:clamp(40px,6vw,57px)}
+  .showcase-stage{padding:100px 12px 42px;gap:4px}
+  .showcase-card,.showcase-card-0,.showcase-card-1,.showcase-card-2{width:33%;max-width:none;min-width:0;height:clamp(175px,29vh,230px)}
+  .showcase-card-0{margin-right:-5px}.showcase-card-2{margin-left:-5px}
+  .showcase-index{font-size:7px;padding:9px 7px 0}
+  .showcase-photo{padding:5px}
+  .showcase-caption{min-height:43px;padding:7px}
+  .showcase-brand{font-size:7px}
+  .showcase-name{font-size:12px}
+  .showcase-bottom{left:16px;right:16px;bottom:9px}
+  .showcase-footnote{font-size:7px}
+  .motion-toggle{padding:7px;font-size:8px}
+}
+
+/* iPhone landscape, compact Android browsers and foldable inner screens. */
+@media(max-width:640px) and (orientation:landscape){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-visual{min-height:350px}
+  .hero h1{font-size:clamp(58px,12vw,86px)}
+  .showcase-stage{padding-inline:15px}
+  .goal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* Short viewports: tighten decorative space but never clip content. */
+@media(max-height:550px) and (min-width:901px){
+  .hero-grid{min-height:460px}
+  .hero-visual{min-height:460px}
+  .hero-copy{padding-block:32px}
+  .hero h1{font-size:clamp(61px,7.3vw,98px)}
+}
+
+/* Preserve readable navigation and motion preferences. */
+@media(prefers-reduced-motion:reduce){
+  .showcase-stage,.product-controls{scroll-behavior:auto}
+  .motion-ticker-track,.hero-visual:before,.showcase-card{animation:none!important}
+  [data-reveal]{opacity:1!important;transform:none!important}
+}
