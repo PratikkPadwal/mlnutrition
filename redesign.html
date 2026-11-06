@@ -23,7 +23,7 @@
         <span class="brand-text">ML NUTRITION<small>THE PREMIUM STANDARD</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#categories">SHOP BY GOAL</a>
+        <a href="#categories">SHOP BY CATEGORY</a>
         <a href="#featured">FEATURED</a>
         <a href="#why-us">WHY ML</a>
         <a href="#stores">OUR STORES</a>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation" hidden>
-      <a href="#categories">Shop by goal</a>
+      <a href="#categories">Shop by category</a>
       <a href="#featured">Featured products</a>
       <a href="#why-us">Why ML Nutrition</a>
       <a href="#stores">Our stores</a>
@@ -101,10 +101,10 @@
       </div>
     </section>
 
-    <div class="motion-ticker" aria-label="Discover protein, creatine, pre-workout, gainers and global brands">
+    <div class="motion-ticker" aria-label="Discover protein, creatine, pre-workout, gainers, essentials, health food and global brands">
       <div class="motion-ticker-track">
-        <div class="motion-ticker-set"><span>PROTEIN</span><i>✳</i><span>CREATINE</span><i>✳</i><span>PRE-WORKOUT</span><i>✳</i><span>MASS GAINERS</span><i>✳</i><span>GLOBAL BRANDS</span><i>✳</i></div>
-        <div class="motion-ticker-set" aria-hidden="true"><span>PROTEIN</span><i>✳</i><span>CREATINE</span><i>✳</i><span>PRE-WORKOUT</span><i>✳</i><span>MASS GAINERS</span><i>✳</i><span>GLOBAL BRANDS</span><i>✳</i></div>
+        <div class="motion-ticker-set"><span>PROTEIN</span><i>✳</i><span>CREATINE</span><i>✳</i><span>PRE-WORKOUT</span><i>✳</i><span>MASS GAINERS</span><i>✳</i><span>ESSENTIALS</span><i>✳</i><span>HEALTH FOOD</span><i>✳</i><span>GLOBAL BRANDS</span><i>✳</i></div>
+        <div class="motion-ticker-set" aria-hidden="true"><span>PROTEIN</span><i>✳</i><span>CREATINE</span><i>✳</i><span>PRE-WORKOUT</span><i>✳</i><span>MASS GAINERS</span><i>✳</i><span>ESSENTIALS</span><i>✳</i><span>HEALTH FOOD</span><i>✳</i><span>GLOBAL BRANDS</span><i>✳</i></div>
       </div>
     </div>
 
@@ -120,14 +120,16 @@
     <section class="section" id="categories" data-reveal aria-labelledby="goalsTitle">
       <div class="container">
         <div class="section-heading">
-          <div><span class="section-kicker">FIND YOUR EDGE / 01</span><h2 id="goalsTitle">SHOP BY CATEGORY.</h2></div>
-          <p>Know what you need? Start with the essentials. Select a category to explore matching products from our catalogue.</p>
+          <div><span class="section-kicker">EXPLORE THE RANGE / 01</span><h2 id="goalsTitle">SHOP BY CATEGORY.</h2></div>
+          <p>From training essentials to everyday nutrition, explore the six categories in our catalogue.</p>
         </div>
         <div class="goal-grid">
           <button class="goal-card" type="button" data-goal="protein" aria-pressed="false"><span class="goal-num">01 / FUEL</span><span class="goal-arrow" aria-hidden="true">↗</span><strong class="goal-name">WHEY<br>PROTEIN</strong><span class="goal-detail">Your daily protein essentials</span></button>
           <button class="goal-card" type="button" data-goal="creatine" aria-pressed="false"><span class="goal-num">02 / BUILD</span><span class="goal-arrow" aria-hidden="true">↗</span><strong class="goal-name">CREATINE</strong><span class="goal-detail">The training staple</span></button>
           <button class="goal-card" type="button" data-goal="preworkout" aria-pressed="false"><span class="goal-num">03 / TRAIN</span><span class="goal-arrow" aria-hidden="true">↗</span><strong class="goal-name">PRE-<br>WORKOUT</strong><span class="goal-detail">For your training days</span></button>
           <button class="goal-card" type="button" data-goal="gainer" aria-pressed="false"><span class="goal-num">04 / GROW</span><span class="goal-arrow" aria-hidden="true">↗</span><strong class="goal-name">MASS<br>GAINERS</strong><span class="goal-detail">Extra calories, simplified</span></button>
+          <button class="goal-card" type="button" data-goal="essentials" aria-pressed="false"><span class="goal-num">05 / GEAR</span><span class="goal-arrow" aria-hidden="true">↗</span><strong class="goal-name">ESSENTIALS</strong><span class="goal-detail">Everyday gym and fitness gear</span></button>
+          <button class="goal-card" type="button" data-goal="healthfood" aria-pressed="false"><span class="goal-num">06 / NOURISH</span><span class="goal-arrow" aria-hidden="true">↗</span><strong class="goal-name">HEALTH<br>FOOD</strong><span class="goal-detail">Smart everyday nutrition choices</span></button>
         </div>
       </div>
     </section>
@@ -144,6 +146,8 @@
           <button class="chip" type="button" data-filter="creatine" aria-pressed="false">Creatine</button>
           <button class="chip" type="button" data-filter="preworkout" aria-pressed="false">Pre-workout</button>
           <button class="chip" type="button" data-filter="gainer" aria-pressed="false">Gainers</button>
+          <button class="chip" type="button" data-filter="essentials" aria-pressed="false">Essentials</button>
+          <button class="chip" type="button" data-filter="healthfood" aria-pressed="false">Health Food</button>
         </div>
         <div class="products-grid" id="productsGrid" aria-live="polite" aria-busy="true">
           <div class="product-message">Loading products from the ML Nutrition catalogue…</div>
