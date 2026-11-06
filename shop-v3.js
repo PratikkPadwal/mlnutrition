@@ -114,7 +114,7 @@ function initListing(){
  loadCatalog().then(p=>{
   products=p;
   const brands=[...new Set(products.map(x=>x.brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-  brandSelect.replaceChildren(node('option','','All brands'),...brands.map(b=>{const x=node('option','',b);x.value=b;return x}));
+  const allBrandsOption=node('option','','All brands');allBrandsOption.value='';brandSelect.replaceChildren(allBrandsOption,...brands.map(b=>{const x=node('option','',b);x.value=b;return x}));
   $$('.shop-category-chip[data-category]').forEach(b=>{const key=b.dataset.category;if(key!=='all'){const n=products.filter(p=>catMatches[key]?.(p)).length;const badge=b.querySelector('small');if(badge)badge.textContent=String(n)}});
   render();
  }).catch(e=>{console.error('Catalogue failed',e);displayMessage(grid,'Unable to load products right now. Please try again or contact us on WhatsApp.');count.textContent='Unavailable';more.hidden=true});
