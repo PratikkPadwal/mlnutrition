@@ -25,9 +25,9 @@
   let catalog = [];
   let activeFilter = 'all';
   const matches = {
-    protein: p => /protein|whey|isolate|casein/i.test([p.category,p.title].join(' ')) && !/bar|cookie|snack/i.test(p.category || ''),
-    creatine: p => /creatine/i.test([p.category,p.title].join(' ')),
-    preworkout: p => /pre.?workout|pre.?work.?out|pump formula/i.test([p.category,p.title].join(' ')),
+    protein: p => /protein|whey|isolate|casein/i.test([p.product_type,p.title].join(' ')) && !/bar|cookie|snack/i.test(p.product_type || ''),
+    creatine: p => /creatine/i.test([p.product_type,p.title].join(' ')),
+    preworkout: p => /pre.?workout|pre.?work.?out|pump formula/i.test([p.product_type,p.title].join(' ')),
     gainer: p => /gainer|mass gain|weight gain/i.test([p.product_type,p.title].join(' ')),
     // Match the exact categories used by the current Google Sheets catalogue.
     // Do not infer these from titles: food and accessory names can overlap with protein products.
