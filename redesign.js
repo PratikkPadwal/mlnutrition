@@ -127,20 +127,105 @@
   buttons.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.filter,false)));
   goalButtons.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.goal,true)));
 
-  function spotlight(){
-    const preferred=catalog.filter(p=>getImage(p)&&/(whey|protein|creatine)/i.test(p.title||''));
-    const p=preferred[0]||catalog.find(p=>getImage(p));
-    if(!p) return;
-    const src=getImage(p);
-    const img=document.getElementById('heroProductImage');
-    img.onerror=()=>{img.hidden=true;document.getElementById('heroFallback').hidden=false;};
-    img.onload=()=>{img.hidden=false;document.getElementById('heroFallback').hidden=true;};
-    img.src=src;
-    img.alt=p.title || 'Featured supplement';
-    document.getElementById('heroProductBrand').textContent=p.vendor||'FEATURED PRODUCT';
-    document.getElementById('heroProductName').textContent=p.title||'SHOP PREMIUM SUPPLEMENTS';
-    document.getElementById('heroProductLink').textContent='EXPLORE PRODUCT ↗';
-    document.getElementById('heroProductLink').href=productUrl(p);
+
+  // Populate the three hero cards with distinct product categories.
+  // A missing image uses a labelled category card instead of inventing a product photo.
+  const showcaseCards = Array.from(document.querySelectorAll('[data-showcase-slot]'));
+  let showcaseTimer = null;
+  let showcaseIndex = 0;
+  let isPaused = false;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionButton = document.getElementById('motionToggle');
+  const categorySequence = ['protein','creatine','preworkout','gainer'];
+
+  function eligible(category){
+    return catalog.filter(p=>matches[category]?.(p) && getImage(p));
+  }
+
+  function writeShowcaseCard(card, product, fallbackLabel, categoryName){
+    const img=card.querySelector('img');
+    const fallback=card.querySelector('.showcase-fallback');
+    const brand=card.querySelector('.showcase-brand');
+    const label=card.querySelector('.showcase-name');
+    const imageContainer=card.querySelector('.showcase-photo');
+    if(!img||!fallback||!brand||!label||!imageContainer) return;
+    if(!product){
+      img.hidden=true;
+      img.removeAttribute('src');
+      fallback.hidden=false;
+      fallback.textContent=fallbackLabel;
+      brand.textContent=categoryName;
+      label.textContent='EXPLORE CATEGORY';
+      card.href='#featured';
+      card.setAttribute('aria-label','Explore '+categoryName+' on the page');
+      return;
+    }
+    // Labels and links are updated together so image loading never mismatches the product.
+    const image=getImage(product);
+    img.hidden=true;
+    fallback.hidden=false;
+    fallback.textContent=fallbackLabel;
+    img.onload=()=>{img.hidden=false;fallback.hidden=true;};
+    img.onerror=()=>{img.hidden=true;fallback.hidden=false;};
+    img.src=image;
+    img.alt=product.title || 'Supplement product';
+    brand.textContent=product.vendor||categoryName;
+    label.textContent=product.title||categoryName;
+    card.href=productUrl(product);
+    card.setAttribute('aria-label','View '+(product.title||categoryName));
+  }
+
+  function drawShowcase(){
+    const categories=[0,1,2].map(i=>categorySequence[(showcaseIndex+i)%categorySequence.length]);
+    const used=new Set();
+    showcaseCards.forEach((card,i)=>{
+      const category=categories[i];
+      const possibilities=eligible(category);
+      const product=possibilities.find(p=>!used.has(p.id)) || null;
+      if(product)used.add(product.id);
+      const labels={protein:['WHEY','PROTEIN'],creatine:['CREATINE','CREATINE'],preworkout:['PRE','PRE-WORKOUT'],gainer:['GAIN','MASS GAINER']};
+      writeShowcaseCard(card,product,labels[category][0],labels[category][1]);
+      const index=card.querySelector('.showcase-index');
+      if(index)index.textContent=String(i+1).padStart(2,'0')+' / '+labels[category][1];
+    });
+  }
+
+  function startMotion(){
+    if(showcaseTimer!==null)clearInterval(showcaseTimer);
+    showcaseTimer=null;
+    if(isPaused||reducedMotion.matches||document.hidden||!catalog.length)return;
+    showcaseTimer=setInterval(()=>{
+      showcaseIndex=(showcaseIndex+1)%categorySequence.length;
+      drawShowcase();
+    },6500);
+  }
+
+  motionButton?.addEventListener('click',()=>{
+    isPaused=!isPaused;
+    document.body.classList.toggle('motion-paused',isPaused);
+    motionButton.setAttribute('aria-pressed',String(isPaused));
+    motionButton.textContent=isPaused?'▶ PLAY MOTION':'Ⅱ PAUSE MOTION';
+    motionButton.setAttribute('aria-label',isPaused?'Play rotating products':'Pause rotating products');
+    startMotion();
+  });
+
+  document.addEventListener('visibilitychange',startMotion);
+  if(reducedMotion.addEventListener)reducedMotion.addEventListener('change',startMotion);
+
+  // Staggered entrance is progressive enhancement; no observer means content stays visible.
+  const revealTargets=Array.from(document.querySelectorAll('[data-reveal]'));
+  if(reducedMotion.matches || !('IntersectionObserver' in window)){
+    revealTargets.forEach(el=>el.classList.add('is-visible'));
+  }else{
+    const observer=new IntersectionObserver(entries=>{
+      for(const entry of entries){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      }
+    },{threshold:0.08,rootMargin:'0px 0px 45px 0px'});
+    revealTargets.forEach(el=>observer.observe(el));
   }
 
   async function load(){
@@ -153,7 +238,8 @@
       catalog=items.filter(p=>p&&p.id!==undefined&&p.title&&p.status==='active');
       if(!catalog.length){showMessage('The online catalogue has no available listings right now.');return;}
       // Show only currently listed products, never fictitious sample products.
-      spotlight();
+      drawShowcase();
+      startMotion();
       render();
     }catch(error){
       console.error('ML Nutrition preview catalogue error:',error);
