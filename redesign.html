@@ -15,7 +15,6 @@
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
-  <div class="preview-note" role="note">DESIGN PREVIEW — This page is a concept. Your existing website has not been replaced.</div>
   <div class="announcement">GLOBAL BRANDS <span>✦</span> GENUINE EXPERIENCE <span>✦</span> PREMIUM SUPPLEMENTS</div>
   <header class="site-header">
     <div class="container header-inner">
@@ -60,21 +59,54 @@
             <span><strong>✓</strong> Two Pune-area stores</span>
           </div>
         </div>
-        <div class="hero-visual" aria-label="Featured product spotlight">
-          <div class="orbit-inner" aria-hidden="true"></div>
-          <span class="hero-edition">ML / CURATED SELECTION</span>
-          <span class="hero-vertical">BUILT FOR THE EVERYDAY ATHLETE</span>
-          <div class="hero-product-wrap">
-            <div class="hero-mark" id="heroFallback" aria-hidden="true">MLN.</div>
-            <img id="heroProductImage" class="hero-product-image" alt="" hidden>
-            <div class="hero-product-meta" id="heroProductBrand">THE ML NUTRITION EDIT</div>
-            <div class="hero-product-title" id="heroProductName">ONLY THE GOOD STUFF.</div>
-            <a class="hero-product-link" href="/products.html" id="heroProductLink">SHOP THE COLLECTION ↗</a>
+        <div class="hero-visual" aria-label="Explore the ML Nutrition supplement collection">
+          <div class="hero-grid-lines" aria-hidden="true"></div>
+          <span class="hero-edition">ML / THE PRODUCT EDIT</span>
+          <span class="hero-vertical">PROTEIN / CREATINE / PERFORMANCE</span>
+          <div class="showcase-intro">
+            <span class="showcase-kicker">FOR EVERY GOAL. EVERY REP.</span>
+            <h2>THE GOOD<br><em>STUFF.</em></h2>
           </div>
-          <span class="hero-visual-note">PREMIUM SUPPLEMENTS / EST. PUNE</span>
+          <div class="showcase-stage" id="showcaseStage" aria-label="Products from across the catalogue">
+            <a class="showcase-card showcase-card-0" data-showcase-slot="0" href="/products.html" aria-label="Browse protein supplements">
+              <span class="showcase-index">01 / FUEL</span>
+              <div class="showcase-photo">
+                <span class="showcase-fallback">WHEY</span>
+                <img alt="" loading="eager" decoding="async" hidden>
+              </div>
+              <div class="showcase-caption"><span class="showcase-brand">PROTEIN</span><strong class="showcase-name">FUEL THE WORK.</strong></div>
+            </a>
+            <a class="showcase-card showcase-card-1" data-showcase-slot="1" href="/products.html" aria-label="Browse creatine supplements">
+              <span class="showcase-index">02 / BUILD</span>
+              <div class="showcase-photo">
+                <span class="showcase-fallback">CREATINE</span>
+                <img alt="" loading="eager" decoding="async" hidden>
+              </div>
+              <div class="showcase-caption"><span class="showcase-brand">CREATINE</span><strong class="showcase-name">OWN THE REP.</strong></div>
+            </a>
+            <a class="showcase-card showcase-card-2" data-showcase-slot="2" href="/products.html" aria-label="Browse pre-workout supplements">
+              <span class="showcase-index">03 / TRAIN</span>
+              <div class="showcase-photo">
+                <span class="showcase-fallback">PRE-WORKOUT</span>
+                <img alt="" loading="eager" decoding="async" hidden>
+              </div>
+              <div class="showcase-caption"><span class="showcase-brand">PRE-WORKOUT</span><strong class="showcase-name">SHOW UP READY.</strong></div>
+            </a>
+          </div>
+          <div class="showcase-bottom">
+            <span class="showcase-footnote">A CURATED MIX OF GLOBAL BRANDS</span>
+            <button class="motion-toggle" type="button" id="motionToggle" aria-pressed="false" aria-label="Pause rotating products">Ⅱ PAUSE MOTION</button>
+          </div>
         </div>
       </div>
     </section>
+
+    <div class="motion-ticker" aria-label="Discover protein, creatine, pre-workout, gainers and global brands">
+      <div class="motion-ticker-track">
+        <div class="motion-ticker-set"><span>PROTEIN</span><i>✳</i><span>CREATINE</span><i>✳</i><span>PRE-WORKOUT</span><i>✳</i><span>MASS GAINERS</span><i>✳</i><span>GLOBAL BRANDS</span><i>✳</i></div>
+        <div class="motion-ticker-set" aria-hidden="true"><span>PROTEIN</span><i>✳</i><span>CREATINE</span><i>✳</i><span>PRE-WORKOUT</span><i>✳</i><span>MASS GAINERS</span><i>✳</i><span>GLOBAL BRANDS</span><i>✳</i></div>
+      </div>
+    </div>
 
     <section class="trust-strip" aria-label="Why people shop ML Nutrition">
       <div class="container trust-items">
@@ -85,7 +117,7 @@
       </div>
     </section>
 
-    <section class="section" id="categories" aria-labelledby="goalsTitle">
+    <section class="section" id="categories" data-reveal aria-labelledby="goalsTitle">
       <div class="container">
         <div class="section-heading">
           <div><span class="section-kicker">FIND YOUR EDGE / 01</span><h2 id="goalsTitle">SHOP BY CATEGORY.</h2></div>
@@ -100,7 +132,7 @@
       </div>
     </section>
 
-    <section class="section products-section" id="featured" aria-labelledby="featuredTitle">
+    <section class="section products-section" id="featured" data-reveal aria-labelledby="featuredTitle">
       <div class="container">
         <div class="section-heading">
           <div><span class="section-kicker">CURATED FOR YOU / 02</span><h2 id="featuredTitle">DISCOVER THE LINEUP.</h2></div>
@@ -120,7 +152,7 @@
       </div>
     </section>
 
-    <section class="story" id="why-us" aria-labelledby="storyTitle">
+    <section class="story" id="why-us" data-reveal aria-labelledby="storyTitle">
       <div class="container story-grid">
         <div>
           <span class="section-kicker">OUR PROMISE / 03</span>
@@ -137,7 +169,7 @@
       </div>
     </section>
 
-    <section class="section stores" id="stores" aria-labelledby="storesTitle">
+    <section class="section stores" id="stores" data-reveal aria-labelledby="storesTitle">
       <div class="container">
         <div class="section-heading">
           <div><span class="section-kicker">COME THROUGH / 04</span><h2 id="storesTitle">FIND US OFFLINE.</h2></div>
