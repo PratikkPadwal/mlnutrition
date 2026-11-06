@@ -21,6 +21,20 @@
     menu.setAttribute('hidden','');
     menuButton?.setAttribute('aria-expanded','false');
   }));
+  // Keep navigation state consistent when rotating the device or switching viewports.
+  function closeMobileMenu(){
+    menu?.setAttribute('hidden','');
+    menuButton?.setAttribute('aria-expanded','false');
+  }
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape')closeMobileMenu();
+  });
+  const desktopNavigation = window.matchMedia('(min-width: 1021px)');
+  if(desktopNavigation.addEventListener){
+    desktopNavigation.addEventListener('change',event=>{
+      if(event.matches)closeMobileMenu();
+    });
+  }
 
   let catalog = [];
   let activeFilter = 'all';
@@ -139,6 +153,7 @@
   let showcaseIndex = 0;
   let isPaused = false;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const narrowViewport = window.matchMedia('(max-width: 900px)');
   const motionButton = document.getElementById('motionToggle');
   const categorySequence = ['protein','creatine','preworkout','gainer','essentials','healthfood'];
 
@@ -197,7 +212,9 @@
   function startMotion(){
     if(showcaseTimer!==null)clearInterval(showcaseTimer);
     showcaseTimer=null;
-    if(isPaused||reducedMotion.matches||document.hidden||!catalog.length)return;
+    // On phones/tablets retain three stable product cards that visitors can swipe.
+    // Automatic content changes during a swipe are frustrating and disorienting.
+    if(isPaused||reducedMotion.matches||narrowViewport.matches||document.hidden||!catalog.length)return;
     showcaseTimer=setInterval(()=>{
       showcaseIndex=(showcaseIndex+1)%categorySequence.length;
       drawShowcase();
@@ -215,6 +232,12 @@
 
   document.addEventListener('visibilitychange',startMotion);
   if(reducedMotion.addEventListener)reducedMotion.addEventListener('change',startMotion);
+  if(narrowViewport.addEventListener)narrowViewport.addEventListener('change',startMotion);
+  // Prevent autoplay from continuing after an orientation/viewport change.
+  window.addEventListener('pagehide',()=>{
+    if(showcaseTimer!==null)clearInterval(showcaseTimer);
+    showcaseTimer=null;
+  });
 
   // Staggered entrance is progressive enhancement; no observer means content stays visible.
   const revealTargets=Array.from(document.querySelectorAll('[data-reveal]'));
