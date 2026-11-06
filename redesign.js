@@ -64,10 +64,7 @@
     const variants=Array.isArray(p.variants)?p.variants:[];
     return variants.find(v=>Number(v.quantity)>0) || variants[0] || null;
   }
-  function inventory(p){
-    return Array.isArray(p.variants) && p.variants.some(v=>Number(v.quantity)>0);
-  }
-  function productUrl(p){
+    function productUrl(p){
     return '/product.html?id='+encodeURIComponent(p.id);
   }
   function showMessage(message){
@@ -91,7 +88,7 @@
       imageAnchor.append(image);
     }else imageAnchor.append(el('span','product-photo-placeholder','ML'));
 
-    const label=el('span','card-label',inventory(p)?'IN STOCK':'CHECK AVAILABILITY');
+    const label=el('span','card-label','EXPLORE PRODUCT');
     imageAnchor.append(label);
     article.append(imageAnchor);
 
@@ -115,9 +112,7 @@
 
   function render(){
     const filtered=activeFilter==='all'?catalog:catalog.filter(matches[activeFilter]);
-    const prioritized=filtered.filter(inventory);
-    const others=filtered.filter(p=>!inventory(p));
-    const visible=prioritized.concat(others).slice(0,8);
+    const visible=filtered.slice(0,8);
     if(!visible.length){showMessage('No matching products available in the catalogue right now. Explore all products or ask us on WhatsApp.');return;}
     grid.replaceChildren(...visible.map(card));
     grid.setAttribute('aria-busy','false');
@@ -133,8 +128,8 @@
   goalButtons.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.goal,true)));
 
   function spotlight(){
-    const preferred=catalog.filter(p=>inventory(p)&&getImage(p)&&/(whey|protein|creatine)/i.test(p.title||''));
-    const p=preferred[0]||catalog.find(p=>inventory(p)&&getImage(p));
+    const preferred=catalog.filter(p=>getImage(p)&&/(whey|protein|creatine)/i.test(p.title||''));
+    const p=preferred[0]||catalog.find(p=>getImage(p));
     if(!p) return;
     const src=getImage(p);
     const img=document.getElementById('heroProductImage');
