@@ -1,3 +1,4 @@
+.anchor-alias{display:block;height:0;width:0;scroll-margin-top:94px}
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
 :root{--red:#cc1024;--red2:#ed1a30;--ink:#111114;--muted:#5f5d5b;--paper:#f9f8f6;--line:#e1dfdc;--display:'Barlow Condensed','Arial Narrow',Impact,sans-serif;--font:'Manrope',Arial,sans-serif;--w:1460px}
 *{box-sizing:border-box}
