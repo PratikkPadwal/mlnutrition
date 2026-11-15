@@ -232,3 +232,18 @@
  .category-viewport{scroll-behavior:auto}
  .category-card,.brand-list .brand-link,.featured-section .feature-card{transition:none}
 }
+
+
+/* The legacy storefront targeted .category-card > span:last-child with
+   greater selector specificity. Override that rule explicitly so the
+   new dark category labels retain their intended size and alignment. */
+.categories-section .category-card > .category-title{
+  display:flex;justify-content:space-between;align-items:center;
+  color:#fff;text-align:left;font:900 clamp(19px,1.55vw,24px)/1 var(--display);
+}
+@media(max-width:760px){
+  .categories-section .category-card > .category-title{font-size:21px;line-height:1}
+}
+@media(max-width:390px){
+  .categories-section .category-card > .category-title{font-size:20px}
+}
