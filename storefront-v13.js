@@ -174,6 +174,23 @@ function fillBrands(){
   // Only display a picture if it actually loads; the true catalogue
   // brand name remains the fallback for failed or unavailable assets.
   const brandAssets=[
+    // Verified existing logo artwork, matched to catalogue brand spellings.
+    {re:/^as[\s-]*it[\s-]*is(?:\s+nutrition)?$/i,src:'https://cdn.kindlife.in/images/feature_variant/216/ASITIS_Black_Text_Logo_Without_BG.png?t=1771222200'},
+    {re:/^big[\s-]*muscles(?:\s+nutrition)?$/i,src:'https://pbs.twimg.com/profile_images/1463771910177640455/-yDh17Jw.jpg'},
+    {re:/^doctor['’]?\s*s[\s-]*choice$|^doctor[\s-]*choice$/i,src:'https://images.yourstory.com/cs/images/companies/2725850111044989421442515851804265828519002n1-1705832698022.jpg?ar=1%3A1&fill=solid&fill-color=fff&fm=auto&format=auto&mode=fill&q=85&w=1920'},
+    {re:/^cellucor$/i,src:'https://supplementsuperstores.com/cdn/shop/files/Cellucor_Logo.png?v=1647546825&width=3840'},
+    {re:/^flex[\s-]*wheeler(?:\s+nutrition)?$/i,src:'https://flexwheelernutrition.com/cdn/shop/files/Flex_Wheeler_Logo_02.png?v=1683280327'},
+    {re:/^fuel[\s-]*one$/i,src:'https://mma.prnewswire.com/media/2393254/Fuel_One_Logo.jpg?p=facebook'},
+    {re:/^gat(?:\s*sport)?$/i,src:'https://www.supplementking.ca/media/amasty/shopby/option_images/GAT_2016_New_LOGO_1.jpg'},
+    {re:/^rule[\s-]*1(?:\s*proteins?)?$|^r1$/i,src:'https://snshealth.com/cdn/shop/collections/Rule-One_600x600_crop_center.png?v=1689272606'},
+    {re:/^scivation$/i,src:'https://www.shayn.ch/cdn/shop/files/Scivation-Logo_1024x1024.jpg?v=1690726039'},
+    {re:/^ultimate[\s-]*nutrition$/i,src:'https://muscle-nutrition.com/cdn/shop/collections/ulto.jpg?v=1730032215&width=1024'},
+    // For these niche brands use the real icon requested from the
+    // brand's own website, paired with the exact catalogue name.
+    // Don't substitute unrelated supplement packaging or invent a logo.
+    {re:/^nortech(?:\s+nutrition)?$/i,src:'https://www.google.com/s2/favicons?domain=nortechnutrition.com&sz=128',icon:true},
+    {re:/^pro[\s-]*maniax$/i,src:'https://www.google.com/s2/favicons?domain=promaniax.au&sz=128',icon:true},
+    {re:/^scitron(?:\s+nutrition)?$/i,src:'https://www.google.com/s2/favicons?domain=scitron.com&sz=128',icon:true},
     {re:/^muscle\s*blaze$/i,src:'https://iiasl.org/images/muscleblaze-logo.png'},
     {re:/^(on|optimum nutrition)$/i,src:'https://nastore.com/cdn/shop/collections/5.jpg?v=1729843115'},
     {re:/^ronnie coleman/i,src:'https://ronniecoleman.net/cdn/shop/collections/RC_Logo_BlueAndGold_LowRes_1024x1024.png?v=1623848696'},
@@ -211,7 +228,10 @@ function fillBrands(){
     if(asset){
       const image=el('img','brand-logo-img'+(asset.icon?' brand-logo-icon':''));
       image.alt=asset.icon?'':name+' brand logo';
-      image.loading='lazy';image.decoding='async';
+      // Logos should start loading even when initially hidden for their
+      // fallback; tiny absolutely positioned lazy images can stall.
+      image.loading='eager';image.decoding='async';
+      image.referrerPolicy='no-referrer';
       image.style.opacity='0';image.style.position='absolute';
       image.onload=()=>{
         if(!image.naturalWidth)return;
