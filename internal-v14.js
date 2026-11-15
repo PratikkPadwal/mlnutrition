@@ -5,6 +5,22 @@
 function ready(){
  const body=document.body;
  if(!body?.classList?.contains('mln-catalog-page')&&!body?.classList?.contains('mln-product-page'))return;
+ // The slim announcement scrolls away while the homepage-style header stays
+ // sticky. Keep the legacy mobile menu immediately below its actual edge.
+ const navbar=document.querySelector('.navbar');
+ const menu=document.getElementById('mobileMenu');
+ const mobileToggle=document.querySelector('.mobile-toggle');
+ if(navbar&&menu&&mobileToggle){
+   const positionMenu=()=>{
+     if(!menu.classList.contains('active'))return;
+     const bottom=Math.max(0,Math.round(navbar.getBoundingClientRect().bottom));
+     menu.style.top=bottom+'px';
+     menu.style.maxHeight=Math.max(100,window.innerHeight-bottom)+'px';
+   };
+   mobileToggle.addEventListener('click',positionMenu);
+   window.addEventListener('resize',positionMenu);
+   window.addEventListener('scroll',positionMenu,{passive:true});
+ }
  if(body.classList.contains('mln-catalog-page')){
    const active=(new URLSearchParams(window.location.search).get('category')||'all').toLowerCase();
    document.querySelectorAll('[data-mln-category]').forEach(a=>{
