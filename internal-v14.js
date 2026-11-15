@@ -19,12 +19,20 @@ function ready(){
    if(toggle&&sidebar){
      toggle.setAttribute('aria-controls','sidebar');
      toggle.setAttribute('aria-expanded','false');
+     const close=document.createElement('button');
+     close.type='button';
+     close.className='mln-filter-close';
+     close.textContent='CLOSE FILTERS ×';
+     close.setAttribute('aria-label','Close product filters');
+     sidebar.prepend(close);
      const sync=()=>toggle.setAttribute('aria-expanded',String(sidebar.classList.contains('active')));
+     const hide=()=>{sidebar.classList.remove('active');sync();};
+     close.addEventListener('click',()=>{hide();toggle.focus();});
      toggle.addEventListener('click',()=>queueMicrotask(sync));
+     new MutationObserver(sync).observe(sidebar,{attributes:true,attributeFilter:['class']});
      document.addEventListener('keydown',e=>{
        if(e.key==='Escape'&&sidebar.classList.contains('active')){
-         sidebar.classList.remove('active');
-         sync();toggle.focus();
+         hide();toggle.focus();
        }
      });
    }
