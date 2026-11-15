@@ -9,8 +9,15 @@ const $$=s=>Array.from(document.querySelectorAll(s));
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=String(text);return n};
 const inStock=p=>String(p.in_stock||'').trim().toLowerCase()==='yes';
 const isFeatured=p=>String(p.featured||'').trim().toLowerCase()==='yes';
-const photos=p=>String(p.image_url||'').split(/,(?=\s*https?:\/\/)/).map(x=>x.trim()).filter(Boolean);
-const primaryPhoto=p=>photos(p).find(src=>{try{const u=new URL(src);return u.protocol==='https:'||u.protocol==='http:'}catch{return false}})||'';
+const photos=p=>String(p.image_url||'').split(/,(?=\s*(?:https?:\/\/|\/\/|\/))/).map(x=>x.trim()).filter(Boolean);
+// Accept the same image sources as our original catalogue, including
+// site-relative paths. Never accept executable or non-web URL schemes.
+const primaryPhoto=p=>photos(p).map(src=>{
+  try{
+    const resolved=new URL(src,location.origin);
+    return resolved.protocol==='https:'||resolved.protocol==='http:'?resolved.href:'';
+  }catch{return ''}
+}).find(Boolean)||'';
 const url=p=>'/product.html?id='+encodeURIComponent(p.id);
 const categoryMatchers={
  protein:p=>/whey|protein|isolate|casein/i.test(p.category+' '+p.name)&&!/bars?|cookies?|snacks?/i.test(p.category),
@@ -49,12 +56,30 @@ function parseSheet(raw){
   })).filter(p=>p.id!==''&&p.name&&p.name.toLowerCase()!=='name');
 }
 function showImage(img,fallback,src,name){
-  if(!src)return;
-  img.hidden=true;
+  if(!src){
+    img.hidden=true;
+    if(fallback)fallback.hidden=false;
+    return;
+  }
   img.alt=name||'';
-  img.onload=()=>{img.hidden=false;if(fallback)fallback.hidden=true};
-  img.onerror=()=>{img.hidden=true;if(fallback)fallback.hidden=false};
+  // A lazy <img hidden> never intersects the viewport, so it may never
+  // download and its onload handler will never fire. Keep it in layout
+  // with opacity 0 while the real product photo is loading.
+  img.style.opacity='0';
+  img.hidden=false;
+  if(fallback)fallback.hidden=false;
+  img.onload=()=>{
+    if(!img.naturalWidth)return;
+    img.style.opacity='1';
+    if(fallback)fallback.hidden=true;
+  };
+  img.onerror=()=>{
+    img.hidden=true;
+    img.style.opacity='0';
+    if(fallback)fallback.hidden=false;
+  };
   img.src=src;
+  if(img.complete&&img.naturalWidth>0)img.onload();
 }
 function setupHeader(){
   $('#year').textContent=String(new Date().getFullYear());
@@ -134,11 +159,11 @@ function renderFeatured(){
     grid.replaceChildren(el('p','loading-message','No matching products right now. Browse all products or message us on WhatsApp.'));
     grid.setAttribute('aria-busy','false');return;
   }
-  grid.replaceChildren(...picks.map(productCard));
+  grid.replaceChildren(...picks.map((p,index)=>productCard(p,index)));
   grid.setAttribute('aria-busy','false');
   window.MLStore?.syncWishlistButtons();
 }
-function productCard(p){
+function productCard(p,index){
   const card=el('article','feature-card');
   const flag=el('span','feature-flag'+(isFeatured(p)?' is-featured':''),isFeatured(p)?'FEATURED':inStock(p)?'AVAILABLE':'CHECK AVAILABILITY');
   card.append(flag);
@@ -146,7 +171,7 @@ function productCard(p){
   const top=el('div','feature-top');
   const image=el('a','feature-image');image.href=url(p);image.setAttribute('aria-label','View '+p.name);
   const photo=primaryPhoto(p);const fallback=el('span','feature-fallback','MLN.');
-  const img=el('img');img.loading='lazy';img.decoding='async';image.append(fallback,img);
+  const img=el('img');img.loading=index<5?'eager':'lazy';img.decoding='async';image.append(fallback,img);
   showImage(img,fallback,photo,p.name);
   top.append(image);
   const info=el('div','feature-info');
