@@ -143,7 +143,16 @@
     if(scroll) document.getElementById('featured')?.scrollIntoView({behavior:'smooth',block:'start'});
   }
   buttons.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.filter,false)));
-  goalButtons.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.goal,true)));
+  goalButtons.forEach(button=>button.addEventListener('click',()=>{
+    // A category tile on mobile should take shoppers directly to matching inventory.
+    // Desktop retains its existing in-page featured-product filters.
+    const category=button.dataset.goal;
+    if(window.matchMedia('(max-width:900px)').matches){
+      window.location.assign('/products.html?category='+encodeURIComponent(category));
+    }else{
+      applyFilter(category,true);
+    }
+  }));
 
 
   // Populate the three hero cards with distinct product categories.
@@ -209,6 +218,53 @@
     });
   }
 
+  // The mobile hero is a multi-brand product edit, populated using genuine
+  // catalogue images. No AI-rendered jars or stock photos are substituted.
+  function populateMobileEdit(){
+    const slots=Array.from(document.querySelectorAll('[data-mobile-slot]'));
+    if(!slots.length)return;
+    const preferences=[
+      ['protein','preworkout','gainer'],
+      ['creatine','preworkout','essentials'],
+      ['healthfood','essentials','gainer']
+    ];
+    const labels={
+      protein:'WHEY PROTEIN',creatine:'CREATINE',preworkout:'PRE-WORKOUT',
+      gainer:'MASS GAINERS',essentials:'ESSENTIALS',healthfood:'HEALTH FOOD'
+    };
+    const usedIds=new Set(),usedBrands=new Set();
+    slots.forEach((slot,index)=>{
+      const ordered=preferences[index];
+      let picked=null,category=ordered[0];
+      // Select distinct brands first whenever product availability allows.
+      for(const key of ordered){
+        const choices=eligible(key).filter(p=>!usedIds.has(String(p.id)));
+        const diverse=choices.find(p=>!usedBrands.has(String(p.vendor||'').trim().toLowerCase()));
+        picked=diverse||choices[0]||null;
+        if(picked){category=key;break;}
+      }
+      const img=slot.querySelector('img');
+      const fallback=slot.querySelector('.mobile-edit-fallback');
+      const label=slot.querySelector('.mobile-edit-name');
+      if(!img||!fallback||!label)return;
+      fallback.textContent=labels[category];
+      slot.href='/products.html?category='+encodeURIComponent(category);
+      label.textContent=labels[category];
+      if(!picked)return;
+      usedIds.add(String(picked.id));
+      usedBrands.add(String(picked.vendor||'').trim().toLowerCase());
+      const url=getImage(picked);
+      if(!url)return;
+      img.hidden=true;fallback.hidden=false;
+      img.onload=()=>{img.hidden=false;fallback.hidden=true;};
+      img.onerror=()=>{img.hidden=true;fallback.hidden=false;};
+      img.src=url;img.alt=picked.title||labels[category];
+      label.textContent=(picked.vendor||labels[category]).toUpperCase();
+      slot.href=productUrl(picked);
+      slot.setAttribute('aria-label','View '+(picked.title||labels[category]));
+    });
+  }
+
   function startMotion(){
     if(showcaseTimer!==null)clearInterval(showcaseTimer);
     showcaseTimer=null;
@@ -266,6 +322,7 @@
       if(!catalog.length){showMessage('The online catalogue has no available listings right now.');return;}
       // Show only currently listed products, never fictitious sample products.
       drawShowcase();
+      populateMobileEdit();
       startMotion();
       render();
     }catch(error){
