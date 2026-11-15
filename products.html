@@ -987,15 +987,14 @@
 			border-color: var(--primary);
 		}
 	</style>
+<link rel="stylesheet" href="/internal-v14.css">
+<script src="/internal-v14.js" defer></script>
 </head>
-<body>
+<body class="mln-catalog-page">
 	<!-- NAVBAR -->
 	<nav class="navbar">
 		<div class="navbar-container">
-			<a href="index.html" class="logo-group">
-				<img src="IMG_6042.PNG" alt="ML Nutrition Logo" class="logo-img">
-				<img src="ChatGPT Image Jun 5, 2026, 07_52_48 PM.png" alt="ML Nutrition" class="logo-text-img">
-			</a>
+			<a href="/" class="logo-group" aria-label="ML Nutrition homepage"><span class="mln-mark"><img src="/IMG_6042.PNG" alt="" width="105" height="105"></span><span class="mln-wordmark"><strong>ML NUTRITION</strong><small>THE PREMIUM STANDARD IN SUPPLEMENTS</small></span></a>
 			<ul class="nav-menu">
 				<li><a href="index.html" data-i18n="nav.home">HOME</a></li>
 				<li><a href="products.html" class="active" data-i18n="nav.products">PRODUCTS</a></li>
@@ -1038,7 +1037,8 @@
 		</div>
 	</div>
 
-	<!-- PRODUCTS PAGE -->
+	<section class="mln-catalog-intro" aria-labelledby="mlnBrowseHeading"><div class="mln-page-wrap mln-collection-hero"><div class="mln-intro-copy"><p class="mln-eyebrow">THE ML NUTRITION COLLECTION / 01</p><h1 id="mlnBrowseHeading">FIND YOUR <em>FUEL.</em></h1><p>Original supplements. Trusted global brands. The right products for your fitness goals.</p></div><div class="mln-intro-motto" aria-hidden="true"><span>GLOBAL BRANDS</span><strong>MLN.</strong><span>GENUINE EXPERIENCE</span></div></div></section><nav class="mln-category-strip" id="mlnCategories" aria-label="Shop supplement categories"><div class="mln-page-wrap mln-category-inner"><a href="/products.html" data-mln-category="all">ALL PRODUCTS</a><a href="/products.html?category=protein" data-mln-category="protein">WHEY PROTEIN</a><a href="/products.html?category=creatine" data-mln-category="creatine">CREATINE</a><a href="/products.html?category=gainer" data-mln-category="gainer">MASS GAINERS</a><a href="/products.html?category=preworkout" data-mln-category="preworkout">PRE-WORKOUT</a><a href="/products.html?category=essentials" data-mln-category="essentials">ESSENTIALS</a><a href="/products.html?category=healthfood" data-mln-category="healthfood">HEALTH FOOD</a></div></nav>
+<!-- PRODUCTS PAGE -->
 	<div class="products-page">
 		<!-- SIDEBAR FILTERS -->
 		<aside class="sidebar" id="sidebar">
@@ -1185,7 +1185,9 @@
 		<span data-i18n="page.filters">Filters</span>
 	</button>
 
-	<script>
+	<div class="mln-page-benefits"><div class="mln-page-wrap"><span>✓ Genuine products</span><span>✓ GST invoices</span><span>✓ Stores in Talegaon &amp; Akurdi</span><span>✓ Guidance on WhatsApp</span></div></div><footer class="mln-shop-footer"><div class="mln-page-wrap mln-footer-content"><div><strong>ML NUTRITION<span>.</span></strong><p>THE PREMIUM STANDARD IN SUPPLEMENTS</p></div><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/products.html">Shop all</a><a href="/#stores">Our stores</a><a href="/shipping-policy.html">Shipping</a><a href="/return-policy.html">Returns</a><a href="/privacy-policy.html">Privacy</a></nav></div></footer>
+<nav class="mln-mobile-shop-dock" aria-label="Mobile shopping navigation"><a href="/"><span class="mln-dock-icon">⌂</span><span>HOME</span></a><a href="/products.html" aria-current="page"><span class="mln-dock-icon">▣</span><span>SHOP</span></a><a href="#mlnCategories"><span class="mln-dock-icon">▦</span><span>CATEGORIES</span></a><button type="button" id="mlnMobileCart" aria-label="Open cart"><span class="mln-dock-icon">♧</span><span>CART</span></button></nav>
+<script>
 		// LANGUAGE SYSTEM
 		let currentLang = localStorage.getItem('mlnutrition-lang') || 'en';
 
