@@ -1,7 +1,7 @@
 /* ML Nutrition official symbol | focused display fix.
  * IMG_6042.PNG remains the exact supplied logo.
  * The original asset is a square canvas with extensive surrounding space.
- * Viewport clipping enlarges the original pixels without redrawing the mark.
+ * The complete PNG is displayed without clipping; original artwork is not modified.
  * Loaded after brand-header-v6.css on every storefront page. */
 .site-header{background:#101010!important}
 .site-header .brand{
@@ -25,22 +25,22 @@
   flex:0 0 var(--symbol-width);
   display:block;
   position:relative;
-  overflow:hidden;
+  overflow:visible; /* full artwork must remain visible */
   background:transparent;
 }
 .site-header .brand-symbol-frame img{
   position:absolute!important;
   top:50%!important;
   left:50%!important;
-  width:calc(var(--symbol-width) * 1.90)!important;
-  height:calc(var(--symbol-width) * 1.90)!important;
+  width:calc(var(--symbol-width) * 1.72)!important;
+  height:calc(var(--symbol-width) * 1.72)!important;
   max-width:none!important;
   max-height:none!important;
   min-width:0!important;
   min-height:0!important;
   object-fit:contain!important;
   object-position:center center!important;
-  transform:translate(-50%, -52%)!important;
+  transform:translate(-50%, -50%)!important;
   filter:none!important;
   display:block!important;
   margin:0!important;
