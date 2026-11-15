@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/redesign.css">
+  <link rel="stylesheet" href="/home-mobile-v4.css">
   <script src="/redesign.js" defer></script>
 </head>
 <body>
@@ -30,7 +31,10 @@
       </nav>
       <div class="header-actions">
         <a class="btn btn-red" href="/products.html">SHOP ALL <span aria-hidden="true">↗</span></a>
-        <button class="menu-button" id="menuButton" aria-controls="mobileMenu" aria-expanded="false" type="button">MENU</button>
+        <a class="mobile-header-shop" href="/products.html" aria-label="Shop all supplements">SHOP <span aria-hidden="true">↗</span></a>
+        <button class="menu-button" id="menuButton" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open navigation menu" type="button">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
       </div>
     </div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation" hidden>
@@ -43,6 +47,48 @@
   </header>
 
   <main id="content">
+    <section class="mobile-home-intro" aria-labelledby="mobileHeroTitle">
+      <div class="mobile-home-heading">
+        <div class="mobile-home-eyebrow"><span class="mobile-home-dot" aria-hidden="true"></span> ML NUTRITION / THE PREMIUM STANDARD</div>
+        <h1 id="mobileHeroTitle">FUEL YOUR<br><em>AMBITION.</em></h1>
+        <p class="mobile-home-copy">Global brands. Genuine products. One destination for your training and everyday nutrition.</p>
+        <a href="/products.html" class="mobile-home-primary">EXPLORE ALL SUPPLEMENTS <span aria-hidden="true">↗</span></a>
+        <a href="https://wa.me/918329384588" target="_blank" rel="noopener noreferrer" class="mobile-home-secondary">NOT SURE WHAT TO PICK? <strong>ASK OUR TEAM ↗</strong></a>
+      </div>
+      <div class="mobile-home-product-edit" aria-label="Products from the ML Nutrition catalogue">
+        <div class="mobile-edit-top">
+          <div><span>THE ML NUTRITION EDIT</span><h2>THE RIGHT FUEL.</h2></div>
+          <span class="mobile-edit-count">01 — 03</span>
+        </div>
+        <div class="mobile-edit-products" id="mobileEditProducts">
+          <a href="/products.html?category=protein" class="mobile-edit-product" data-mobile-slot="0" aria-label="Shop protein supplements">
+            <span class="mobile-edit-media">
+              <span class="mobile-edit-fallback">PROTEIN</span>
+              <img alt="" loading="eager" decoding="async" hidden>
+            </span>
+            <span class="mobile-edit-name">WHEY PROTEIN</span>
+          </a>
+          <a href="/products.html?category=creatine" class="mobile-edit-product" data-mobile-slot="1" aria-label="Shop creatine supplements">
+            <span class="mobile-edit-media">
+              <span class="mobile-edit-fallback">CREATINE</span>
+              <img alt="" loading="eager" decoding="async" hidden>
+            </span>
+            <span class="mobile-edit-name">CREATINE</span>
+          </a>
+          <a href="/products.html?category=healthfood" class="mobile-edit-product" data-mobile-slot="2" aria-label="Shop health foods">
+            <span class="mobile-edit-media">
+              <span class="mobile-edit-fallback">HEALTH FOOD</span>
+              <img alt="" loading="eager" decoding="async" hidden>
+            </span>
+            <span class="mobile-edit-name">HEALTH FOOD</span>
+          </a>
+        </div>
+        <div class="mobile-edit-foot"><span>CURATED FROM THE LIVE CATALOGUE</span><span aria-hidden="true">✳</span></div>
+      </div>
+      <div class="mobile-home-assurance" aria-label="Our shopping commitments">
+        <span>✓ 100% GENUINE</span><span>✓ GST BILLING</span><span>✓ EXPERT GUIDANCE</span>
+      </div>
+    </section>
     <section class="hero" aria-labelledby="heroTitle">
       <div class="container hero-grid">
         <div class="hero-copy">
@@ -202,7 +248,7 @@
         <div><h3>EXPLORE</h3><a href="/products.html">All products</a><a href="#categories">Shop by category</a><a href="#why-us">Why ML Nutrition</a><a href="#stores">Visit our stores</a></div>
         <div><h3>NEED HELP?</h3><a href="https://wa.me/918329384588" target="_blank" rel="noopener noreferrer">WhatsApp us</a><a href="https://www.instagram.com/themlnutrition/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="/shipping-policy.html">Shipping policy</a><a href="/return-policy.html">Return policy</a><a href="/privacy-policy.html">Privacy policy</a></div>
       </div>
-      <div class="footer-bottom"><span>© <span id="copyrightYear">2026</span> ML Nutrition. All rights reserved.</span><span>PREVIEW CONCEPT 01 • NOT THE LIVE HOMEPAGE</span></div>
+      <div class="footer-bottom"><span>© <span id="copyrightYear">2026</span> ML Nutrition. All rights reserved.</span><span>DESIGN PREVIEW • NOT THE LIVE HOMEPAGE</span></div>
     </div>
   </footer>
 </body>
