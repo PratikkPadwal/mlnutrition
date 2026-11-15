@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
 /* ML Nutrition official symbol | focused display fix.
  * IMG_6042.PNG remains the exact supplied logo.
  * The original asset is a square canvas with extensive surrounding space.
@@ -130,4 +131,45 @@
 }
 @media(max-width:340px){
   .site-header .brand-text small{font-size:6px!important}
+}
+
+/* V11: angular, technical wordmark styled to complement the original ML symbol.
+   Typeface is an intentional approximation; official symbol is unchanged. */
+.site-header .brand-text .brand-name{
+  display:block;
+  width:max-content;
+  max-width:100%;
+  font-family:'Rajdhani','Arial Narrow',Impact,sans-serif!important;
+  font-size:1.13em!important;
+  line-height:.88!important;
+  font-weight:700!important;
+  font-style:normal!important;
+  letter-spacing:-.044em!important;
+  text-transform:uppercase;
+  transform:skewX(-5deg);
+  transform-origin:left center;
+  -webkit-text-stroke:.45px currentColor;
+  text-shadow:0 0 .1px currentColor;
+  color:#f8f8f8;
+  white-space:nowrap;
+}
+.site-header .brand-text{
+  overflow:visible!important;
+}
+.site-header .brand-text small{
+  padding-top:2px!important;
+  letter-spacing:.055em!important;
+}
+@media(max-width:767px){
+  .site-header .brand-text .brand-name{
+    font-size:1.08em!important;
+    letter-spacing:-.052em!important;
+    -webkit-text-stroke:.3px currentColor;
+  }
+}
+@media(max-width:380px){
+  .site-header .brand-text .brand-name{
+    font-size:1.03em!important;
+    letter-spacing:-.055em!important;
+  }
 }
