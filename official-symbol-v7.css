@@ -112,3 +112,22 @@
   .site-header .brand-text{font-size:17px!important}
   .site-header .brand-text small{font-size:5px!important;letter-spacing:0!important}
 }
+
+
+/* Full official tagline. Never truncate the brand promise. */
+.site-header .brand-text small{
+  white-space:normal!important;
+  overflow:visible!important;
+  max-width:100%;
+}
+.site-header .brand-tagline-tail{display:inline}
+@media(max-width:640px){
+  .site-header .brand-text small{font-size:6px!important;line-height:1.4!important;letter-spacing:.015em!important}
+}
+@media(max-width:420px){
+  .site-header .brand-tagline-tail{display:block}
+  .site-header .brand-text small{font-size:7px!important;line-height:1.25!important;letter-spacing:.02em!important}
+}
+@media(max-width:340px){
+  .site-header .brand-text small{font-size:6px!important}
+}
