@@ -217,7 +217,7 @@ function fillBrands(){
     {re:/^wellcore/i,src:'https://www.google.com/s2/favicons?domain=wellversed.in&sz=128',icon:true}
   ];
 
-  target.replaceChildren(...names.map(item=>{
+  target.replaceChildren(...names.map((item,index)=>{
     const name=item.name;
     const link=el('a','brand-link');
     link.href='/products.html?brand='+encodeURIComponent(name);
@@ -228,15 +228,22 @@ function fillBrands(){
     if(asset){
       const image=el('img','brand-logo-img'+(asset.icon?' brand-logo-icon':''));
       image.alt=asset.icon?'':name+' brand logo';
-      // Logos should start loading even when initially hidden for their
-      // fallback; tiny absolutely positioned lazy images can stall.
-      image.loading='eager';image.decoding='async';
+      // Keep hidden loading images in a visible carousel slot so
+      // native lazy loading can fetch them when customers scroll.
+      image.loading=index<6?'eager':'lazy';image.decoding='async';
       image.referrerPolicy='no-referrer';
-      image.style.opacity='0';image.style.position='absolute';
+      image.style.opacity='0';
+      image.style.position='absolute';
+      image.style.inset='0';
+      image.style.width='100%';
+      image.style.height='100%';
       image.onload=()=>{
         if(!image.naturalWidth)return;
         image.style.opacity='1';
         image.style.position='static';
+        image.style.inset='auto';
+        image.style.width='';
+        image.style.height='';
         if(!asset.icon)fallback.hidden=true;
         else link.classList.add('has-brand-icon');
       };
