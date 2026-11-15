@@ -147,27 +147,102 @@ function fillCategories(){
   });
 }
 function fillBrands(){
-  const target=$('#brandList'),counts=new Map();
-  catalog.forEach(p=>{const name=p.brand.trim();if(name)counts.set(name,(counts.get(name)||0)+1)});
-  const names=Array.from(counts.keys());
-  if(!names.length){target.replaceChildren(el('span','brand-loading','Browse our complete product catalogue.'));return}
-  const preferred=[/muscleblaze/i,/optimum nutrition|^on$/i,/ronnie coleman/i,/applied nutrition/i,/muscletech/i,/avvatar/i,/healthninja/i,/naturaltein/i,/allmax/i];
-  const selected=[],seen=new Set();
-  for(const regex of preferred){
-    const name=names.find(n=>!seen.has(n.toLowerCase())&&regex.test(n));
-    if(name){selected.push(name);seen.add(name.toLowerCase())}
-    if(selected.length===6)break;
+  const target=$('#brandList'),count=$('#brandCount'),prev=$('#brandPrev'),next=$('#brandNext');
+  const counts=new Map();
+  // Every brand is taken from the real product catalogue. Merge differences
+  // in capitalization without inventing brand names or products.
+  catalog.forEach(p=>{
+    const name=String(p.brand||'').trim();
+    if(!name)return;
+    const key=name.toLowerCase().replace(/\s+/g,' ');
+    const existing=counts.get(key);
+    if(existing)existing.count++;
+    else counts.set(key,{name,count:1});
+  });
+  const names=Array.from(counts.values()).sort((a,b)=>{
+    // Larger in-store ranges appear first; then alphabetical within peers.
+    return b.count-a.count||a.name.localeCompare(b.name);
+  });
+  count.textContent=names.length+' CATALOGUE BRANDS';
+  if(!names.length){
+    target.replaceChildren(el('span','brand-loading','Browse our full product catalogue.'));
+    prev.disabled=true;next.disabled=true;return;
   }
-  for(const name of names.sort((a,b)=>counts.get(b)-counts.get(a))){
-    if(selected.length===6)break;
-    if(!seen.has(name.toLowerCase())){selected.push(name);seen.add(name.toLowerCase())}
-  }
-  target.replaceChildren(...selected.map(name=>{
-    const link=el('a','brand-link',name);
+
+  // Source artwork is from official brand sites or identifiable existing
+  // retailer brand assets. Do not transform or recreate trademark geometry.
+  // Only display a picture if it actually loads; the true catalogue
+  // brand name remains the fallback for failed or unavailable assets.
+  const brandAssets=[
+    {re:/^muscle\s*blaze$/i,src:'https://iiasl.org/images/muscleblaze-logo.png'},
+    {re:/^(on|optimum nutrition)$/i,src:'https://nastore.com/cdn/shop/collections/5.jpg?v=1729843115'},
+    {re:/^ronnie coleman/i,src:'https://ronniecoleman.net/cdn/shop/collections/RC_Logo_BlueAndGold_LowRes_1024x1024.png?v=1623848696'},
+    {re:/^applied nutrition/i,src:'https://cdn.shopify.com/s/files/1/0454/0871/4919/files/Applied_Logo_blue_1200x1200.png?v=1658918948'},
+    {re:/^muscle\s*tech$/i,src:'https://images.tcdn.com.br/img/img_prod/820633/vapor_x5_360_g_sabor_nasty_grape_muscletech_1487_3_e4ca5f278fc704165dec7fdc97f5816b.jpg'},
+    {re:/^avvatar/i,src:'https://pbs.twimg.com/profile_images/1035100746738479109/kviFfjwO_400x400.jpg'},
+    {re:/^steadfast/i,src:'https://steadfastnutrition.in/cdn/shop/files/SN_Logo_Final-02_014eb72b-8e3a-430c-b6ac-fa4e87ae5c33.png?v=1694502155'},
+    {re:/^naturaltein/i,src:'https://app.shoptrustified.in/public/uploads/brand/13-04-241713041918brand.jpg'},
+    {re:/^allmax/i,src:'https://gibbsdirect.com/cdn/shop/collections/gibbs-direct-allmax_1200x1200.png?v=1681393521'},
+    {re:/^labrada/i,src:'https://shopvitaplus.com/cdn/shop/collections/Labrada_logo.png?v=1697222812'},
+    {re:/^(bpi|bpi sports)$/i,src:'https://cdn.shopify.com/s/files/1/0581/6021/8173/files/brand-logo-bpisports_com.png?v=1775134907'},
+    {re:/^ultimate nutrition/i,src:'https://jupitersfitness.cl/cdn/shop/collections/1000097253.webp?v=1743730671'},
+    {re:/^gnc/i,src:'https://api.watsons.com.sg/medias/GNC-Brand-Landing-Page-Brand-Logo-750pxl-x-452pxl.jpg?context=bWFzdGVyfGltYWdlc3w3MTU1NXxpbWFnZS9qcGVnfGFHRXlMMmd4WkM4eU9ETTNPVGcyTmpNek16SXhOQzlIVGtNZ1FuSmhibVFnVEdGdVpHbHVaeUJRWVdkbElFSnlZVzVrSUV4dloyOGdOelV3Y0hoc0lIZ2dORFV5Y0hoc0xtcHdad3xhMmU2ZmY4N2ZhN2FiNGEzNTUwMGVlNzQ3OTNiYTM2NDg5ZDVlYjBhNzIyMDQ5NmJkYjJlYThjNDk0NDI4MzRl'},
+    {re:/^mutant/i,src:'https://static.insales-cdn.com/images/collections/1/5811/93689523/Mutant-brand-logo.webp'},
+    {re:/^dymatize/i,src:'https://images.seeklogo.com/logo-png/65/1/dymatize-logo-png_seeklogo-654141.png'},
+    {re:/^isopure/i,src:'https://images.seeklogo.com/logo-png/60/1/isopure-logo-png_seeklogo-608651.png'},
+    {re:/^scitec/i,src:'https://seeklogo.com/images/S/scitec-nutrition-logo-58790A3263-seeklogo.com.png'},
+    {re:/^bsn/i,src:'https://supplementsuperstores.com/cdn/shop/files/BSN-logo.png?v=1613159646&width=2000'},
+    {re:/^kevin levrone/i,src:'https://www.sportnahrungdirekt.com/media/image/manufacturer/3/lg/kevin-levrone-signature-series.jpg'},
+    // These two use the favicon supplied by the brand's own website
+    // instead of a guessed, redrawn or unrelated wordmark.
+    {re:/^health\s*ninja/i,src:'https://www.google.com/s2/favicons?domain=healthninjafoods.in&sz=128',icon:true},
+    {re:/^(ozn|optimize nutrition)/i,src:'https://www.google.com/s2/favicons?domain=optimize-nutrition.com&sz=128',icon:true},
+    {re:/^wellcore/i,src:'https://www.google.com/s2/favicons?domain=wellversed.in&sz=128',icon:true}
+  ];
+
+  target.replaceChildren(...names.map(item=>{
+    const name=item.name;
+    const link=el('a','brand-link');
     link.href='/products.html?brand='+encodeURIComponent(name);
     link.setAttribute('aria-label','Shop '+name+' supplements');
+    const fallback=el('span','brand-logo-name',name);
+    link.append(fallback);
+    const asset=brandAssets.find(entry=>entry.re.test(name));
+    if(asset){
+      const image=el('img','brand-logo-img'+(asset.icon?' brand-logo-icon':''));
+      image.alt=asset.icon?'':name+' brand logo';
+      image.loading='lazy';image.decoding='async';
+      image.style.opacity='0';image.style.position='absolute';
+      image.onload=()=>{
+        if(!image.naturalWidth)return;
+        image.style.opacity='1';
+        image.style.position='static';
+        if(!asset.icon)fallback.hidden=true;
+        else link.classList.add('has-brand-icon');
+      };
+      image.onerror=()=>{image.remove();fallback.hidden=false};
+      link.prepend(image);
+      image.src=asset.src;
+      if(image.complete&&image.naturalWidth>0)image.onload();
+    }
     return link;
   }));
+
+  function syncBrandArrows(){
+    const max=Math.max(0,target.scrollWidth-target.clientWidth);
+    prev.disabled=target.scrollLeft<=3;
+    next.disabled=max<=3||target.scrollLeft>=max-3;
+  }
+  const scroll=(direction)=>{
+    const first=target.querySelector('.brand-link');
+    const width=first?.getBoundingClientRect().width||185;
+    target.scrollBy({left:direction*(width+11)*3,behavior:'smooth'});
+  };
+  prev.addEventListener('click',()=>scroll(-1));
+  next.addEventListener('click',()=>scroll(1));
+  target.addEventListener('scroll',syncBrandArrows,{passive:true});
+  window.addEventListener('resize',syncBrandArrows);
+  requestAnimationFrame(syncBrandArrows);
 }
 function buildFeaturedPool(){
   const candidates=catalog.filter(p=>primaryPhoto(p)&&inStock(p));
