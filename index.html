@@ -110,6 +110,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
 <link rel="stylesheet" href="/storefront-v13.css">
+<link rel="stylesheet" href="/homepage-curated-v16.css">
 <script src="/cart.js" defer></script>
 <script src="/storefront-v13.js" defer></script>
 </head>
@@ -193,44 +194,66 @@
 
  <section class="section categories-section" id="categories" aria-labelledby="categoriesTitle">
   <div class="wrap">
-   <div class="section-head"><h2 id="categoriesTitle">SHOP BY CATEGORY</h2><a class="section-link" href="/products.html">VIEW ALL PRODUCTS <span aria-hidden="true">→</span></a></div>
-   <div class="category-grid">
-    <a class="category-card" href="/products.html?category=protein" data-category="protein"><span class="category-photo"><span class="category-graphic">P</span><img alt="" loading="lazy" hidden></span><span>WHEY PROTEIN</span></a>
-    <a class="category-card" href="/products.html?category=creatine" data-category="creatine"><span class="category-photo"><span class="category-graphic">C</span><img alt="" loading="lazy" hidden></span><span>CREATINE</span></a>
-    <a class="category-card" href="/products.html?category=gainer" data-category="gainer"><span class="category-photo"><span class="category-graphic">G</span><img alt="" loading="lazy" hidden></span><span>MASS GAINERS</span></a>
-    <a class="category-card" href="/products.html?category=preworkout" data-category="preworkout"><span class="category-photo"><span class="category-graphic">P</span><img alt="" loading="lazy" hidden></span><span>PRE-WORKOUT</span></a>
-    <a class="category-card" href="/products.html?category=essentials" data-category="essentials"><span class="category-photo"><span class="category-graphic">E</span><img alt="" loading="lazy" hidden></span><span>ESSENTIALS</span></a>
-    <a class="category-card" href="/products.html?category=healthfood" data-category="healthfood"><span class="category-photo"><span class="category-graphic">H</span><img alt="" loading="lazy" hidden></span><span>HEALTH FOOD</span></a>
-   </div>
+    <div class="section-head curated-head">
+      <div class="section-heading"><h2 id="categoriesTitle">SHOP BY CATEGORY</h2><p>FIND THE RIGHT SUPPLEMENTS FOR YOUR GOALS</p></div>
+      <a class="section-link" href="/products.html">VIEW ALL PRODUCTS <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="category-shell">
+      <div class="category-viewport" id="categoryViewport" tabindex="0" aria-label="Scroll supplement categories horizontally">
+        <div class="category-grid">
+          <a class="category-card" href="/products.html?category=protein" data-category="protein" aria-label="Shop protein supplements"><span class="category-photo"><span class="category-graphic">P</span><img alt="" loading="lazy" decoding="async" hidden></span><span class="category-title">PROTEIN<span class="category-arrow" aria-hidden="true">↗</span></span></a>
+      <a class="category-card" href="/products.html?category=creatine" data-category="creatine" aria-label="Shop creatine supplements"><span class="category-photo"><span class="category-graphic">C</span><img alt="" loading="lazy" decoding="async" hidden></span><span class="category-title">CREATINE<span class="category-arrow" aria-hidden="true">↗</span></span></a>
+      <a class="category-card" href="/products.html?category=gainer" data-category="gainer" aria-label="Shop mass gainers supplements"><span class="category-photo"><span class="category-graphic">G</span><img alt="" loading="lazy" decoding="async" hidden></span><span class="category-title">MASS GAINERS<span class="category-arrow" aria-hidden="true">↗</span></span></a>
+      <a class="category-card" href="/products.html?category=preworkout" data-category="preworkout" aria-label="Shop pre-workout supplements"><span class="category-photo"><span class="category-graphic">P</span><img alt="" loading="lazy" decoding="async" hidden></span><span class="category-title">PRE-WORKOUT<span class="category-arrow" aria-hidden="true">↗</span></span></a>
+      <a class="category-card" href="/products.html?category=essentials" data-category="essentials" aria-label="Shop essentials supplements"><span class="category-photo"><span class="category-graphic">E</span><img alt="" loading="lazy" decoding="async" hidden></span><span class="category-title">ESSENTIALS<span class="category-arrow" aria-hidden="true">↗</span></span></a>
+      <a class="category-card" href="/products.html?category=healthfood" data-category="healthfood" aria-label="Shop health food supplements"><span class="category-photo"><span class="category-graphic">H</span><img alt="" loading="lazy" decoding="async" hidden></span><span class="category-title">HEALTH FOOD<span class="category-arrow" aria-hidden="true">↗</span></span></a>
+        </div>
+      </div>
+      <div class="category-arrows" aria-label="Category carousel controls">
+        <button class="slider-arrow" id="categoryPrev" type="button" aria-label="Previous categories">‹</button>
+        <button class="slider-arrow" id="categoryNext" type="button" aria-label="Next categories">›</button>
+      </div>
+    </div>
   </div>
- </section>
+</section>
 
- <section class="section brands-section" id="brands" aria-labelledby="brandsTitle">
+<section class="section brands-section" id="brands" aria-labelledby="brandsTitle">
   <div class="wrap">
-   <div class="section-head brands-head"><h2 id="brandsTitle">TRUSTED GLOBAL BRANDS</h2><a class="section-link" href="/products.html">SHOP ALL BRANDS <span aria-hidden="true">→</span></a></div>
-   <div class="brand-list" id="brandList" aria-label="Brands in our catalogue"><span class="brand-loading">Loading our brands…</span></div>
+    <div class="section-head curated-head">
+      <div class="section-heading"><h2 id="brandsTitle">TRUSTED GLOBAL BRANDS</h2><p>GLOBAL NUTRITION BRANDS, CURATED BY ML NUTRITION</p></div>
+      <a class="section-link" href="/products.html">SHOP ALL BRANDS <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="brand-carousel">
+      <div class="brand-list" id="brandList" tabindex="0" aria-label="Scroll all available supplement brands horizontally"><span class="brand-loading">Loading our brands…</span></div>
+      <div class="brand-carousel-controls" aria-label="Browse all brands">
+        <span class="brand-count" id="brandCount" role="status">BRANDS IN OUR CATALOGUE</span>
+        <div class="brand-carousel-buttons">
+          <button class="brand-arrow" id="brandPrev" type="button" aria-label="Previous brands" disabled>‹</button>
+          <button class="brand-arrow" id="brandNext" type="button" aria-label="Next brands" disabled>›</button>
+        </div>
+      </div>
+    </div>
   </div>
- </section>
+</section>
 
- <section class="section featured-section" id="featured" aria-labelledby="featuredTitle"><span id="products" class="anchor-alias" aria-hidden="true"></span>
+<section class="section featured-section" id="featured" aria-labelledby="featuredTitle"><span id="products" class="anchor-alias" aria-hidden="true"></span>
   <div class="wrap">
-   <div class="section-head"><div><h2 id="featuredTitle">FEATURED PRODUCTS</h2><p>Real products from our ML Nutrition catalogue</p></div><a class="section-link" href="/products.html">VIEW ALL PRODUCTS <span aria-hidden="true">→</span></a></div>
-   <div class="product-chips" aria-label="Filter featured products">
-    <button type="button" class="chip selected" data-filter="all" aria-pressed="true">ALL PRODUCTS</button>
-    <button type="button" class="chip" data-filter="protein" aria-pressed="false">PROTEIN</button>
-    <button type="button" class="chip" data-filter="creatine" aria-pressed="false">CREATINE</button>
-    <button type="button" class="chip" data-filter="gainer" aria-pressed="false">MASS GAINERS</button>
-    <button type="button" class="chip" data-filter="essentials" aria-pressed="false">ESSENTIALS</button>
-    <button type="button" class="chip" data-filter="healthfood" aria-pressed="false">HEALTH FOOD</button>
-   </div>
-   <div class="product-grid" id="featuredGrid" aria-live="polite" aria-busy="true">
-    <p class="loading-message">Loading products from the ML Nutrition catalogue…</p>
-   </div>
-   <a class="mobile-more" href="/products.html">BROWSE THE COMPLETE COLLECTION →</a>
+    <div class="section-head curated-head curated-featured-head">
+      <div class="section-heading"><h2 id="featuredTitle">FEATURED PRODUCTS</h2><p>CURATED PICKS FROM OUR ML NUTRITION CATALOGUE</p></div>
+      <div class="feature-carousel-controls" aria-label="Featured product carousel controls">
+        <button class="slider-arrow" id="featuredPrev" type="button" aria-label="Previous featured products">‹</button>
+        <button class="slider-arrow" id="featuredNext" type="button" aria-label="Next featured products">›</button>
+        <span class="feature-dots" id="featuredDots" role="status" aria-label="Featured carousel page"></span>
+      </div>
+    </div>
+    <div class="product-grid" id="featuredGrid" aria-live="polite" aria-busy="true">
+      <p class="loading-message">Loading products from the ML Nutrition catalogue…</p>
+    </div>
+    <div class="featured-footer"><a href="/products.html">EXPLORE THE COMPLETE COLLECTION <span aria-hidden="true">↗</span></a></div>
   </div>
- </section>
+</section>
 
- <section class="store-section" id="stores" aria-labelledby="storesTitle"><span id="contact" class="anchor-alias" aria-hidden="true"></span>
+<section class="store-section" id="stores" aria-labelledby="storesTitle"><span id="contact" class="anchor-alias" aria-hidden="true"></span>
   <div class="wrap store-inner">
    <div><span class="store-eyebrow">REAL STORES. REAL PEOPLE.</span><h2 id="storesTitle">COME FIND US.</h2><p>Visit our Talegaon or Akurdi store, see the products in person, and ask our team what fits your goal.</p></div>
    <div class="store-links">
