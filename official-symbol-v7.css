@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
 /* ML Nutrition official symbol | focused display fix.
  * IMG_6042.PNG remains the exact supplied logo.
  * The original asset is a square canvas with extensive surrounding space.
@@ -133,43 +132,79 @@
   .site-header .brand-text small{font-size:6px!important}
 }
 
-/* V11: angular, technical wordmark styled to complement the original ML symbol.
-   Typeface is an intentional approximation; official symbol is unchanged. */
-.site-header .brand-text .brand-name{
-  display:block;
+/* V12: restrained, high-quality wordmark
+   The logo mark remains the original asset; the name is complementary
+   typography, not an imitation produced with distorted text. */
+.site-header .brand-text{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
   width:max-content;
   max-width:100%;
-  font-family:'Rajdhani','Arial Narrow',Impact,sans-serif!important;
-  font-size:1.13em!important;
-  line-height:.88!important;
-  font-weight:700!important;
-  font-style:normal!important;
-  letter-spacing:-.044em!important;
-  text-transform:uppercase;
-  transform:skewX(-5deg);
-  transform-origin:left center;
-  -webkit-text-stroke:.45px currentColor;
-  text-shadow:0 0 .1px currentColor;
-  color:#f8f8f8;
-  white-space:nowrap;
-}
-.site-header .brand-text{
+  min-width:0;
   overflow:visible!important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.site-header .brand-text .brand-name{
+  display:block!important;
+  color:#f9f9f8!important;
+  font-family:'Barlow Condensed',Impact,'Arial Narrow',sans-serif!important;
+  font-size:clamp(29px,2.75vw,38px)!important;
+  font-weight:800!important;
+  line-height:.88!important;
+  font-style:normal!important;
+  letter-spacing:-.012em!important;
+  font-kerning:normal;
+  font-synthesis:none;
+  text-transform:uppercase;
+  width:auto!important;
+  max-width:100%;
+  white-space:nowrap;
+  transform:none!important;
+  -webkit-transform:none!important;
+  -webkit-text-stroke:0!important;
+  text-shadow:none!important;
+  filter:none!important;
 }
 .site-header .brand-text small{
-  padding-top:2px!important;
-  letter-spacing:.055em!important;
+  display:block!important;
+  color:#ff5c63!important;
+  font-family:'Manrope',Arial,sans-serif!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  line-height:1.4!important;
+  letter-spacing:.04em!important;
+  text-transform:uppercase;
+  margin-top:9px!important;
+  padding:0!important;
+  white-space:normal!important;
+  max-width:100%;
+  text-wrap:balance;
+}
+@media(max-width:1100px){
+  .site-header .brand-text .brand-name{font-size:33px!important}
+  .site-header .brand-text small{font-size:8px!important}
+}
+@media(max-width:1020px){
+  .site-header .brand-text .brand-name{font-size:31px!important}
+  .site-header .brand-text small{font-size:8px!important}
 }
 @media(max-width:767px){
-  .site-header .brand-text .brand-name{
-    font-size:1.08em!important;
-    letter-spacing:-.052em!important;
-    -webkit-text-stroke:.3px currentColor;
-  }
+  .site-header .brand-text .brand-name{font-size:27px!important}
+  .site-header .brand-text small{font-size:7.3px!important;letter-spacing:.012em!important;margin-top:7px!important}
+}
+@media(max-width:420px){
+  .site-header .brand-text .brand-name{font-size:23px!important;letter-spacing:-.018em!important}
+  .site-header .brand-text small{font-size:7px!important;line-height:1.27!important;letter-spacing:.012em!important}
+  .site-header .brand-tagline-tail{display:block}
 }
 @media(max-width:380px){
-  .site-header .brand-text .brand-name{
-    font-size:1.03em!important;
-    letter-spacing:-.055em!important;
-  }
+  .site-header .brand-text .brand-name{font-size:21px!important}
+  .site-header .brand-text small{font-size:6.5px!important}
+}
+@media(max-width:340px){
+  .site-header .brand-text .brand-name{font-size:19px!important}
+  .site-header .brand-text small{font-size:6px!important;letter-spacing:0!important}
 }
