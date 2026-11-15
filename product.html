@@ -391,15 +391,14 @@
 			.detail-media { padding: 1.5rem; }
 		}
 	</style>
+<link rel="stylesheet" href="/internal-v14.css">
+<script src="/internal-v14.js" defer></script>
 </head>
-<body>
+<body class="mln-product-page">
 	<!-- NAVBAR -->
 	<nav class="navbar">
 		<div class="navbar-container">
-			<a href="index.html" class="logo-group">
-				<img src="IMG_6042.PNG" alt="ML Nutrition Logo" class="logo-img">
-				<img src="ChatGPT Image Jun 5, 2026, 07_52_48 PM.png" alt="ML Nutrition" class="logo-text-img">
-			</a>
+			<a href="/" class="logo-group" aria-label="ML Nutrition homepage"><span class="mln-mark"><img src="/IMG_6042.PNG" alt="" width="105" height="105"></span><span class="mln-wordmark"><strong>ML NUTRITION</strong><small>THE PREMIUM STANDARD IN SUPPLEMENTS</small></span></a>
 			<ul class="nav-menu">
 				<li><a href="index.html" data-i18n="nav.home">HOME</a></li>
 				<li><a href="products.html" class="active" data-i18n="nav.products">PRODUCTS</a></li>
@@ -440,7 +439,8 @@
 		</div>
 	</div>
 
-	<!-- MAIN -->
+	<div class="mln-detail-topline"><div class="mln-page-wrap"><span>ML NUTRITION / THE PRODUCT EDIT</span><a href="/products.html">EXPLORE ALL PRODUCTS ↗</a></div></div>
+<!-- MAIN -->
 	<main class="detail-wrap">
 		<nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
 			<a href="index.html" data-i18n="nav.home">HOME</a>
@@ -470,7 +470,9 @@
 		</section>
 	</main>
 
-	<!-- Lightbox (zoomable image viewer) -->
+	<div class="mln-page-benefits"><div class="mln-page-wrap"><span>✓ Genuine products</span><span>✓ GST invoices</span><span>✓ Stores in Talegaon &amp; Akurdi</span><span>✓ Guidance on WhatsApp</span></div></div><footer class="mln-shop-footer"><div class="mln-page-wrap mln-footer-content"><div><strong>ML NUTRITION<span>.</span></strong><p>THE PREMIUM STANDARD IN SUPPLEMENTS</p></div><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/products.html">Shop all</a><a href="/#stores">Our stores</a><a href="/shipping-policy.html">Shipping</a><a href="/return-policy.html">Returns</a><a href="/privacy-policy.html">Privacy</a></nav></div></footer>
+<div class="mln-mobile-buy" id="mlnMobileBuy" hidden aria-label="Quick purchase actions"><div class="mln-buy-price"><span>PRICE</span><strong id="mlnBuyPrice">—</strong></div><button type="button" class="mln-buy-wa" id="mlnBuyWhatsApp">WHATSAPP</button><button type="button" class="mln-buy-cart" id="mlnBuyAdd" disabled>ADD TO CART</button></div>
+<!-- Lightbox (zoomable image viewer) -->
 	<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Product image viewer">
 		<button class="lightbox-close" id="lbClose" aria-label="Close">×</button>
 		<button class="lightbox-nav prev" id="lbPrev" aria-label="Previous image">‹</button>
