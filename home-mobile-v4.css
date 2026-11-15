@@ -1,0 +1,140 @@
+/* ML Nutrition — Home mobile editorial refresh V4
+   Standalone, intentionally composed phone/tablet storefront.
+   Desktop hero and V3 styles remain untouched. */
+.mobile-home-intro{display:none}
+.mobile-header-shop{display:none}
+.menu-button svg{display:none}
+@media(max-width:900px){
+  main#content{display:flex;flex-direction:column}
+  main#content>.hero{display:none!important}
+  main#content>.mobile-home-intro{display:block;order:0}
+  main#content>#categories{order:1}
+  main#content>.motion-ticker{order:2}
+  main#content>.trust-strip{display:none}
+  main#content>#featured{order:3}
+  main#content>#why-us{order:4}
+  main#content>#stores{order:5}
+  main#content>.bottom-cta{order:6}
+  .site-header{background:#0e0e0e}
+  .header-inner{min-width:0}
+  .brand{background:#0b0b0b;border-color:#292929;min-width:0}
+  .brand-text{color:#fff}
+  .header-actions{display:flex;align-items:center;gap:8px}
+  .mobile-header-shop{min-height:43px;display:inline-flex;align-items:center;gap:10px;background:#d91f29;color:white;padding:0 15px;font:800 10px var(--font);letter-spacing:.08em;white-space:nowrap}
+  .mobile-header-shop span{font-size:15px}
+  .menu-button{display:inline-flex;align-items:center;justify-content:center;min-width:43px;width:43px;height:43px;padding:0;background:#1d1d1d;border:1px solid #4b4949;color:white}
+  .menu-button svg{display:block;width:20px;height:20px}
+  .mobile-menu{background:#171717;color:white;border-color:#3b3636}
+  .mobile-home-intro{background:#19191a;color:white;overflow:hidden}
+  .mobile-home-heading{max-width:760px;margin-inline:auto;padding:clamp(27px,4vw,44px) clamp(17px,4vw,34px) clamp(19px,3vw,27px)}
+  .mobile-home-eyebrow{display:flex;align-items:center;gap:8px;font:800 clamp(8px,1.65vw,11px)/1.5 var(--font);letter-spacing:.12em;color:#e8bfc2}
+  .mobile-home-dot{display:inline-block;flex:0 0 7px;width:7px;height:7px;background:#ff404c;border-radius:50%;box-shadow:0 0 0 4px rgba(231,41,56,.13)}
+  .mobile-home-heading h1{font:800 clamp(60px,10vw,100px)/.8 var(--display);letter-spacing:-.02em;margin:19px 0 14px;text-transform:uppercase}
+  .mobile-home-heading h1 em{font-style:normal;color:#ff4d57}
+  .mobile-home-copy{font:500 clamp(12px,1.7vw,15px)/1.6 var(--font);color:#ddd5d3;max-width:55ch;margin:0 0 21px}
+  .mobile-home-primary{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:52px;background:#d91f29;color:white;border:1px solid #d91f29;padding:0 19px;font:800 11px var(--font);letter-spacing:.1em;text-decoration:none}
+  .mobile-home-primary span{font-size:20px}
+  .mobile-home-primary:active{background:#f13341}
+  .mobile-home-secondary{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;color:#d8d0ce;font:700 9px/1.5 var(--font);letter-spacing:.04em;margin:15px 0 0}
+  .mobile-home-secondary strong{font-size:10px;color:#fff;text-decoration:underline;text-decoration-color:#ff5661;text-underline-offset:4px}
+  .mobile-home-product-edit{background:#ede8e0;color:#1c1c1c;padding:clamp(16px,3vw,22px) clamp(16px,4vw,32px) clamp(14px,3vw,21px);position:relative}
+  .mobile-home-product-edit:before{content:"";position:absolute;top:0;left:clamp(16px,4vw,32px);width:65px;height:3px;background:#db2231}
+  .mobile-edit-top{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:0 0 14px}
+  .mobile-edit-top div>span{display:block;font:800 9px var(--font);letter-spacing:.15em;color:#cb2a36}
+  .mobile-edit-top h2{font:800 clamp(30px,5.6vw,50px)/.95 var(--display);letter-spacing:-.025em;margin:6px 0 0}
+  .mobile-edit-count{font:800 10px var(--font);letter-spacing:.08em;color:#716f6b;white-space:nowrap;margin-bottom:3px}
+  .mobile-edit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(6px,1.2vw,14px)}
+  .mobile-edit-product{background:#faf9f7;border:1px solid #d9d4ce;min-width:0;display:flex;flex-direction:column;overflow:hidden;transition:border-color .2s,transform .2s;animation:mobileTileIn .55s ease both}
+  .mobile-edit-product:nth-child(2){animation-delay:.08s}
+  .mobile-edit-product:nth-child(3){animation-delay:.16s}
+  .mobile-edit-product:hover{border-color:#d92b36;transform:translateY(-3px)}
+  .mobile-edit-media{display:grid;place-items:center;position:relative;aspect-ratio:1/1.04;width:100%;min-width:0;overflow:hidden;background:radial-gradient(circle at center,#fff 15%,#f1efec 100%)}
+  .mobile-edit-media img{width:89%;height:89%;max-width:89%;max-height:89%;object-fit:contain;mix-blend-mode:multiply;filter:drop-shadow(0 5px 7px rgba(0,0,0,.08))}
+  .mobile-edit-fallback{font:800 clamp(17px,3.5vw,35px)/.95 var(--display);color:#b8afa8;text-transform:uppercase;text-align:center;overflow-wrap:anywhere;padding:7px}
+  .mobile-edit-name{min-width:0;min-height:38px;display:flex;align-items:center;padding:8px 8px 9px;border-top:1px solid #e4e0db;font:800 clamp(9px,1.5vw,12px)/1.15 var(--font);letter-spacing:.025em;color:#242222;text-transform:uppercase;overflow:hidden;word-break:normal}
+  .mobile-edit-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;font:800 8px var(--font);letter-spacing:.1em;color:#706b68;margin-top:11px}
+  .mobile-edit-foot span:last-child{font-size:17px;color:#c72b35}
+  .mobile-home-assurance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;padding:12px 14px;border-top:1px solid #363234;background:#151515;color:#f6eded;gap:5px}
+  .mobile-home-assurance span{font:800 9px/1.4 var(--font);letter-spacing:.02em;text-align:center}
+  .mobile-home-assurance span:not(:last-child){border-right:1px solid #4e4848}
+  /* Merchandise-first, concise browsing tiles below the fold. */
+  main#content>#categories{padding:31px 0 35px!important;background:#f6f4f0}
+  #categories .section-heading{display:block;margin-bottom:16px}
+  #categories .section-heading .section-kicker{font-size:9px;letter-spacing:.14em}
+  #categories .section-heading h2{font:800 clamp(33px,5.5vw,46px)/.94 var(--display);letter-spacing:-.015em;margin-top:8px}
+  #categories .section-heading p{display:none}
+  #categories .goal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  #categories .goal-card{min-height:clamp(110px,16vw,156px);padding:12px 9px;min-width:0;background:white;border:1px solid #dcd7cf}
+  #categories .goal-card:after{display:none}
+  #categories .goal-card[aria-pressed=true]{background:white;border-color:#db2231}
+  #categories .goal-card .goal-num{font:800 8px var(--font);letter-spacing:.07em;color:#cd2b36}
+  #categories .goal-card .goal-arrow{right:9px;top:6px;font-size:16px;color:#cf2a35}
+  #categories .goal-card .goal-name{font:800 clamp(22px,4vw,34px)/.94 var(--display);text-transform:uppercase;letter-spacing:-.01em;overflow-wrap:anywhere}
+  #categories .goal-card .goal-name-long{font-size:clamp(17px,3.5vw,28px)}
+  #categories .goal-card .goal-detail{display:none}
+  #featured .section-heading h2{font-size:clamp(44px,8vw,65px)}
+  #featured .section-heading p{font-size:12px}
+  .motion-ticker{padding:10px 0}
+  .motion-ticker-set span{font-size:19px}
+  .motion-ticker-track{animation-duration:36s}
+  @keyframes mobileTileIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+}
+@media(max-width:640px){
+  .announcement{min-height:26px;padding:6px 6px;font:800 7px/1.3 var(--font);letter-spacing:.06em}
+  .announcement span{margin-inline:3px}
+  .header-inner{height:64px;gap:6px}
+  .brand{margin-left:-16px;padding:0 4px 0 12px;gap:7px;max-width:calc(100% - 135px)}
+  .brand img{height:43px;width:39px}
+  .brand-text{font-size:clamp(20px,5.9vw,26px);line-height:.93}
+  .brand-text small{font-size:6px;letter-spacing:.09em;margin-top:5px}
+  .header-actions{margin-left:auto;gap:6px}
+  .mobile-header-shop{min-height:42px;padding:0 11px;font-size:9px;gap:6px}
+  .menu-button{min-width:42px;width:42px;height:42px}
+  .mobile-home-heading{padding:26px 16px 20px}
+  .mobile-home-eyebrow{font-size:9px;letter-spacing:.08em}
+  .mobile-home-heading h1{font-size:clamp(56px,15.7vw,90px);line-height:.82;margin:16px 0 13px}
+  .mobile-home-copy{font-size:12.5px;line-height:1.55;max-width:400px;margin-bottom:18px}
+  .mobile-home-primary{min-height:49px;font-size:10px;padding:0 16px}
+  .mobile-home-secondary{font-size:9px;margin-top:12px}
+  .mobile-home-product-edit{padding:19px 16px 15px}
+  .mobile-edit-top{margin-bottom:11px}
+  .mobile-edit-top div>span{font-size:8px}
+  .mobile-edit-top h2{font-size:33px;margin-top:5px}
+  .mobile-edit-products{gap:7px}
+  .mobile-edit-name{font-size:9px;min-height:36px;padding:7px 6px;line-height:1.13}
+  .mobile-edit-foot{font-size:8px;margin-top:9px}
+  .mobile-home-assurance{padding:11px 7px}
+  .mobile-home-assurance span{font-size:clamp(7px,2.1vw,9px)}
+  main#content>#categories{padding:27px 0 29px!important}
+  #categories .section-heading h2{font-size:34px}
+  #categories .goal-card{min-height:112px;padding:10px 7px}
+  #categories .goal-card .goal-name{font-size:clamp(20px,5.1vw,25px)}
+  #categories .goal-card .goal-name-long{font-size:clamp(16px,4.3vw,21px)}
+  #categories .goal-card .goal-num{font-size:7px}
+}
+@media(max-width:365px){
+  .brand{max-width:calc(100% - 119px);gap:4px;padding-left:9px}
+  .brand img{width:31px}
+  .brand-text{font-size:19px}
+  .brand-text small{font-size:5px}
+  .mobile-header-shop{padding:0 8px}
+  .header-actions{gap:5px}
+  .mobile-home-heading h1{font-size:clamp(51px,15.5vw,58px)}
+  .mobile-edit-top h2{font-size:29px}
+  .mobile-edit-name{font-size:8px}
+  #categories .goal-grid{gap:6px}
+  #categories .goal-card .goal-name{font-size:19px}
+  #categories .goal-card .goal-name-long{font-size:15px}
+  #categories .goal-card{min-height:105px}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:560px){
+  .mobile-home-heading{padding:19px 22px 17px}
+  .mobile-home-heading h1{font-size:clamp(53px,8vw,83px)}
+  .mobile-home-copy{max-width:80ch}
+  .mobile-home-product-edit{padding:15px 22px}
+  .mobile-edit-media{aspect-ratio:1.7}
+  #categories .goal-card{min-height:108px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mobile-edit-product{animation:none!important;transition:none!important}
+}
