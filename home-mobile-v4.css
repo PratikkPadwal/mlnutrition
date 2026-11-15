@@ -138,3 +138,107 @@
 @media(prefers-reduced-motion:reduce){
   .mobile-edit-product{animation:none!important;transition:none!important}
 }
+
+
+/* V5 — ML Nutrition's own voice: authenticity, clarity and human help.
+   An editorial light canvas contrasts with the original black logo header.
+   The section is shorter, readable and intentionally non-campaign-like. */
+@media(max-width:900px){
+  .mobile-home-intro{background:#efede7;color:#171717}
+  .mobile-home-heading{
+    position:relative;
+    max-width:760px;
+    margin-inline:auto;
+    background:linear-gradient(120deg,#f5f3ee 0%,#eeeae3 100%);
+    padding:clamp(24px,4vw,39px) clamp(18px,4vw,34px) clamp(18px,3vw,25px);
+    isolation:isolate;
+  }
+  .mobile-home-heading:before{
+    content:"";position:absolute;top:0;left:clamp(18px,4vw,34px);
+    width:58px;height:3px;background:#d91f29;
+  }
+  .mobile-home-heading:after{
+    content:"ML / AUTHENTICITY FIRST";position:absolute;right:clamp(18px,4vw,34px);top:14px;
+    color:#9c928b;font:800 8px var(--font);letter-spacing:.13em;
+  }
+  .mobile-home-eyebrow{gap:8px;flex-wrap:wrap;max-width:85%;color:#a12a32;font:800 10px/1.5 var(--font);letter-spacing:.06em}
+  .mobile-home-dot{background:#c92430;box-shadow:0 0 0 3px rgba(217,31,41,.10);width:6px;height:6px;flex-basis:6px}
+  .mobile-eyebrow-separator{color:#9b938b}
+  .mobile-home-heading h1{
+    display:flex;flex-direction:column;
+    font:800 clamp(41px,8vw,75px)/.89 var(--display);
+    letter-spacing:-.016em;margin:17px 0 14px;
+    max-width:100%;color:#161616;
+  }
+  .mobile-home-heading h1 span,.mobile-home-heading h1 em{display:block;max-width:100%;white-space:nowrap}
+  .mobile-home-heading h1 em{font-style:normal;color:#d91f29;font-size:.95em;margin-top:5px}
+  .mobile-home-copy{color:#514a46;font:500 clamp(13px,1.75vw,15px)/1.63 var(--font);max-width:49ch;margin:0 0 18px}
+  .mobile-home-actions{display:grid;grid-template-columns:1fr;gap:9px}
+  .mobile-home-primary{
+    background:#161616;color:#fff;border:1px solid #161616;
+    min-height:55px;padding:5px 5px 5px 16px;
+    font:800 11px var(--font);letter-spacing:.07em;
+  }
+  .mobile-home-primary span{
+    background:#d91f29;color:#fff;width:43px;height:43px;flex:0 0 43px;
+    display:grid;place-items:center;font-size:21px;
+  }
+  .mobile-home-primary:hover,.mobile-home-primary:active{background:#333;color:white}
+  .mobile-home-secondary{
+    width:100%;min-height:49px;margin:0;padding:10px 14px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px 12px;
+    background:transparent;border:1px solid #c6bfb7;color:#5d5450;
+    font:700 10px/1.35 var(--font);letter-spacing:.025em;
+  }
+  .mobile-home-secondary strong{color:#1c1b1b;text-decoration:none;font:800 10px/1.35 var(--font);letter-spacing:.02em;white-space:nowrap}
+  .mobile-home-secondary:hover{background:#fff;border-color:#1c1b1b}
+  .mobile-home-voice{margin:14px 0 0;color:#77706a;font:700 11px/1.45 var(--font)}
+  .mobile-home-assurance{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:0;background:#171717;color:white;border:0;
+    padding:15px clamp(14px,4vw,31px);
+  }
+  .mobile-home-assurance span{
+    font:700 clamp(9px,1.4vw,12px)/1.35 var(--font);
+    color:#eae8e6;text-transform:none;letter-spacing:0;
+    display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;min-width:0;
+  }
+  .mobile-home-assurance span:not(:last-child){border-right:1px solid #494444}
+  .mobile-home-assurance strong{color:#f2525b;font-size:14px;line-height:1}
+  .mobile-home-product-edit{background:#efede7}
+  .mobile-home-product-edit:before{background:#d91f29}
+}
+@media(max-width:640px){
+  .mobile-home-heading{padding:23px 16px 16px}
+  .mobile-home-heading:before{left:16px;width:46px}
+  .mobile-home-heading:after{display:none}
+  .mobile-home-eyebrow{font-size:9px;max-width:100%;letter-spacing:.015em}
+  .mobile-home-heading h1{font-size:clamp(39px,11.4vw,59px);line-height:.9;letter-spacing:-.015em;margin:15px 0 12px}
+  .mobile-home-heading h1 em{margin-top:4px}
+  .mobile-home-copy{font-size:12.5px;line-height:1.58;margin-bottom:15px}
+  .mobile-home-actions{gap:8px}
+  .mobile-home-primary{min-height:51px;font-size:10px;padding:4px 4px 4px 14px}
+  .mobile-home-primary span{width:41px;height:41px;flex-basis:41px;font-size:18px}
+  .mobile-home-secondary{min-height:46px;padding:8px 10px;gap:5px}
+  .mobile-home-secondary span{font-size:9px}
+  .mobile-home-secondary strong{font-size:9px}
+  .mobile-home-voice{font-size:10px;margin:11px 0 0}
+  .mobile-home-assurance{padding:12px 6px}
+  .mobile-home-assurance span{font-size:clamp(8px,2.2vw,10px);gap:3px}
+  .mobile-home-assurance strong{font-size:12px}
+  .mobile-home-product-edit{padding-top:18px}
+}
+@media(max-width:365px){
+  .mobile-home-heading h1{font-size:clamp(35px,11.25vw,41px)}
+  .mobile-home-heading{padding-inline:14px}
+  .mobile-home-eyebrow{font-size:8px}
+  .mobile-home-copy{font-size:12px}
+  .mobile-home-secondary strong{font-size:8px}
+  .mobile-home-assurance span{font-size:8px;line-height:1.25}
+}
+@media(max-width:900px) and (orientation:landscape) and (max-height:560px){
+  .mobile-home-heading{padding-top:21px;padding-bottom:14px}
+  .mobile-home-heading h1{font-size:clamp(42px,7.6vw,70px)}
+  .mobile-home-actions{grid-template-columns:1fr 1fr}
+  .mobile-home-secondary{min-height:55px}
+}
