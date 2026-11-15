@@ -532,3 +532,27 @@ body.mln-catalog-page .mln-category-strip{background:#fff;border-bottom:1px soli
  body.mln-catalog-page .mln-wordmark strong,body.mln-product-page .mln-wordmark strong{font-size:19px}
  body.mln-catalog-page .mln-wordmark small,body.mln-product-page .mln-wordmark small{font-size:5px;max-width:125px}
 }
+
+/* V15.1: prevent the collapsed, fixed-position mobile drawer from
+   painting a border/shadow OVER the desktop search field.
+   The original page gives .mobile-menu z-index:9999 even when closed,
+   with top:70px, placing its 1px border across the 40px search pill.
+   Hide the entire layer at desktop widths and when inactive on mobile. */
+body.mln-catalog-page .mobile-menu,
+body.mln-product-page .mobile-menu{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+@media(max-width:1070px){
+  body.mln-catalog-page .mobile-menu.active,
+  body.mln-product-page .mobile-menu.active{
+    display:block!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+    border-bottom:1px solid #3b3939!important;
+    box-shadow:0 12px 25px #0005!important;
+  }
+}
