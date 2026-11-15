@@ -319,3 +319,28 @@ svg{width:24px;height:24px}
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
+
+/* Product photos must occupy a visible layout box while lazy-loading.
+   Overlay the original fallback underneath the photo, then reveal the
+   photo on successful load without layout shifts. */
+.hero-jar img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:100%;
+}
+.category-photo img,.category-photo .category-graphic{
+  grid-area:1/1;
+}
+.feature-image img,.feature-image .feature-fallback{
+  grid-area:1/1;
+}
+.feature-image img,.category-photo img,.hero-jar img{
+  transition:opacity .18s ease-out;
+}
+@media(prefers-reduced-motion:reduce){
+  .feature-image img,.category-photo img,.hero-jar img{
+    transition:none;
+  }
+}
