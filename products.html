@@ -1859,6 +1859,26 @@
 			});
 		});
 
+		// Interpret category and search links from the approved homepage.
+		const homeParams = new URLSearchParams(window.location.search);
+		const homeCategoryMap = {
+			protein: 'Protein', creatine: 'Creatine',
+			preworkout: 'Pre-Workout', gainer: 'Mass Gainer',
+			essentials: 'Essentials', healthfood: 'Health Food'
+		};
+		const requestedCategory = homeCategoryMap[(homeParams.get('category') || '').toLowerCase()];
+		if (requestedCategory) {
+			selectedCategories = [requestedCategory];
+			document.querySelectorAll('#categoryFilters input[type="checkbox"]').forEach(cb => {
+				cb.checked = cb.value === requestedCategory;
+			});
+		}
+		const requestedSearch = (homeParams.get('q') || homeParams.get('brand') || '').trim();
+		if (requestedSearch) {
+			searchQuery = requestedSearch;
+			document.getElementById('searchInput').value = requestedSearch;
+		}
+
 		// LOAD PRODUCTS ON PAGE LOAD
 		switchLanguage(currentLang); // Apply saved language preference
 		loadProducts();
