@@ -1,0 +1,163 @@
+/* ML NUTRITION — Identity-first unified header, V6.
+   Original IMG_6042.PNG artwork is displayed unchanged.
+   This stylesheet is loaded LAST across storefront pages. */
+:root{--ml-header:#101010}
+.announcement{
+  background:var(--ml-header)!important;
+  color:#f8f8f8;
+  max-width:100%;
+  overflow:hidden;
+  flex-wrap:wrap;
+  white-space:normal;
+}
+.site-header{
+  background:var(--ml-header)!important;
+  color:#fff!important;
+  border:0!important;
+  border-bottom:1px solid #272727!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:none!important;
+  width:100%;
+  max-width:100%;
+}
+.site-header .header-inner{
+  height:102px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:clamp(12px,1.6vw,26px);
+  min-width:0;
+  background:transparent!important;
+}
+.site-header .brand{
+  align-self:center!important;
+  display:flex!important;
+  flex:0 1 auto!important;
+  align-items:center!important;
+  justify-content:flex-start;
+  min-width:0!important;
+  max-width:none!important;
+  gap:clamp(10px,1.2vw,16px)!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-right:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  text-decoration:none;
+  overflow:visible;
+}
+.site-header .brand img{
+  width:clamp(78px,6.7vw,93px)!important;
+  height:clamp(78px,6.7vw,93px)!important;
+  max-width:none!important;
+  max-height:none!important;
+  flex:0 0 auto!important;
+  object-fit:contain!important;
+  filter:none!important;
+  transform:none!important;
+  background:none!important;
+}
+.site-header .brand-text{
+  color:#fff!important;
+  font-family:var(--display);
+  font-size:clamp(26px,2.5vw,34px)!important;
+  line-height:.88;
+  letter-spacing:.008em;
+  white-space:nowrap!important;
+  flex:0 1 auto;
+  min-width:0;
+}
+.site-header .brand-text small{
+  display:block!important;
+  color:#ff5a64!important;
+  font-family:var(--font);
+  font-size:8px!important;
+  line-height:1.2;
+  letter-spacing:.14em!important;
+  margin-top:8px!important;
+}
+.site-header .desktop-nav{min-width:0;gap:clamp(13px,1.5vw,29px)}
+.site-header .desktop-nav a{white-space:nowrap}
+.site-header .header-actions{margin-left:auto;flex:0 0 auto;min-width:0}
+.site-header .menu-button{border-color:#484848;background:#1d1d1d;color:#fff}
+.site-header .menu-button svg{display:block!important}
+.site-header .mobile-header-shop svg{display:block;width:22px;height:22px;flex:0 0 auto}
+.site-header .mobile-header-shop{background:#d91f29;color:#fff}
+.site-header .ml-icon-btn{color:white}
+@media(max-width:1100px){
+  .site-header .header-inner{height:90px}
+  .site-header .brand img{height:78px!important;width:78px!important}
+  .site-header .brand-text{font-size:29px!important}
+}
+@media(max-width:1020px){
+  .site-header .header-inner{height:86px;gap:10px}
+  .site-header .brand{gap:10px!important}
+  .site-header .brand img{width:75px!important;height:75px!important}
+  .site-header .brand-text{font-size:29px!important}
+  .site-header .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px}
+  .site-header .menu-button{display:inline-flex;min-width:44px;min-height:44px;width:44px;height:44px;padding:0;align-items:center;justify-content:center}
+  .site-header .mobile-header-shop{display:inline-flex;justify-content:center;align-items:center;gap:8px;min-height:44px;padding:0 14px;font-size:10px}
+  .site-header .mobile-shop-label{font-size:10px;font-weight:800;letter-spacing:.06em}
+}
+@media(max-width:767px){
+  .site-header .header-inner{height:83px;gap:6px}
+  .site-header .brand{gap:8px!important}
+  .site-header .brand img{width:70px!important;height:70px!important}
+  .site-header .brand-text{font-size:25px!important}
+  .site-header .brand-text small{font-size:7px!important;letter-spacing:.095em!important;margin-top:6px!important}
+  .site-header .header-actions{gap:7px!important;flex:0 0 auto}
+  .site-header .mobile-header-shop{
+    width:44px;min-width:44px;height:44px;min-height:44px;
+    padding:0!important;
+  }
+  .site-header .mobile-shop-label{display:none}
+  .site-header .menu-button,
+  .site-header .shop-head-actions .menu-button{
+    width:44px;min-width:44px;height:44px;min-height:44px;
+    border-color:#444!important;font-size:0!important;
+    padding:0!important;
+  }
+  .site-header .menu-button svg{width:22px;height:22px}
+  .site-header .shop-head-actions{gap:6px!important}
+  .site-header .shop-head-actions .ml-icon-btn{width:43px;min-width:43px;height:44px;padding:9px}
+  .site-header .mobile-menu{background:var(--ml-header)!important;color:#fff}
+}
+@media(max-width:640px){
+  .announcement{min-height:25px;padding:6px 4px;font-size:clamp(6px,1.75vw,8px)!important;letter-spacing:.035em!important;line-height:1.4}
+  .site-header .header-inner{height:80px;gap:5px}
+  .site-header .brand{gap:7px!important}
+  .site-header .brand img{width:67px!important;height:67px!important}
+  .site-header .brand-text{font-size:clamp(20px,5.8vw,25px)!important}
+  .site-header .brand-text small{font-size:6px!important;letter-spacing:.07em!important;margin-top:6px!important}
+  .site-header .header-actions{gap:6px!important}
+  .site-header .mobile-header-shop{width:42px;min-width:42px;height:42px;min-height:42px}
+  .site-header .menu-button,
+  .site-header .shop-head-actions .menu-button{width:42px;min-width:42px;height:42px;min-height:42px}
+}
+@media(max-width:380px){
+  .site-header .header-inner{height:76px}
+  .site-header .brand img{width:61px!important;height:61px!important}
+  .site-header .brand{gap:5px!important}
+  .site-header .brand-text{font-size:21px!important}
+  .site-header .brand-text small{font-size:5.5px!important}
+  .site-header .mobile-header-shop{min-width:41px;width:41px;height:41px;min-height:41px}
+  .site-header .menu-button,
+  .site-header .shop-head-actions .menu-button{min-width:41px;width:41px;height:41px;min-height:41px}
+}
+@media(max-width:340px){
+  .site-header .header-inner{height:72px;gap:3px}
+  .site-header .brand img{width:55px!important;height:55px!important}
+  .site-header .brand-text{font-size:19px!important}
+  .site-header .brand-text small{font-size:5px!important;letter-spacing:.045em!important}
+  .site-header .header-actions{gap:4px!important}
+  .site-header .mobile-header-shop{min-width:39px;width:39px;height:40px;min-height:40px}
+  .site-header .menu-button,
+  .site-header .shop-head-actions .menu-button{min-width:39px;width:39px;height:40px;min-height:40px}
+  .site-header .shop-head-actions #cartBtn{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-header *{transition:none!important}
+}
