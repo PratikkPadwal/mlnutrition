@@ -1,0 +1,114 @@
+/* ML Nutrition official symbol | focused display fix.
+ * IMG_6042.PNG remains the exact supplied logo.
+ * The original asset is a square canvas with extensive surrounding space.
+ * Viewport clipping enlarges the original pixels without redrawing the mark.
+ * Loaded after brand-header-v6.css on every storefront page. */
+.site-header{background:#101010!important}
+.site-header .brand{
+  display:inline-flex!important;
+  flex:0 1 auto!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+  max-width:none!important;
+  overflow:visible!important;
+}
+.site-header .brand-symbol-frame{
+  --symbol-width:144px;
+  --symbol-height:100px;
+  width:var(--symbol-width);
+  height:var(--symbol-height);
+  flex:0 0 var(--symbol-width);
+  display:block;
+  position:relative;
+  overflow:hidden;
+  background:transparent;
+}
+.site-header .brand-symbol-frame img{
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
+  width:calc(var(--symbol-width) * 2.08)!important;
+  height:calc(var(--symbol-width) * 2.08)!important;
+  max-width:none!important;
+  max-height:none!important;
+  min-width:0!important;
+  min-height:0!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:translate(-50%, -50%)!important;
+  filter:none!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  background:none!important;
+}
+.site-header .header-inner{height:112px!important;min-width:0}
+.site-header .brand-text{
+  font-size:clamp(26px,2.25vw,32px)!important;
+  line-height:.91!important;
+  min-width:0;
+  white-space:nowrap!important;
+}
+.site-header .brand-text small{
+  font-size:8px!important;
+  letter-spacing:.11em!important;
+  margin-top:7px!important;
+}
+@media(max-width:1100px){
+  .site-header .brand-symbol-frame{
+    --symbol-width:120px;
+    --symbol-height:90px;
+  }
+  .site-header .header-inner{height:101px!important}
+  .site-header .brand-text{font-size:27px!important}
+}
+@media(max-width:1020px){
+  .site-header .brand-symbol-frame{
+    --symbol-width:118px;
+    --symbol-height:88px;
+  }
+  .site-header .header-inner{height:97px!important;gap:9px}
+  .site-header .brand-text{font-size:26px!important}
+}
+@media(max-width:767px){
+  .site-header .brand-symbol-frame{
+    --symbol-width:96px;
+    --symbol-height:78px;
+  }
+  .site-header .brand{gap:6px!important;max-width:calc(100% - 98px)!important}
+  .site-header .header-inner{height:88px!important;gap:5px}
+  .site-header .brand-text{font-size:clamp(19px,5.35vw,25px)!important}
+  .site-header .brand-text small{font-size:6px!important;letter-spacing:.05em!important}
+}
+@media(max-width:420px){
+  .site-header .brand-symbol-frame{
+    --symbol-width:90px;
+    --symbol-height:76px;
+  }
+  .site-header .header-inner{height:86px!important}
+  .site-header .brand-text{font-size:clamp(19px,5.2vw,22px)!important}
+}
+@media(max-width:380px){
+  .site-header .brand-symbol-frame{
+    --symbol-width:79px;
+    --symbol-height:72px;
+  }
+  .site-header .header-inner{height:82px!important}
+  .site-header .brand-text{font-size:19px!important}
+  .site-header .brand-text small{font-size:5.5px!important}
+}
+@media(max-width:340px){
+  .site-header .brand-symbol-frame{
+    --symbol-width:73px;
+    --symbol-height:67px;
+  }
+  .site-header .brand{gap:4px!important;max-width:calc(100% - 83px)!important}
+  .site-header .header-inner{height:77px!important;gap:3px}
+  .site-header .brand-text{font-size:17px!important}
+  .site-header .brand-text small{font-size:5px!important;letter-spacing:0!important}
+}
