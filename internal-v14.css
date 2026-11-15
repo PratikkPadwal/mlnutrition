@@ -376,3 +376,14 @@ body.mln-product-page .detail-message p{color:#746e6b}
  html{scroll-behavior:auto}
  .mln-mobile-shop-dock *,body .product-card,body .btn-action{transition:none!important}
 }
+
+/* Visible, accessible mobile filter close control. */
+.mln-filter-close{display:none}
+@media(max-width:1024px){
+ .mln-filter-close{
+  display:block;position:absolute;top:88px;right:16px;
+  min-height:43px;padding:8px 13px;border:1px solid #343032;
+  background:#171719;color:white;border-radius:3px;
+  font:800 10px var(--ml-font);letter-spacing:.025em;z-index:2;
+ }
+}
