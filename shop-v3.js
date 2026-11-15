@@ -93,6 +93,9 @@ function initListing(){
  const brandSelect=$('#brandSelect'),sortSelect=$('#sortSelect'),available=$('#availableOnly');
  const categoryButtons=$$('[data-category]'),clear=$('#clearFilters'),more=$('#loadMore');
  const params=new URLSearchParams(location.search);
+ const initialSearch=(params.get('q')||'').trim();
+ const initialBrand=(params.get('brand')||'').trim();
+ if(initialSearch)search.value=initialSearch;
  let category=normalizeCategory(params.get('category'));let products=[];let limit=16;
  function setCategory(key){category=normalizeCategory(key);limit=16;history.replaceState(null,'',category==='all'?'/products.html':'/products.html?category='+encodeURIComponent(category));render()}
  function render(){
@@ -120,6 +123,7 @@ function initListing(){
   products=p;
   const brands=[...new Set(products.map(x=>x.brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   const allBrandsOption=node('option','','All brands');allBrandsOption.value='';brandSelect.replaceChildren(allBrandsOption,...brands.map(b=>{const x=node('option','',b);x.value=b;return x}));
+  if(initialBrand){const found=brands.find(b=>b.toLowerCase()===initialBrand.toLowerCase());if(found)brandSelect.value=found;}
   $$('.shop-category-chip[data-category]').forEach(b=>{const key=b.dataset.category;if(key!=='all'){const n=products.filter(p=>catMatches[key]?.(p)).length;const badge=b.querySelector('small');if(badge)badge.textContent=String(n)}});
   render();
  }).catch(e=>{console.error('Catalogue failed',e);displayMessage(grid,'Unable to load products right now. Please try again or contact us on WhatsApp.');count.textContent='Unavailable';more.hidden=true});
