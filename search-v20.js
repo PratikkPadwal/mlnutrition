@@ -285,7 +285,7 @@
           const side = make('span', 'ml-smart-side');
           const isAvailable = String(product.in_stock || '').trim().toLowerCase() === 'yes';
           side.appendChild(make('strong', 'ml-smart-price', formatPrice(product.price_range)));
-          side.appendChild(make('span', 'ml-smart-stock' + (isAvailable ? ' available' : ''), isAvailable ? 'IN STOCK' : 'CHECK AVAILABILITY'));
+          side.appendChild(make('span', 'ml-smart-stock' + (isAvailable ? ' available' : ''), isAvailable ? 'IN STOCK' : (String(product.in_stock || '').trim() ? 'OUT OF STOCK' : 'CHECK STOCK')));
           link.append(photo, copy, side);
           panel.appendChild(link);
         });
@@ -342,10 +342,6 @@
     input.addEventListener('blur', () => root.setTimeout(hide, 175));
     const controller = { input, panel, hide, render, position };
     controllers.push(controller);
-    panel.addEventListener('pointerdown', event => {
-      // Keep suggestions visible until links receive their click event.
-      if (event.target.closest('a')) event.preventDefault();
-    });
     doc.addEventListener('pointerdown', event => {
       if (event.target !== input && !panel.contains(event.target)) hide();
     });
