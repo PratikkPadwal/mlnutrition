@@ -347,6 +347,12 @@
     });
     root.addEventListener('resize', () => { if (!panel.hidden) position(); });
     root.addEventListener('scroll', () => { if (!panel.hidden) position(); }, true);
+    // iOS virtual keyboard resizes the visual viewport without always
+    // emitting window.resize. Keep the panel next to the focused input.
+    if (root.visualViewport) {
+      root.visualViewport.addEventListener('resize', () => { if (!panel.hidden) position(); });
+      root.visualViewport.addEventListener('scroll', () => { if (!panel.hidden) position(); });
+    }
   }
   function init() {
     doc.querySelectorAll(
