@@ -436,7 +436,8 @@
 				id, name, brand: String(val(2) || ''),
 				price_range: String(val(5) || ''),
 				in_stock: String(val(7) || ''),
-				flavours: String(val(9) || '')
+				flavours: String(val(9) || ''),
+				stock_qty: String(val(12) || '').trim()
 			});
 		}
 		if (!byId.size) throw new Error('Empty catalog');
@@ -467,10 +468,12 @@
 				return;
 			}
 			const errors = [];
+			const requestedCounts = new Map();
 			let pricesChanged = false;
 			const refreshed = cart.map(item => {
 				const productId = String(item.productId || String(item.id).split('::')[0]);
 				const product = latest.get(productId);
+				requestedCounts.set(productId, (requestedCounts.get(productId) || 0) + Number(item.qty || 0));
 				if (!product) {
 					errors.push(item.name + ': no longer in the catalogue');
 					return item;
@@ -488,6 +491,14 @@
 					in_stock: product.in_stock, flavours: product.flavours
 				});
 			});
+			for (const [id, qty] of requestedCounts) {
+				const product = latest.get(id);
+				if (!product || product.stock_qty === '') continue; // not tracked in sheet
+				const availableQty = Number(product.stock_qty);
+				if (Number.isFinite(availableQty) && availableQty >= 0 && qty > availableQty) {
+					errors.push(product.name + ': requested quantity exceeds available stock');
+				}
+			}
 			saveCart(refreshed);
 			renderCart();
 			if (errors.length) {
