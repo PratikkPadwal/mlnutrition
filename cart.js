@@ -437,7 +437,7 @@
 				price_range: String(val(5) || ''),
 				in_stock: String(val(7) || ''),
 				flavours: String(val(9) || ''),
-				stock_qty: String(val(12) || '').trim()
+				stock_qty: String(val(12)).trim()
 			});
 		}
 		if (!byId.size) throw new Error('Empty catalog');
