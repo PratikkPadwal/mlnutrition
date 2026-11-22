@@ -370,6 +370,7 @@ async function load(){
     catalog=parseSheet(await response.text());
     if(!catalog.length)throw Error('Catalogue is empty');
     window.MLStore?.registerProducts(catalog);
+  window.MLSearch?.setProducts(catalog);
     fillHero();fillCategories();fillBrands();featuredPool=buildFeaturedPool();renderFeatured();
   }catch(err){
     console.error('Unable to load ML Nutrition product catalogue',err);
