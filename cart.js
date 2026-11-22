@@ -113,6 +113,11 @@
 	function formatINR(n) {
 		return '₹' + n.toLocaleString('en-IN');
 	}
+	function priceLabel(value) {
+		const amount = parsePrice(value);
+		if (!amount) return t('priceRequest');
+		return formatINR(amount.min) + (amount.min === amount.max ? '' : ' – ' + formatINR(amount.max));
+	}
 	function cartTotals() {
 		const cart = getCart();
 		let min = 0, max = 0, hasRequest = false, known = false;
@@ -160,7 +165,7 @@
 	}
 	// Escape a string for safe HTML text.
 	function esc(s) {
-		return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
 	}
 
 	/* ---------- Cart ops ---------- */
@@ -313,7 +318,7 @@
 			? `<img src="${item.image_url}" alt="" onerror="this.parentElement.innerHTML='${initials}'">`
 			: initials;
 		const priceP = parsePrice(item.price_range);
-		const priceText = priceP ? '₹' + item.price_range : t('priceRequest');
+		const priceText = priceLabel(item.price_range);
 		const idArg = jsq(item.id);
 		const flavourLine = item.flavour ? `<div class="ml-line-flavour">${esc(item.flavour)}</div>` : '';
 		const qtyControls = inCart
@@ -328,10 +333,10 @@
 			<div class="ml-line">
 				<div class="ml-line-img">${img}</div>
 				<div class="ml-line-info">
-					<div class="ml-line-brand">${item.brand}</div>
-					<div class="ml-line-name">${item.name}</div>
+					<div class="ml-line-brand">${esc(item.brand)}</div>
+					<div class="ml-line-name">${esc(item.name)}</div>
 					${flavourLine}
-					<div class="ml-line-price">${priceText}</div>
+					<div class="ml-line-price">${esc(priceText)}</div>
 					${qtyControls}
 				</div>
 				<button class="ml-line-remove" onclick="${removeFn}" aria-label="${t('remove')}">×</button>
@@ -497,7 +502,7 @@
 			let msg = t('waIntro') + '\n\n';
 			refreshed.forEach((item, index) => {
 				const parsedPrice = parsePrice(item.price_range);
-				const priceText = parsedPrice ? '₹' + String(item.price_range).replace(/^₹\s*/, '') : t('priceRequest');
+				const priceText = priceLabel(item.price_range);
 				const flavourText = item.flavour ? ' [' + item.flavour + ']' : '';
 				msg += (index + 1) + '. ' + item.name + flavourText + ' (' + item.brand + ') — ' +
 					t('qty') + ': ' + item.qty + ' — ' + priceText + '\n';
@@ -572,9 +577,12 @@
 	function cardButtons(product) {
 		const id = product.id != null ? product.id : product.name;
 		const safeId = String(id).replace(/"/g, '&quot;');
-		const inStock = product.in_stock === 'Yes';
+		const available = inStock(product);
 		const wished = isInWishlist(id) ? ' active' : '';
-		const cartBtn = inStock
+		const choiceLink = '<a class="ml-card-cart" href="product.html?id=' + encodeURIComponent(id) + '" aria-label="Choose flavour on product page">↗</a>';
+		const cartBtn = available && productFlavours(product).length
+			? choiceLink
+			: available
 			? `<button class="ml-card-cart" data-cart-id="${safeId}" aria-label="Add to cart">
 					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
 				</button>`
@@ -606,7 +614,14 @@
 		const wb = e.target.closest('[data-wishlist-id]');
 		if (wb) { e.preventDefault(); toggleWishlist(wb.dataset.wishlistId); return; }
 		const cb = e.target.closest('[data-cart-id]');
-		if (cb) { e.preventDefault(); addToCart(cb.dataset.cartId); return; }
+		if (cb) {
+			e.preventDefault();
+			const prod = registry[String(cb.dataset.cartId)];
+			if (productFlavours(prod).length) {
+				window.location.href = 'product.html?id=' + encodeURIComponent(cb.dataset.cartId);
+			} else addToCart(cb.dataset.cartId);
+			return;
+		}
 	});
 
 	/* ---------- Inject CSS ---------- */
