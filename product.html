@@ -392,7 +392,9 @@
 		}
 	</style>
 <link rel="stylesheet" href="/internal-v14.css">
+<link rel="stylesheet" href="/search-v20.css">
 <script src="/internal-v14.js" defer></script>
+<script src="/search-v20.js" defer></script>
 </head>
 <body class="mln-product-page">
 <div class="mln-announcement" aria-label="ML Nutrition commitments"><span>GLOBAL BRANDS</span><b aria-hidden="true">✦</b><span>GENUINE PRODUCTS</span><b aria-hidden="true">✦</b><span>GST INVOICES</span><b aria-hidden="true">✦</b><span>TALEGAON &amp; AKURDI</span></div>
@@ -838,6 +840,7 @@
 						return;
 					}
 					if (window.MLStore) MLStore.registerProducts(allProducts);
+					window.MLSearch?.setProducts(allProducts);
 					const flavs = getFlavours(currentProduct);
 					selectedFlavour = null; // Require the customer to choose a flavour explicitly.
 					renderProduct();
