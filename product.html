@@ -1031,7 +1031,10 @@
 				return;
 			}
 			if (getFlavours(p).length && !selectedFlavour) {
-				window.MLStore?.toast(T('detail.selectFlavour'), 'error');
+				// Reuse the existing option-selection guidance for both actions.
+				const add = document.getElementById('addCartBtn');
+				if (add && !add.disabled) add.click();
+				else window.MLStore?.toast(T('detail.selectFlavour'), 'error');
 				return;
 			}
 			const price = parsePriceNums(p.price_range) ? priceLabel(p.price_range) : '';
