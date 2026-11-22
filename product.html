@@ -568,11 +568,19 @@
 				.replace(/"/g, '&quot;');
 		}
 		function parsePriceNums(str) {
-			if (!str) return null;
-			const nums = String(str).match(/\d+/g);
-			if (!nums) return null;
-			const vals = nums.map(Number);
+			if (str == null || str === '') return null;
+			const normalized = String(str).trim().replace(/(?:\bINR\b|\bRs\.?)/gi, '').replace(/[₹,\s]/g, '');
+			const match = normalized.match(/^(\d+(?:\.\d{1,2})?)(?:(?:-|–|—|to)(\d+(?:\.\d{1,2})?))?$/i);
+			if (!match) return null;
+			const vals = [Number(match[1]), match[2] == null ? Number(match[1]) : Number(match[2])];
+			if (vals.some(n => !Number.isFinite(n) || n <= 0)) return null;
 			return { min: Math.min(...vals), max: Math.max(...vals) };
+		}
+		function priceLabel(str) {
+			const p = parsePriceNums(str);
+			if (!p) return T('detail.priceRequest');
+			const money = n => '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+			return money(p.min) + (p.min === p.max ? '' : ' – ' + money(p.max));
 		}
 		function getFlavours(p) {
 			if (!p || !p.flavours) return [];
@@ -851,7 +859,7 @@
 			const initials = (p.name || 'P').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 			const priceP = parsePriceNums(p.price_range);
 			const priceHTML = priceP
-				? `<span class="currency">₹</span>${esc(p.price_range)}`
+				? `<span class="currency">${esc(priceLabel(p.price_range))}</span>`
 				: `<span class="req">${esc(T('detail.priceRequest'))}</span>`;
 			const flavs = getFlavours(p);
 
@@ -1055,7 +1063,7 @@
 					? `<img src="${esc(imgSrc)}" alt="${esc(p.name)}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">`
 					: `<div class="placeholder">${initials}</div>`;
 				const priceP = parsePriceNums(p.price_range);
-				const priceText = priceP ? `₹${esc(p.price_range)}` : esc(T('detail.priceRequest'));
+				const priceText = priceP ? esc(priceLabel(p.price_range)) : esc(T('detail.priceRequest'));
 				return `
 					<a class="related-card" href="product.html?id=${encodeURIComponent(p.id)}">
 						<div class="related-img">${img}</div>
