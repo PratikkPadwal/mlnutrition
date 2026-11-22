@@ -395,23 +395,131 @@
 	}
 
 	/* ---------- Checkout (WhatsApp) ---------- */
-	function checkout() {
-		const cart = getCart();
-		if (cart.length === 0) return;
-		let msg = t('waIntro') + '\n\n';
-		cart.forEach((item, idx) => {
-			const priceP = parsePrice(item.price_range);
-			const priceText = priceP ? '₹' + item.price_range : t('priceRequest');
-			const flavourText = item.flavour ? ` [${item.flavour}]` : '';
-			msg += `${idx + 1}. ${item.name}${flavourText} (${item.brand}) — ${t('qty')}: ${item.qty} — ${priceText}\n`;
-		});
-		const tot = cartTotals();
-		if (tot.known) {
-			const totalText = tot.min === tot.max ? formatINR(tot.min) : formatINR(tot.min) + ' - ' + formatINR(tot.max);
-			msg += `\n${t('waTotal')}: ${totalText}${tot.hasRequest ? ' +' : ''}\n`;
+	// A saved cart is a snapshot, not an inventory or price authority.
+	const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17h4gGSIbSJZ6qMA0Xjt-2aLoxRT4ZTikjPdaaM6a_S4/gviz/tq?tqx=out:json';
+	let checkoutBusy = false;
+	function checkoutIssue(message) {
+		const footer = document.getElementById('mlCartFooter');
+		if (footer) {
+			let warning = document.getElementById('mlCheckoutIssue');
+			if (!warning) {
+				warning = document.createElement('p');
+				warning.id = 'mlCheckoutIssue';
+				warning.setAttribute('role', 'alert');
+				warning.style.cssText = 'margin:10px 0;color:#b11229;font-size:12px;line-height:1.5';
+				footer.appendChild(warning);
+			}
+			warning.textContent = message;
 		}
-		msg += `\n${t('waConfirm')}`;
-		window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+		showToast(message, 'error');
+	}
+	async function fetchFreshCatalogue() {
+		const response = await fetch(SHEET_URL, { cache: 'no-store' });
+		if (!response.ok) throw new Error('Catalog fetch failed');
+		const raw = await response.text();
+		const begin = raw.indexOf('{'), end = raw.lastIndexOf('}');
+		if (begin < 0 || end <= begin) throw new Error('Invalid catalog response');
+		const parsed = JSON.parse(raw.slice(begin, end + 1));
+		if (!Array.isArray(parsed.table && parsed.table.rows)) throw new Error('Missing products');
+		const byId = new Map();
+		for (const row of parsed.table.rows) {
+			const val = index => row && row.c && row.c[index] && row.c[index].v != null ? row.c[index].v : '';
+			const id = val(0), name = String(val(1) || '').trim();
+			if (id === '' || !name || name.toLowerCase() === 'name') continue;
+			byId.set(String(id), {
+				id, name, brand: String(val(2) || ''),
+				price_range: String(val(5) || ''),
+				in_stock: String(val(7) || ''),
+				flavours: String(val(9) || '')
+			});
+		}
+		if (!byId.size) throw new Error('Empty catalog');
+		return byId;
+	}
+	async function checkout() {
+		const cart = getCart();
+		if (!cart.length || checkoutBusy) return;
+		checkoutBusy = true;
+		const button = document.querySelector('#mlCartFooter .ml-checkout');
+		if (button) button.disabled = true;
+		// Start the popup within the click gesture. After an async stock
+		// check browsers may otherwise block opening WhatsApp.
+		const tab = window.open('', '_blank');
+		if (tab) {
+			try {
+				tab.document.title = 'Checking ML Nutrition order';
+				tab.document.body.textContent = 'Checking current prices and availability…';
+			} catch (err) { /* ignore popup customization errors */ }
+		}
+		try {
+			const latest = await fetchFreshCatalogue();
+			const originalCartKey = JSON.stringify(cart.map(i => [i.id, i.qty]));
+			const currentCart = getCart();
+			if (originalCartKey !== JSON.stringify(currentCart.map(i => [i.id, i.qty]))) {
+				if (tab) tab.close();
+				checkoutIssue('Your cart changed. Review it and try checkout again.');
+				return;
+			}
+			const errors = [];
+			let pricesChanged = false;
+			const refreshed = cart.map(item => {
+				const productId = String(item.productId || String(item.id).split('::')[0]);
+				const product = latest.get(productId);
+				if (!product) {
+					errors.push(item.name + ': no longer in the catalogue');
+					return item;
+				}
+				if (!inStock(product)) errors.push(product.name + ': currently out of stock');
+				if (validFlavour(product, item.flavour) === null)
+					errors.push(product.name + ': choose an available flavour');
+				if (!Number.isSafeInteger(Number(item.qty)) || Number(item.qty) < 1 || Number(item.qty) > 99)
+					errors.push(product.name + ': invalid quantity');
+				const currentPrice = product.price_range.trim();
+				if (String(item.price_range || '').trim() !== currentPrice) pricesChanged = true;
+				registry[productId] = Object.assign({}, registry[productId] || {}, product);
+				return Object.assign({}, item, {
+					name: product.name, brand: product.brand, price_range: currentPrice,
+					in_stock: product.in_stock, flavours: product.flavours
+				});
+			});
+			saveCart(refreshed);
+			renderCart();
+			if (errors.length) {
+				if (tab) tab.close();
+				checkoutIssue(errors.slice(0, 3).join('; ') + '. Please update your cart.');
+				return;
+			}
+			if (pricesChanged) {
+				if (tab) tab.close();
+				checkoutIssue('Some prices have changed. Review your updated cart and tap Checkout again.');
+				return;
+			}
+			let msg = t('waIntro') + '\n\n';
+			refreshed.forEach((item, index) => {
+				const parsedPrice = parsePrice(item.price_range);
+				const priceText = parsedPrice ? '₹' + String(item.price_range).replace(/^₹\s*/, '') : t('priceRequest');
+				const flavourText = item.flavour ? ' [' + item.flavour + ']' : '';
+				msg += (index + 1) + '. ' + item.name + flavourText + ' (' + item.brand + ') — ' +
+					t('qty') + ': ' + item.qty + ' — ' + priceText + '\n';
+			});
+			const tot = cartTotals();
+			if (tot.known) {
+				const total = tot.min === tot.max ? formatINR(tot.min) : formatINR(tot.min) + ' - ' + formatINR(tot.max);
+				msg += '\n' + t('waTotal') + ': ' + total + (tot.hasRequest ? ' +' : '') + '\n';
+			}
+			msg += '\n' + t('waConfirm');
+			const destination = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+			if (tab && !tab.closed) tab.location.replace(destination);
+			else window.location.href = destination;
+		} catch (err) {
+			if (tab) tab.close();
+			console.error('Checkout validation failed', err);
+			checkoutIssue('Cannot verify live prices and stock right now. Please try again.');
+		} finally {
+			checkoutBusy = false;
+			const currentButton = document.querySelector('#mlCartFooter .ml-checkout');
+			if (currentButton) currentButton.disabled = false;
+		}
 	}
 
 	/* ---------- Drawers ---------- */
