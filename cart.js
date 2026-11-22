@@ -91,8 +91,9 @@
 	function parsePrice(str) {
 		if (str == null || str === '') return null;
 		const normalized = String(str).trim()
-			.replace(/\b(?:INR|Rs\.?)\b/gi, '')
-			.replace(/[₹,\s]/g, '');
+			.replace(/(?:\bINR\b|\bRs\.?)/gi, '')
+			.replace(/[₹,\s]/g, '')
+			.replace(/\/-$/, '');
 		const match = normalized.match(/^(\d+(?:\.\d{1,2})?)(?:(?:-|–|—|to)(\d+(?:\.\d{1,2})?))?$/i);
 		if (!match) return null;
 		const values = [Number(match[1]), match[2] === undefined ? Number(match[1]) : Number(match[2])];
