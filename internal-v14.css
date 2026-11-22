@@ -583,3 +583,44 @@ body.mln-product-page .flavour-chip{touch-action:manipulation}
     touch-action:manipulation;cursor:pointer;
   }
 }
+
+/* V21 — minimal sheet-driven product page. Keep purchasing first; show
+   the existing description after the actions, not between options and qty. */
+body.mln-product-page .detail-price{
+  margin-bottom:16px;
+  padding:15px 0;
+}
+body.mln-product-page .flavour-block{
+  margin-bottom:15px;
+}
+body.mln-product-page .qty-block{
+  margin-bottom:15px;
+}
+body.mln-product-page .detail-share{
+  margin-top:14px;
+}
+body.mln-product-page .detail-description-block{
+  width:100%;
+  margin-top:22px;
+  padding-top:20px;
+  border-top:1px solid #ded8d2;
+}
+body.mln-product-page .detail-description-block .detail-section-label{
+  margin:0 0 9px;
+}
+body.mln-product-page .detail-description-block .detail-desc{
+  margin:0;
+  max-width:68ch;
+  overflow-wrap:anywhere;
+  line-height:1.75;
+}
+@media(max-width:760px){
+  body.mln-product-page .detail-description-block{
+    margin-top:19px;
+    padding-top:16px;
+  }
+  body.mln-product-page .detail-description-block .detail-desc{
+    font-size:12px;
+    line-height:1.7;
+  }
+}
