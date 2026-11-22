@@ -869,10 +869,11 @@
 			const mediaInner = buildGalleryHTML(images, initials, p.name);
 
 			const flavourBlock = flavs.length ? `
-				<div class="flavour-block">
+				<div class="flavour-block" id="mlnFlavourBlock">
 					<div class="detail-section-label">${esc(T('detail.flavour'))}</div>
-					<div class="flavour-options" id="flavourOptions">
-						${flavs.map((f, i) => `<button class="flavour-chip" data-flavour="${esc(f)}">${esc(f)}</button>`).join('')}
+					<p class="flavour-hint" id="mlnFlavourHint">Choose a flavour to add this product to your cart.</p>
+					<div class="flavour-options" id="flavourOptions" role="group" aria-label="Choose flavour">
+						${flavs.map((f, i) => `<button type="button" class="flavour-chip" data-flavour="${esc(f)}" aria-pressed="false">${esc(f)}</button>`).join('')}
 					</div>
 				</div>` : '';
 
@@ -891,8 +892,8 @@
 							<span class="badge trust">✓ ${esc(T('detail.authentic'))}</span>
 						</div>
 						<div class="detail-price">${priceHTML}</div>
-						${descBlock}
 						${flavourBlock}
+						${descBlock}
 						<div class="qty-block">
 							<div class="detail-section-label">${esc(T('detail.quantity'))}</div>
 							<div class="qty-selector">
@@ -902,9 +903,9 @@
 							</div>
 						</div>
 						<div class="detail-actions">
-							<button class="btn-action btn-cart" id="addCartBtn" ${inStock && !flavs.length ? '' : 'disabled'}>
+							<button class="btn-action btn-cart" id="addCartBtn" ${inStock ? '' : 'disabled'} ${flavs.length ? 'aria-describedby="mlnFlavourHint"' : ''}>
 								<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-								${inStock ? esc(T('detail.addToCart')) : esc(T('detail.outOfStock'))}
+								<span id="cartButtonLabel">${inStock ? (flavs.length ? 'CHOOSE FLAVOUR' : esc(T('detail.addToCart'))) : esc(T('detail.outOfStock'))}</span>
 							</button>
 							<button class="btn-action btn-wish" id="wishBtn" aria-label="Add to wishlist">
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -956,11 +957,13 @@
 			wireGallery();
 			document.querySelectorAll('.flavour-chip').forEach(chip => {
 				chip.addEventListener('click', () => {
-					document.querySelectorAll('.flavour-chip').forEach(c => c.classList.remove('active'));
+					document.querySelectorAll('.flavour-chip').forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
 					chip.classList.add('active');
+					chip.setAttribute('aria-pressed', 'true');
+					document.getElementById('mlnFlavourBlock')?.classList.remove('needs-selection');
 					selectedFlavour = chip.dataset.flavour;
-					const add = document.getElementById('addCartBtn');
-					if (add) add.disabled = !selectedFlavour || String(currentProduct.in_stock || '').trim().toLowerCase() !== 'yes';
+					const label = document.getElementById('cartButtonLabel');
+					if (label) label.textContent = T('detail.addToCart');
 					syncWishState();
 				});
 			});
@@ -977,6 +980,14 @@
 			if (addBtn && String(currentProduct.in_stock || '').trim().toLowerCase() === 'yes') {
 				addBtn.addEventListener('click', () => {
 					if (window.MLStore) {
+						if (getFlavours(currentProduct).length && !selectedFlavour) {
+							const options = document.getElementById('mlnFlavourBlock');
+							options?.classList.add('needs-selection');
+							options?.scrollIntoView({ behavior: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ? 'auto' : 'smooth', block: 'center' });
+							options?.querySelector('.flavour-chip')?.focus({ preventScroll: true });
+							MLStore.toast('Please choose a flavour first.', 'error');
+							return;
+						}
 						if (MLStore.addToCart(currentProduct.id, selectedFlavour, quantity)) MLStore.openCart();
 					}
 				});
