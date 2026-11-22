@@ -988,7 +988,9 @@
 		}
 	</style>
 <link rel="stylesheet" href="/internal-v14.css">
+<link rel="stylesheet" href="/search-v20.css">
 <script src="/internal-v14.js" defer></script>
+<script src="/search-v20.js" defer></script>
 </head>
 <body class="mln-catalog-page">
 <div class="mln-announcement" aria-label="ML Nutrition commitments"><span>GLOBAL BRANDS</span><b aria-hidden="true">✦</b><span>GENUINE PRODUCTS</span><b aria-hidden="true">✦</b><span>GST INVOICES</span><b aria-hidden="true">✦</b><span>TALEGAON &amp; AKURDI</span></div>
@@ -1148,7 +1150,7 @@
 				<div class="products-controls">
 					<div class="search-bar">
 						<span class="search-icon">🔍</span>
-						<input type="text" class="search-input" id="searchInput" data-i18n-placeholder="page.searchPlaceholder" placeholder="Search products, brands...">
+						<input type="search" autocomplete="off" class="search-input" id="searchInput" data-i18n-placeholder="page.searchPlaceholder" placeholder="Search products, brands...">
 					</div>
 					<select class="sort-select" id="sortSelect">
 						<option value="name-asc" data-i18n="sort.nameAsc">Name: A-Z</option>
@@ -1394,6 +1396,7 @@
 					}));
 
 					allProducts = products.filter(p => p.name && p.name.trim() && p.name.trim().toLowerCase() !== 'name');
+					window.MLSearch?.setProducts(allProducts);
 					updateCategoryCounts();
 					applyFilters();
 				})
@@ -1451,18 +1454,23 @@
 				products = products.filter(p => !isAvailable(p));
 			}
 
-			// Search filter
+			// Smart search matches all terms across brand/name/category, handles
+			// brand abbreviations and limited spelling mistakes.
+			// Preserve selected filters and default to relevance.
 			if (searchQuery.trim()) {
-				const query = searchQuery.toLowerCase();
-				products = products.filter(p =>
-					p.name.toLowerCase().includes(query) ||
-					p.brand.toLowerCase().includes(query) ||
-					p.category.toLowerCase().includes(query)
-				);
+				if (window.MLSearch) {
+					products = window.MLSearch.rankProducts(products, searchQuery);
+				} else {
+					const query = searchQuery.toLowerCase();
+					products = products.filter(p =>
+						String(p.name || '').toLowerCase().includes(query) ||
+						String(p.brand || '').toLowerCase().includes(query) ||
+						String(p.category || '').toLowerCase().includes(query)
+					);
+				}
 			}
 
-			// Sort
-			products = sortProducts(products);
+			if (!searchQuery.trim() || sortBy !== 'name-asc') products = sortProducts(products);
 
 			filteredProducts = products;
 			renderProducts(products);
