@@ -357,7 +357,8 @@
   function init() {
     doc.querySelectorAll(
       'form.search-bar input[name="q"], form.mobile-search input[name="q"], ' +
-      'form.mln-header-search input[name="q"], form.mln-mobile-search input[name="q"], #searchInput'
+      'form.mln-header-search input[name="q"], form.mln-mobile-search input[name="q"], ' +
+      'form.mln-home-quick-search input[name="q"], #searchInput'
     ).forEach(setup);
   }
   api.setProducts = setProducts;
