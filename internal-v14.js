@@ -83,7 +83,7 @@ function ready(){
    wa.addEventListener('click',()=>root.querySelector('#buyWaBtn')?.click());
    // Observe only the actual product area; changes to the bar itself
    // do not retrigger this observer.
-   new MutationObserver(sync).observe(root,{childList:true,subtree:true});
+   new MutationObserver(sync).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled']});
    sync();
  }
 }
