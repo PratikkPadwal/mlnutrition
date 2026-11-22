@@ -1436,12 +1436,8 @@
 			// Price filter
 			if (minPrice !== null || maxPrice !== null) {
 				products = products.filter(p => {
-					const priceStr = p.price_range == null ? '' : String(p.price_range);
-					if (!priceStr || priceStr === 'Price on request') return false;
-					
-					const prices = priceStr.split('-').map(s => parseInt(s.replace(/[^\d]/g, '')));
-					const avgPrice = prices.length === 2 ? (prices[0] + prices[1]) / 2 : prices[0];
-					
+					const avgPrice = getAvgPrice(p);
+					if (!Number.isFinite(avgPrice)) return false;
 					if (minPrice !== null && avgPrice < minPrice) return false;
 					if (maxPrice !== null && avgPrice > maxPrice) return false;
 					return true;
@@ -1450,9 +1446,9 @@
 
 			// Stock filter
 			if (stockFilter === 'in') {
-				products = products.filter(p => p.in_stock === 'Yes');
+				products = products.filter(p => isAvailable(p));
 			} else if (stockFilter === 'out') {
-				products = products.filter(p => p.in_stock !== 'Yes');
+				products = products.filter(p => !isAvailable(p));
 			}
 
 			// Search filter
@@ -1499,38 +1495,46 @@
 			return sorted;
 		}
 
+		function parseShopPrice(value) {
+			if (value == null || value === '') return null;
+			const normalized = String(value).trim().replace(/(?:\bINR\b|\bRs\.?)/gi,'').replace(/[₹,\s]/g,'');
+			const match = normalized.match(/^(\d+(?:\.\d{1,2})?)(?:(?:-|–|—|to)(\d+(?:\.\d{1,2})?))?$/i);
+			if (!match) return null;
+			const vals = [Number(match[1]), match[2] == null ? Number(match[1]) : Number(match[2])];
+			if (vals.some(n => !Number.isFinite(n) || n <= 0)) return null;
+			return { min: Math.min(...vals), max: Math.max(...vals) };
+		}
 		function getAvgPrice(product) {
-			const priceStr = product.price_range == null ? '' : String(product.price_range);
-			if (!priceStr || priceStr === 'Price on request') return Infinity;
-			const prices = priceStr.split('-').map(s => parseInt(s.replace(/[^\d]/g, '')));
-			return prices.length === 2 ? (prices[0] + prices[1]) / 2 : prices[0];
+			const prices = parseShopPrice(product.price_range);
+			return prices ? (prices.min + prices.max) / 2 : Infinity;
+		}
+		function productPriceLabel(value) {
+			const prices = parseShopPrice(value);
+			if (!prices) return 'Price on request';
+			const fmt = n => '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+			return fmt(prices.min) + (prices.min === prices.max ? '' : ' – ' + fmt(prices.max));
+		}
+		function isAvailable(product) {
+			return String(product && product.in_stock || '').trim().toLowerCase() === 'yes';
 		}
 
-		// SEO: build & inject Product structured data (JSON-LD) for the visible products.
-		// Designed for fixed prices (single value); falls back to a price range if needed.
-		function buildOffer(priceStr, inStock) {
-			const availability = inStock
+		// Structured-data offers must use the same validated prices shown
+		// to customers; commas must not create fake low/high ranges.
+		function buildOffer(priceStr, available) {
+			const parsed = parseShopPrice(priceStr);
+			if (!parsed) return null;
+			const availability = available
 				? 'https://schema.org/InStock'
 				: 'https://schema.org/OutOfStock';
-			priceStr = priceStr == null ? '' : String(priceStr);
-			if (!priceStr || /request/i.test(priceStr)) return null;
-			const nums = (priceStr.match(/\d+/g) || []).map(Number);
-			if (nums.length === 0) return null;
-			if (nums.length === 1) {
-				return {
-					'@type': 'Offer',
-					priceCurrency: 'INR',
-					price: String(nums[0]),
-					availability: availability
-				};
+			if (parsed.min === parsed.max) {
+				return { '@type': 'Offer', priceCurrency: 'INR', price: String(parsed.min), availability };
 			}
-			// Range fallback (until prices are updated to a single value in the sheet)
 			return {
 				'@type': 'AggregateOffer',
 				priceCurrency: 'INR',
-				lowPrice: String(Math.min(...nums)),
-				highPrice: String(Math.max(...nums)),
-				availability: availability
+				lowPrice: String(parsed.min),
+				highPrice: String(parsed.max),
+				availability
 			};
 		}
 
@@ -1546,7 +1550,7 @@
 				};
 				if (product.image_url) item.image = String(product.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim();
 				if (product.description) item.description = product.description;
-				const offer = buildOffer(product.price_range, product.in_stock === 'Yes');
+				const offer = buildOffer(product.price_range, isAvailable(product));
 				if (offer) item.offers = offer;
 				return {
 					'@type': 'ListItem',
@@ -1601,7 +1605,7 @@
 					: `Hi ML Nutrition! I am interested in ${name} by ${brand}. Please share availability and exact price.`;
 				const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`;
 
-				const isInStock = product.in_stock === 'Yes';
+				const isInStock = isAvailable(product);
 				const stockBadge = isInStock
 					? `<div class="stock-badge in-stock">${translations[currentLang].product.inStockBadge}</div>`
 					: `<div class="stock-badge out-of-stock">${translations[currentLang].product.outOfStockBadge}</div>`;
@@ -1623,7 +1627,7 @@
 						<div class="product-info">
 							<div class="product-brand">${brand}</div>
 							<a class="product-link" href="${productUrl}"><h3 class="product-name">${name}</h3></a>
-							<div class="product-price"><span class="currency">₹</span>${price}</div>
+							<div class="product-price">${productPriceLabel(price)}</div>
 							${isInStock ?
 								`<a href="${whatsappUrl}" target="_blank" class="${buttonClass}">
 									<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

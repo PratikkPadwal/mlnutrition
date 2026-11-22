@@ -86,21 +86,45 @@
 	function saveWishlist(w) { write(WISHLIST_KEY, w); }
 
 	/* ---------- Price parsing ---------- */
+	// Accept fixed INR amounts and clearly separated price ranges.
+	// Never split thousands separators: "₹10,700" must mean 10700.
 	function parsePrice(str) {
-		if (!str) return null;
-		const nums = String(str).match(/\d+/g);
-		if (!nums || nums.length === 0) return null;
-		const vals = nums.map(Number);
-		return { min: Math.min(...vals), max: Math.max(...vals) };
+		if (str == null || str === '') return null;
+		const normalized = String(str).trim()
+			.replace(/(?:\bINR\b|\bRs\.?)/gi, '')
+			.replace(/[₹,\s]/g, '')
+			.replace(/\/-$/, '');
+		const match = normalized.match(/^(\d+(?:\.\d{1,2})?)(?:(?:-|–|—|to)(\d+(?:\.\d{1,2})?))?$/i);
+		if (!match) return null;
+		const values = [Number(match[1]), match[2] === undefined ? Number(match[1]) : Number(match[2])];
+		if (values.some(n => !Number.isFinite(n) || n <= 0)) return null;
+		return { min: Math.min(...values), max: Math.max(...values) };
+	}
+	function inStock(product) {
+		return String(product && product.in_stock || '').trim().toLowerCase() === 'yes';
+	}
+	function productFlavours(product) {
+		return String(product && product.flavours || '').split(/[,|]/).map(f => f.trim()).filter(Boolean);
+	}
+	function validFlavour(product, flavour) {
+		const list = productFlavours(product);
+		if (!list.length) return !flavour ? '' : null;
+		return list.find(f => f.toLowerCase() === String(flavour || '').trim().toLowerCase()) || null;
 	}
 	function formatINR(n) {
 		return '₹' + n.toLocaleString('en-IN');
+	}
+	function priceLabel(value) {
+		const amount = parsePrice(value);
+		if (!amount) return t('priceRequest');
+		return formatINR(amount.min) + (amount.min === amount.max ? '' : ' – ' + formatINR(amount.max));
 	}
 	function cartTotals() {
 		const cart = getCart();
 		let min = 0, max = 0, hasRequest = false, known = false;
 		cart.forEach(item => {
-			const p = parsePrice(item.price_range);
+			const current = registry[String(item.productId || String(item.id).split('::')[0])];
+			const p = parsePrice(current ? current.price_range : item.price_range);
 			if (p) {
 				min += p.min * item.qty;
 				max += p.max * item.qty;
@@ -127,7 +151,8 @@
 			brand: p.brand || 'ML Nutrition',
 			price_range: p.price_range || '',
 			image_url: p.image_url ? String(p.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim() : '',
-			in_stock: p.in_stock || ''
+			in_stock: p.in_stock || '',
+			flavours: p.flavours || ''
 		};
 	}
 
@@ -141,36 +166,53 @@
 	}
 	// Escape a string for safe HTML text.
 	function esc(s) {
-		return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
 	}
 
 	/* ---------- Cart ops ---------- */
 	function addToCart(id, flavour, qty) {
-		const prod = findProduct(id);
-		if (!prod) return;
-		if (prod.in_stock && prod.in_stock !== 'Yes') {
-			showToast(t('outOfStock'), 'error');
-			return;
+		// Local storage snapshots can be stale. Only registered catalogue
+		// products may be added; checkout rechecks the live sheet.
+		const prod = registry[String(id)];
+		if (!prod) {
+			showToast('Product is still loading. Please try again.', 'error');
+			return false;
 		}
-		const addQty = Math.max(1, parseInt(qty, 10) || 1);
-		const key = lineId(id, flavour);
+		if (!inStock(prod)) {
+			showToast(t('outOfStock'), 'error');
+			return false;
+		}
+		const selection = validFlavour(prod, flavour);
+		if (selection === null) {
+			showToast(productFlavours(prod).length ? 'Please choose a valid flavour.' : 'Invalid product option.', 'error');
+			return false;
+		}
+		const parsedQty = Number(qty == null ? 1 : qty);
+		const addQty = Number.isSafeInteger(parsedQty) ? parsedQty : 0;
+		if (addQty < 1 || addQty > 99) {
+			showToast('Quantity must be between 1 and 99.', 'error');
+			return false;
+		}
+		const key = lineId(id, selection);
 		const cart = getCart();
 		const existing = cart.find(i => String(i.id) === key);
 		if (existing) {
-			existing.qty += addQty;
+			existing.qty = Math.min(99, (Number(existing.qty) || 0) + addQty);
+			Object.assign(existing, snapshot(prod), { id: key, productId: prod.id, flavour: selection || undefined });
 		} else {
-			const s = snapshot(prod);
-			s.productId = prod.id;
-			s.id = key;
-			if (flavour) s.flavour = flavour;
-			s.qty = addQty;
-			cart.push(s);
+			const record = snapshot(prod);
+			record.productId = prod.id;
+			record.id = key;
+			if (selection) record.flavour = selection;
+			record.qty = addQty;
+			cart.push(record);
 		}
 		saveCart(cart);
 		updateBadges();
 		renderCart();
 		showToast(t('addedCart'), 'success');
 		bump('cartBtn');
+		return true;
 	}
 	function removeFromCart(id) {
 		saveCart(getCart().filter(i => String(i.id) !== String(id)));
@@ -228,25 +270,18 @@
 	function moveToCart(id) {
 		const item = getWishlist().find(i => String(i.id) === String(id));
 		if (!item) return;
-		if (item.in_stock && item.in_stock !== 'Yes') {
-			showToast(t('outOfStock'), 'error');
+		const productId = item.productId || String(item.id).split('::')[0];
+		const prod = registry[String(productId)];
+		if (!prod) {
+			showToast('Product details are loading. Please try again.', 'error');
 			return;
 		}
-		const cart = getCart();
-		const existing = cart.find(i => String(i.id) === String(item.id));
-		if (existing) {
-			existing.qty += 1;
-		} else {
-			const s = Object.assign({}, item);
-			s.qty = 1;
-			cart.push(s);
+		if (productFlavours(prod).length && !item.flavour) {
+			showToast('Choose a flavour on the product page.', 'error');
+			window.location.href = 'product.html?id=' + encodeURIComponent(productId);
+			return;
 		}
-		saveCart(cart);
-		removeFromWishlist(id);
-		updateBadges();
-		renderCart();
-		showToast(t('addedCart'), 'success');
-		bump('cartBtn');
+		if (addToCart(productId, item.flavour, 1)) removeFromWishlist(id);
 	}
 
 	/* ---------- Badges & button sync ---------- */
@@ -284,7 +319,7 @@
 			? `<img src="${item.image_url}" alt="" onerror="this.parentElement.innerHTML='${initials}'">`
 			: initials;
 		const priceP = parsePrice(item.price_range);
-		const priceText = priceP ? '₹' + item.price_range : t('priceRequest');
+		const priceText = priceLabel(item.price_range);
 		const idArg = jsq(item.id);
 		const flavourLine = item.flavour ? `<div class="ml-line-flavour">${esc(item.flavour)}</div>` : '';
 		const qtyControls = inCart
@@ -299,10 +334,10 @@
 			<div class="ml-line">
 				<div class="ml-line-img">${img}</div>
 				<div class="ml-line-info">
-					<div class="ml-line-brand">${item.brand}</div>
-					<div class="ml-line-name">${item.name}</div>
+					<div class="ml-line-brand">${esc(item.brand)}</div>
+					<div class="ml-line-name">${esc(item.name)}</div>
 					${flavourLine}
-					<div class="ml-line-price">${priceText}</div>
+					<div class="ml-line-price">${esc(priceText)}</div>
 					${qtyControls}
 				</div>
 				<button class="ml-line-remove" onclick="${removeFn}" aria-label="${t('remove')}">×</button>
@@ -366,23 +401,142 @@
 	}
 
 	/* ---------- Checkout (WhatsApp) ---------- */
-	function checkout() {
-		const cart = getCart();
-		if (cart.length === 0) return;
-		let msg = t('waIntro') + '\n\n';
-		cart.forEach((item, idx) => {
-			const priceP = parsePrice(item.price_range);
-			const priceText = priceP ? '₹' + item.price_range : t('priceRequest');
-			const flavourText = item.flavour ? ` [${item.flavour}]` : '';
-			msg += `${idx + 1}. ${item.name}${flavourText} (${item.brand}) — ${t('qty')}: ${item.qty} — ${priceText}\n`;
-		});
-		const tot = cartTotals();
-		if (tot.known) {
-			const totalText = tot.min === tot.max ? formatINR(tot.min) : formatINR(tot.min) + ' - ' + formatINR(tot.max);
-			msg += `\n${t('waTotal')}: ${totalText}${tot.hasRequest ? ' +' : ''}\n`;
+	// A saved cart is a snapshot, not an inventory or price authority.
+	const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17h4gGSIbSJZ6qMA0Xjt-2aLoxRT4ZTikjPdaaM6a_S4/gviz/tq?tqx=out:json';
+	let checkoutBusy = false;
+	function checkoutIssue(message) {
+		const footer = document.getElementById('mlCartFooter');
+		if (footer) {
+			let warning = document.getElementById('mlCheckoutIssue');
+			if (!warning) {
+				warning = document.createElement('p');
+				warning.id = 'mlCheckoutIssue';
+				warning.setAttribute('role', 'alert');
+				warning.style.cssText = 'margin:10px 0;color:#b11229;font-size:12px;line-height:1.5';
+				footer.appendChild(warning);
+			}
+			warning.textContent = message;
 		}
-		msg += `\n${t('waConfirm')}`;
-		window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+		showToast(message, 'error');
+	}
+	async function fetchFreshCatalogue() {
+		const response = await fetch(SHEET_URL, { cache: 'no-store' });
+		if (!response.ok) throw new Error('Catalog fetch failed');
+		const raw = await response.text();
+		const begin = raw.indexOf('{'), end = raw.lastIndexOf('}');
+		if (begin < 0 || end <= begin) throw new Error('Invalid catalog response');
+		const parsed = JSON.parse(raw.slice(begin, end + 1));
+		if (!Array.isArray(parsed.table && parsed.table.rows)) throw new Error('Missing products');
+		const byId = new Map();
+		for (const row of parsed.table.rows) {
+			const val = index => row && row.c && row.c[index] && row.c[index].v != null ? row.c[index].v : '';
+			const id = val(0), name = String(val(1) || '').trim();
+			if (id === '' || !name || name.toLowerCase() === 'name') continue;
+			byId.set(String(id), {
+				id, name, brand: String(val(2) || ''),
+				price_range: String(val(5) || ''),
+				in_stock: String(val(7) || ''),
+				flavours: String(val(9) || ''),
+				stock_qty: String(val(12)).trim()
+			});
+		}
+		if (!byId.size) throw new Error('Empty catalog');
+		return byId;
+	}
+	async function checkout() {
+		const cart = getCart();
+		if (!cart.length || checkoutBusy) return;
+		checkoutBusy = true;
+		const button = document.querySelector('#mlCartFooter .ml-checkout');
+		if (button) button.disabled = true;
+		// Start the popup within the click gesture. After an async stock
+		// check browsers may otherwise block opening WhatsApp.
+		const tab = window.open('', '_blank');
+		if (tab) {
+			try {
+				tab.document.title = 'Checking ML Nutrition order';
+				tab.document.body.textContent = 'Checking current prices and availability…';
+			} catch (err) { /* ignore popup customization errors */ }
+		}
+		try {
+			const latest = await fetchFreshCatalogue();
+			const originalCartKey = JSON.stringify(cart.map(i => [i.id, i.qty]));
+			const currentCart = getCart();
+			if (originalCartKey !== JSON.stringify(currentCart.map(i => [i.id, i.qty]))) {
+				if (tab) tab.close();
+				checkoutIssue('Your cart changed. Review it and try checkout again.');
+				return;
+			}
+			const errors = [];
+			const requestedCounts = new Map();
+			let pricesChanged = false;
+			const refreshed = cart.map(item => {
+				const productId = String(item.productId || String(item.id).split('::')[0]);
+				const product = latest.get(productId);
+				requestedCounts.set(productId, (requestedCounts.get(productId) || 0) + Number(item.qty || 0));
+				if (!product) {
+					errors.push(item.name + ': no longer in the catalogue');
+					return item;
+				}
+				if (!inStock(product)) errors.push(product.name + ': currently out of stock');
+				if (validFlavour(product, item.flavour) === null)
+					errors.push(product.name + ': choose an available flavour');
+				if (!Number.isSafeInteger(Number(item.qty)) || Number(item.qty) < 1 || Number(item.qty) > 99)
+					errors.push(product.name + ': invalid quantity');
+				const currentPrice = product.price_range.trim();
+				if (String(item.price_range || '').trim() !== currentPrice) pricesChanged = true;
+				registry[productId] = Object.assign({}, registry[productId] || {}, product);
+				return Object.assign({}, item, {
+					name: product.name, brand: product.brand, price_range: currentPrice,
+					in_stock: product.in_stock, flavours: product.flavours
+				});
+			});
+			for (const [id, qty] of requestedCounts) {
+				const product = latest.get(id);
+				if (!product || product.stock_qty === '') continue; // not tracked in sheet
+				const availableQty = Number(product.stock_qty);
+				if (Number.isFinite(availableQty) && availableQty >= 0 && qty > availableQty) {
+					errors.push(product.name + ': requested quantity exceeds available stock');
+				}
+			}
+			saveCart(refreshed);
+			renderCart();
+			if (errors.length) {
+				if (tab) tab.close();
+				checkoutIssue(errors.slice(0, 3).join('; ') + '. Please update your cart.');
+				return;
+			}
+			if (pricesChanged) {
+				if (tab) tab.close();
+				checkoutIssue('Some prices have changed. Review your updated cart and tap Checkout again.');
+				return;
+			}
+			let msg = t('waIntro') + '\n\n';
+			refreshed.forEach((item, index) => {
+				const parsedPrice = parsePrice(item.price_range);
+				const priceText = priceLabel(item.price_range);
+				const flavourText = item.flavour ? ' [' + item.flavour + ']' : '';
+				msg += (index + 1) + '. ' + item.name + flavourText + ' (' + item.brand + ') — ' +
+					t('qty') + ': ' + item.qty + ' — ' + priceText + '\n';
+			});
+			const tot = cartTotals();
+			if (tot.known) {
+				const total = tot.min === tot.max ? formatINR(tot.min) : formatINR(tot.min) + ' - ' + formatINR(tot.max);
+				msg += '\n' + t('waTotal') + ': ' + total + (tot.hasRequest ? ' +' : '') + '\n';
+			}
+			msg += '\n' + t('waConfirm');
+			const destination = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+			if (tab && !tab.closed) tab.location.replace(destination);
+			else window.location.href = destination;
+		} catch (err) {
+			if (tab) tab.close();
+			console.error('Checkout validation failed', err);
+			checkoutIssue('Cannot verify live prices and stock right now. Please try again.');
+		} finally {
+			checkoutBusy = false;
+			const currentButton = document.querySelector('#mlCartFooter .ml-checkout');
+			if (currentButton) currentButton.disabled = false;
+		}
 	}
 
 	/* ---------- Drawers ---------- */
@@ -435,9 +589,12 @@
 	function cardButtons(product) {
 		const id = product.id != null ? product.id : product.name;
 		const safeId = String(id).replace(/"/g, '&quot;');
-		const inStock = product.in_stock === 'Yes';
+		const available = inStock(product);
 		const wished = isInWishlist(id) ? ' active' : '';
-		const cartBtn = inStock
+		const choiceLink = '<a class="ml-card-cart" href="product.html?id=' + encodeURIComponent(id) + '" aria-label="Choose flavour on product page">↗</a>';
+		const cartBtn = available && productFlavours(product).length
+			? choiceLink
+			: available
 			? `<button class="ml-card-cart" data-cart-id="${safeId}" aria-label="Add to cart">
 					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
 				</button>`
@@ -469,7 +626,14 @@
 		const wb = e.target.closest('[data-wishlist-id]');
 		if (wb) { e.preventDefault(); toggleWishlist(wb.dataset.wishlistId); return; }
 		const cb = e.target.closest('[data-cart-id]');
-		if (cb) { e.preventDefault(); addToCart(cb.dataset.cartId); return; }
+		if (cb) {
+			e.preventDefault();
+			const prod = registry[String(cb.dataset.cartId)];
+			if (productFlavours(prod).length) {
+				window.location.href = 'product.html?id=' + encodeURIComponent(cb.dataset.cartId);
+			} else addToCart(cb.dataset.cartId);
+			return;
+		}
 	});
 
 	/* ---------- Inject CSS ---------- */

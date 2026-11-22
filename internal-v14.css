@@ -556,3 +556,30 @@ body.mln-product-page .mobile-menu{
     box-shadow:0 12px 25px #0005!important;
   }
 }
+
+/* V19.1: Make optional flavour selection obvious and tappable.
+   The mobile CTA stays active for in-stock flavours and guides the customer
+   to the options, never incorrectly saying "Out of stock". */
+body.mln-product-page .flavour-hint{
+  margin:5px 0 12px;color:#8c2936;
+  font:700 11px/1.5 var(--ml-font);
+}
+body.mln-product-page .flavour-block{
+  border:1px solid #e3dcd7;border-radius:5px;background:#fff;
+  padding:15px 16px;margin:8px 0 19px;
+  scroll-margin-top:105px;transition:border-color .18s,box-shadow .18s;
+}
+body.mln-product-page .flavour-block.needs-selection{
+  border-color:#ca1026;box-shadow:0 0 0 2px #ca102626;
+}
+body.mln-product-page .flavour-chip{touch-action:manipulation}
+@media(max-width:760px){
+  body.mln-product-page .flavour-block{
+    margin:12px 0 16px;padding:13px 12px;scroll-margin-top:110px;
+  }
+  body.mln-product-page .flavour-options{display:flex;flex-wrap:wrap;gap:9px}
+  body.mln-product-page .flavour-chip{min-height:48px;padding:12px 15px}
+  body.mln-product-page .mln-mobile-buy button{
+    touch-action:manipulation;cursor:pointer;
+  }
+}

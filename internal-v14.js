@@ -72,18 +72,29 @@ function ready(){
        return;
      }
      price.textContent=originalPrice.textContent.trim()||'ASK FOR PRICE';
-     add.disabled=originalAdd.disabled;
-     add.textContent=originalAdd.disabled?'OUT OF STOCK':'ADD TO CART';
+     const inStock=!root.querySelector('.badge.out');
+     const hasFlavours=!!root.querySelector('.flavour-chip');
+     const hasChosenFlavour=!!root.querySelector('.flavour-chip.active');
+     const needsFlavour=inStock&&hasFlavours&&!hasChosenFlavour;
+     add.disabled=!inStock;
+     add.textContent=!inStock?'OUT OF STOCK':needsFlavour?'CHOOSE FLAVOUR':'ADD TO CART';
+     add.setAttribute('aria-label',needsFlavour?'Choose a flavour before adding to cart':add.textContent);
      bar.hidden=false;
    };
    add.addEventListener('click',()=>{
      const original=root.querySelector('#addCartBtn');
      if(original&&!original.disabled)original.click();
    });
-   wa.addEventListener('click',()=>root.querySelector('#buyWaBtn')?.click());
+   wa.addEventListener('click',()=>{
+     if(root.querySelector('.flavour-chip')&&!root.querySelector('.flavour-chip.active')){
+       root.querySelector('#addCartBtn')?.click();
+       return;
+     }
+     root.querySelector('#buyWaBtn')?.click();
+   });
    // Observe only the actual product area; changes to the bar itself
    // do not retrigger this observer.
-   new MutationObserver(sync).observe(root,{childList:true,subtree:true});
+   new MutationObserver(sync).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class','disabled']});
    sync();
  }
 }
