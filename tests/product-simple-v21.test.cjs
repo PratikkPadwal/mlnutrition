@@ -91,12 +91,13 @@ test('existing sheet description is conditional and appears after purchase contr
   const renderer = html.slice(start, end);
   assert.match(renderer, /String\(p\.description \|\| ''\)\.trim\(\)/);
   assert.match(renderer, /detail-description-block/);
-  const price = renderer.indexOf('class="detail-price"');
-  const flavour = renderer.indexOf('id="mlnFlavourBlock"');
-  const quantity = renderer.indexOf('id="qtyMinus"');
-  const actions = renderer.indexOf('id="addCartBtn"');
-  const whatsapp = renderer.indexOf('id="buyWaBtn"');
-  const description = renderer.indexOf(String.fromCharCode(36) + '{descBlock}', renderer.indexOf('root.innerHTML'));
+  const markup = renderer.slice(renderer.indexOf('root.innerHTML'));
+  const price = markup.indexOf('class="detail-price"');
+  const flavour = markup.indexOf(String.fromCharCode(36) + '{flavourBlock}');
+  const quantity = markup.indexOf('id="qtyMinus"');
+  const actions = markup.indexOf('id="addCartBtn"');
+  const whatsapp = markup.indexOf('id="buyWaBtn"');
+  const description = markup.indexOf(String.fromCharCode(36) + '{descBlock}');
   assert.ok(price < flavour && flavour < quantity && quantity < actions &&
     actions < whatsapp && whatsapp < description);
   assert.match(css, /detail-description-block/);
