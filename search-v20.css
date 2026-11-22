@@ -1,0 +1,214 @@
+/* ML Nutrition Smart Search V20 — shared responsive autocomplete.
+   Body-level portal avoids clipping by mobile menus, headers and filters. */
+.ml-smart-results{
+  position:fixed;
+  z-index:12050;
+  display:flex;
+  flex-direction:column;
+  max-height:420px;
+  overflow:auto;
+  padding:9px;
+  border:1px solid #504448;
+  border-radius:12px;
+  background:#161518;
+  color:#fff;
+  box-shadow:0 20px 70px #0009;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#68575d transparent;
+  -webkit-overflow-scrolling:touch;
+  font-family:'DM Sans',Manrope,Arial,sans-serif;
+}
+.ml-smart-results[hidden]{display:none!important}
+.ml-smart-heading{
+  padding:8px 9px 10px;
+  color:#a7a1a3;
+  font:800 10px/1.25 inherit;
+  letter-spacing:.12em;
+}
+.ml-smart-result{
+  display:grid;
+  grid-template-columns:55px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  min-height:72px;
+  border:1px solid transparent;
+  border-radius:7px;
+  background:transparent;
+  color:#fff;
+  padding:7px 9px;
+  text-align:left;
+  text-decoration:none;
+  outline-offset:-2px;
+  transition:background .15s,border-color .15s;
+}
+.ml-smart-result:hover,
+.ml-smart-result:focus-visible,
+.ml-smart-result.is-active{
+  background:#30272c;
+  border-color:#684149;
+}
+.ml-smart-photo{
+  display:grid;
+  place-items:center;
+  width:55px;
+  height:57px;
+  background:#eeeae7;
+  border-radius:5px;
+  overflow:hidden;
+}
+.ml-smart-photo img{
+  grid-area:1/1;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+}
+.ml-smart-fallback{
+  grid-area:1/1;
+  font:800 15px/1.1 Arial,sans-serif;
+  color:#a69b9b;
+}
+.ml-smart-copy{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.ml-smart-title{
+  color:#fff;
+  font:800 12px/1.35 'DM Sans',Manrope,Arial,sans-serif;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+.ml-smart-brand{
+  color:#b7afb0;
+  font:650 10px/1.2 'DM Sans',Manrope,Arial,sans-serif;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.ml-smart-side{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+  padding-left:6px;
+  min-width:78px;
+}
+.ml-smart-price{
+  font:800 12px/1.2 'DM Sans',Manrope,Arial,sans-serif;
+  white-space:nowrap;
+  color:#f15c6b;
+}
+.ml-smart-stock{
+  color:#aba0a0;
+  font:800 9px/1.2 'DM Sans',Manrope,Arial,sans-serif;
+  letter-spacing:.035em;
+  white-space:nowrap;
+}
+.ml-smart-stock.available{color:#88d9ae}
+.ml-smart-message{
+  padding:16px 12px;
+  color:#ded5d5;
+  font:600 12px/1.5 'DM Sans',Manrope,Arial,sans-serif;
+}
+.ml-smart-all{
+  display:block;
+  padding:13px 12px 10px;
+  margin-top:6px;
+  border-top:1px solid #474044;
+  color:#f56b7b;
+  font:800 11px/1.35 'DM Sans',Manrope,Arial,sans-serif;
+  letter-spacing:.015em;
+  overflow-wrap:anywhere;
+  text-decoration:none;
+}
+.ml-smart-all:hover,.ml-smart-all:focus-visible{color:#fff;text-decoration:underline}
+input[role="combobox"][aria-expanded="true"]{
+  outline-offset:2px;
+}
+@media(max-width:760px){
+  .ml-smart-results{
+    border-radius:8px;
+    padding:7px;
+    box-shadow:0 15px 42px #000b;
+    max-height:min(400px,55vh);
+  }
+  .ml-smart-result{
+    grid-template-columns:50px minmax(0,1fr) auto;
+    min-height:68px;
+    gap:8px;
+    padding:7px 6px;
+  }
+  .ml-smart-photo{width:50px;height:53px}
+  .ml-smart-title{font-size:11px}
+  .ml-smart-side{min-width:64px;padding-left:3px}
+  .ml-smart-price{font-size:11px}
+  .ml-smart-stock{font-size:8px}
+}
+@media(max-width:370px){
+  .ml-smart-result{grid-template-columns:45px minmax(0,1fr);gap:7px}
+  .ml-smart-photo{width:45px;height:48px}
+  .ml-smart-side{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between;padding:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .ml-smart-result{transition:none}
+}
+
+
+/* Always-visible mobile search strip — replaces hidden desktop search
+   at tablet/phone widths without altering the approved desktop header. */
+.mln-home-quick-search{display:none}
+@media(max-width:1070px){
+  .mln-home-quick-search{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    min-height:62px;
+    padding:9px max(14px,env(safe-area-inset-left,0px));
+    border-bottom:1px solid #333033;
+    background:#151518;
+    color:#f0eceb;
+    position:relative;
+    z-index:99;
+    box-sizing:border-box;
+  }
+  .mln-home-quick-search svg{flex:0 0 19px;color:#f06a77}
+  .mln-home-quick-search input{
+    flex:1;
+    min-width:0;
+    min-height:44px;
+    border:0;
+    outline:0;
+    border-radius:4px;
+    background:#28272a;
+    color:#fff;
+    padding:0 12px;
+    font:600 12px/1.3 'DM Sans',Manrope,Arial,sans-serif;
+  }
+  .mln-home-quick-search input::placeholder{color:#bbb4b3}
+  .mln-home-quick-search input:focus{box-shadow:0 0 0 2px #c6223e}
+  .mln-home-quick-search button{
+    flex:0 0 auto;
+    min-height:44px;
+    border:0;
+    border-radius:4px;
+    background:#ce1933;
+    color:#fff;
+    padding:0 12px;
+    font:800 10px/1.2 'DM Sans',Manrope,Arial,sans-serif;
+    letter-spacing:.03em;
+    touch-action:manipulation;
+  }
+  .mln-home-quick-search button span{font-size:15px;margin-left:4px}
+}
+@media(max-width:370px){
+  .mln-home-quick-search{padding:8px 10px;gap:6px}
+  .mln-home-quick-search input{font-size:11px;padding:0 9px}
+  .mln-home-quick-search button{padding:0 9px}
+}
