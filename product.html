@@ -1046,7 +1046,7 @@
 					price ? 'वेबसाइटवरील किंमत: ' + price : '',
 					'प्रॉडक्ट लिंक: ' + link,
 					'कृपया उपलब्धता आणि अंतिम किंमत कळवा.'
-				].filter(Boolean).join('\\n')
+				].filter(Boolean).join('\n')
 				: [
 					'Hi ML Nutrition! I would like to enquire about:',
 					'Product: ' + p.name,
@@ -1056,7 +1056,7 @@
 					price ? 'Listed price: ' + price : '',
 					'Product link: ' + link,
 					'Please confirm availability and final price.'
-				].filter(Boolean).join('\\n');
+				].filter(Boolean).join('\n');
 			window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 		}
 
