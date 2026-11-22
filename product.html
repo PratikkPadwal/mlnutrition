@@ -505,7 +505,7 @@
 					quantity: 'Quantity',
 					addToCart: 'Add to Cart',
 					outOfStock: 'Out of Stock',
-					buyWhatsapp: 'Buy on WhatsApp',
+					buyWhatsapp: 'Enquire on WhatsApp',
 					inStock: 'In Stock',
 					authentic: '100% Authentic',
 					share: 'Share:',
@@ -528,7 +528,7 @@
 					quantity: 'संख्या',
 					addToCart: 'कार्टमध्ये टाका',
 					outOfStock: 'स्टॉक संपला',
-					buyWhatsapp: 'व्हाट्सअॅपवर खरेदी करा',
+					buyWhatsapp: 'व्हॉट्सअॅपवर चौकशी करा',
 					inStock: 'स्टॉकमध्ये',
 					authentic: '१००% अस्सल',
 					share: 'शेअर करा:',
@@ -880,9 +880,11 @@
 					</div>
 				</div>` : '';
 
-			const descBlock = p.description ? `
-				<div class="detail-section-label">${esc(T('detail.description'))}</div>
-				<p class="detail-desc">${esc(p.description)}</p>` : '';
+			const descBlock = String(p.description || '').trim() ? `
+				<section class="detail-description-block" aria-label="${esc(T('detail.description'))}">
+					<h2 class="detail-section-label">${esc(T('detail.description'))}</h2>
+					<p class="detail-desc">${esc(p.description)}</p>
+				</section>` : '';
 
 			root.innerHTML = `
 				<div class="detail-grid">
@@ -896,7 +898,6 @@
 						</div>
 						<div class="detail-price">${priceHTML}</div>
 						${flavourBlock}
-						${descBlock}
 						<div class="qty-block">
 							<div class="detail-section-label">${esc(T('detail.quantity'))}</div>
 							<div class="qty-selector">
@@ -927,6 +928,7 @@
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
 							</button>
 						</div>
+						${descBlock}
 					</div>
 				</div>`;
 
@@ -1029,15 +1031,36 @@
 				return;
 			}
 			if (getFlavours(p).length && !selectedFlavour) {
-				window.MLStore?.toast(T('detail.selectFlavour'), 'error');
+				// Reuse the existing option-selection guidance for both actions.
+				const add = document.getElementById('addCartBtn');
+				if (add && !add.disabled) add.click();
+				else window.MLStore?.toast(T('detail.selectFlavour'), 'error');
 				return;
 			}
-			const flav = selectedFlavour ? ` (${selectedFlavour})` : '';
-			const qtyStr = quantity > 1 ? ` x${quantity}` : '';
+			const price = parsePriceNums(p.price_range) ? priceLabel(p.price_range) : '';
+			const link = `${SITE}/product.html?id=${encodeURIComponent(p.id)}`;
 			const msg = (currentLang === 'mr')
-				? `नमस्ते ML Nutrition! मला ${p.name}${flav}${qtyStr} (${p.brand}) हवे आहे. उपलब्धता आणि किंमत सांगा.`
-				: `Hi ML Nutrition! I am interested in ${p.name}${flav}${qtyStr} by ${p.brand}. Please share availability and exact price.`;
-			window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+				? [
+					'नमस्कार ML Nutrition! मला या प्रॉडक्टबद्दल माहिती हवी आहे.',
+					'प्रॉडक्ट: ' + p.name,
+					'ब्रँड: ' + (p.brand || 'ML Nutrition'),
+					selectedFlavour ? 'फ्लेवर: ' + selectedFlavour : '',
+					'संख्या: ' + quantity,
+					price ? 'वेबसाइटवरील किंमत: ' + price : '',
+					'प्रॉडक्ट लिंक: ' + link,
+					'कृपया उपलब्धता आणि अंतिम किंमत कळवा.'
+				].filter(Boolean).join('\n')
+				: [
+					'Hi ML Nutrition! I would like to enquire about:',
+					'Product: ' + p.name,
+					'Brand: ' + (p.brand || 'ML Nutrition'),
+					selectedFlavour ? 'Flavour: ' + selectedFlavour : '',
+					'Quantity: ' + quantity,
+					price ? 'Listed price: ' + price : '',
+					'Product link: ' + link,
+					'Please confirm availability and final price.'
+				].filter(Boolean).join('\n');
+			window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 		}
 
 		function shareWhatsApp() {
@@ -1065,9 +1088,18 @@
 
 		/* ---------- Related ---------- */
 		function renderRelated() {
+			// Use only catalogue category, brand and availability. Same-brand,
+			// in-stock alternatives are more useful than arbitrary sheet order.
 			const related = allProducts
 				.filter(p => p.category === currentProduct.category && String(p.id) !== String(currentProduct.id))
-				.slice(0, 5);
+				.sort((a, b) => {
+					const score = p => (
+						(String(p.in_stock || '').trim().toLowerCase() === 'yes' ? 2 : 0) +
+						(String(p.brand || '').trim().toLowerCase() === String(currentProduct.brand || '').trim().toLowerCase() ? 1 : 0)
+					);
+					return score(b) - score(a);
+				})
+				.slice(0, 4);
 			if (!related.length) return;
 			const grid = document.getElementById('relatedGrid');
 			grid.innerHTML = related.map(p => {
