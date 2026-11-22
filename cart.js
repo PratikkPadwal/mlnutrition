@@ -86,12 +86,29 @@
 	function saveWishlist(w) { write(WISHLIST_KEY, w); }
 
 	/* ---------- Price parsing ---------- */
+	// Accept fixed INR amounts and clearly separated price ranges.
+	// Never split thousands separators: "₹10,700" must mean 10700.
 	function parsePrice(str) {
-		if (!str) return null;
-		const nums = String(str).match(/\d+/g);
-		if (!nums || nums.length === 0) return null;
-		const vals = nums.map(Number);
-		return { min: Math.min(...vals), max: Math.max(...vals) };
+		if (str == null || str === '') return null;
+		const normalized = String(str).trim()
+			.replace(/\b(?:INR|Rs\.?)\b/gi, '')
+			.replace(/[₹,\s]/g, '');
+		const match = normalized.match(/^(\d+(?:\.\d{1,2})?)(?:(?:-|–|—|to)(\d+(?:\.\d{1,2})?))?$/i);
+		if (!match) return null;
+		const values = [Number(match[1]), match[2] === undefined ? Number(match[1]) : Number(match[2])];
+		if (values.some(n => !Number.isFinite(n) || n <= 0)) return null;
+		return { min: Math.min(...values), max: Math.max(...values) };
+	}
+	function inStock(product) {
+		return String(product && product.in_stock || '').trim().toLowerCase() === 'yes';
+	}
+	function productFlavours(product) {
+		return String(product && product.flavours || '').split(/[,|]/).map(f => f.trim()).filter(Boolean);
+	}
+	function validFlavour(product, flavour) {
+		const list = productFlavours(product);
+		if (!list.length) return !flavour ? '' : null;
+		return list.find(f => f.toLowerCase() === String(flavour || '').trim().toLowerCase()) || null;
 	}
 	function formatINR(n) {
 		return '₹' + n.toLocaleString('en-IN');
@@ -100,7 +117,8 @@
 		const cart = getCart();
 		let min = 0, max = 0, hasRequest = false, known = false;
 		cart.forEach(item => {
-			const p = parsePrice(item.price_range);
+			const current = registry[String(item.productId || String(item.id).split('::')[0])];
+			const p = parsePrice(current ? current.price_range : item.price_range);
 			if (p) {
 				min += p.min * item.qty;
 				max += p.max * item.qty;
@@ -127,7 +145,8 @@
 			brand: p.brand || 'ML Nutrition',
 			price_range: p.price_range || '',
 			image_url: p.image_url ? String(p.image_url).split(/,(?=\s*https?:\/\/)/)[0].trim() : '',
-			in_stock: p.in_stock || ''
+			in_stock: p.in_stock || '',
+			flavours: p.flavours || ''
 		};
 	}
 
@@ -146,31 +165,48 @@
 
 	/* ---------- Cart ops ---------- */
 	function addToCart(id, flavour, qty) {
-		const prod = findProduct(id);
-		if (!prod) return;
-		if (prod.in_stock && prod.in_stock !== 'Yes') {
-			showToast(t('outOfStock'), 'error');
-			return;
+		// Local storage snapshots can be stale. Only registered catalogue
+		// products may be added; checkout rechecks the live sheet.
+		const prod = registry[String(id)];
+		if (!prod) {
+			showToast('Product is still loading. Please try again.', 'error');
+			return false;
 		}
-		const addQty = Math.max(1, parseInt(qty, 10) || 1);
-		const key = lineId(id, flavour);
+		if (!inStock(prod)) {
+			showToast(t('outOfStock'), 'error');
+			return false;
+		}
+		const selection = validFlavour(prod, flavour);
+		if (selection === null) {
+			showToast(productFlavours(prod).length ? 'Please choose a valid flavour.' : 'Invalid product option.', 'error');
+			return false;
+		}
+		const parsedQty = Number(qty == null ? 1 : qty);
+		const addQty = Number.isSafeInteger(parsedQty) ? parsedQty : 0;
+		if (addQty < 1 || addQty > 99) {
+			showToast('Quantity must be between 1 and 99.', 'error');
+			return false;
+		}
+		const key = lineId(id, selection);
 		const cart = getCart();
 		const existing = cart.find(i => String(i.id) === key);
 		if (existing) {
-			existing.qty += addQty;
+			existing.qty = Math.min(99, (Number(existing.qty) || 0) + addQty);
+			Object.assign(existing, snapshot(prod), { id: key, productId: prod.id, flavour: selection || undefined });
 		} else {
-			const s = snapshot(prod);
-			s.productId = prod.id;
-			s.id = key;
-			if (flavour) s.flavour = flavour;
-			s.qty = addQty;
-			cart.push(s);
+			const record = snapshot(prod);
+			record.productId = prod.id;
+			record.id = key;
+			if (selection) record.flavour = selection;
+			record.qty = addQty;
+			cart.push(record);
 		}
 		saveCart(cart);
 		updateBadges();
 		renderCart();
 		showToast(t('addedCart'), 'success');
 		bump('cartBtn');
+		return true;
 	}
 	function removeFromCart(id) {
 		saveCart(getCart().filter(i => String(i.id) !== String(id)));
@@ -228,25 +264,18 @@
 	function moveToCart(id) {
 		const item = getWishlist().find(i => String(i.id) === String(id));
 		if (!item) return;
-		if (item.in_stock && item.in_stock !== 'Yes') {
-			showToast(t('outOfStock'), 'error');
+		const productId = item.productId || String(item.id).split('::')[0];
+		const prod = registry[String(productId)];
+		if (!prod) {
+			showToast('Product details are loading. Please try again.', 'error');
 			return;
 		}
-		const cart = getCart();
-		const existing = cart.find(i => String(i.id) === String(item.id));
-		if (existing) {
-			existing.qty += 1;
-		} else {
-			const s = Object.assign({}, item);
-			s.qty = 1;
-			cart.push(s);
+		if (productFlavours(prod).length && !item.flavour) {
+			showToast('Choose a flavour on the product page.', 'error');
+			window.location.href = 'product.html?id=' + encodeURIComponent(productId);
+			return;
 		}
-		saveCart(cart);
-		removeFromWishlist(id);
-		updateBadges();
-		renderCart();
-		showToast(t('addedCart'), 'success');
-		bump('cartBtn');
+		if (addToCart(productId, item.flavour, 1)) removeFromWishlist(id);
 	}
 
 	/* ---------- Badges & button sync ---------- */
