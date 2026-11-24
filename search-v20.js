@@ -262,6 +262,15 @@
         results.forEach((product, index) => {
           const link = make('a', 'ml-smart-result');
           link.href = '/product.html?id=' + encodeURIComponent(product.id);
+          // Search suggestion selection is distinct from submitting a search.
+          link.addEventListener('click', () => {
+            const metrics = root.MLAnalytics;
+            if (!metrics) return;
+            metrics.trackSearch(input.value);
+            const item = metrics.ecommerce(product, 1);
+            if (item) metrics.track('select_item', Object.assign(
+              { item_list_name: 'search_suggestions' }, item));
+          });
           link.setAttribute('role', 'option');
           link.setAttribute('aria-selected', 'false');
           link.id = id + '-item-' + index;
@@ -336,7 +345,7 @@
       }
       if (event.key === 'Enter' && !panel.hidden && activeIndex >= 0) {
         const result = panel.querySelectorAll('.ml-smart-result')[activeIndex];
-        if (result) { event.preventDefault(); root.location.assign(result.href); }
+        if (result) { event.preventDefault(); result.click(); }
       }
     });
     input.addEventListener('blur', () => root.setTimeout(hide, 175));

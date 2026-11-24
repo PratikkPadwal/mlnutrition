@@ -394,6 +394,9 @@
 <link rel="stylesheet" href="/internal-v14.css">
 <link rel="stylesheet" href="/search-v20.css">
 <script src="/internal-v14.js" defer></script>
+<link rel="stylesheet" href="/analytics-v22.css">
+<script src="/analytics-config.js" defer></script>
+<script src="/analytics-v22.js" defer></script>
 <script src="/search-v20.js" defer></script>
 </head>
 <body class="mln-product-page">
@@ -847,6 +850,8 @@
 					renderRelated();
 					injectSchema();
 					updateMeta();
+					const view = window.MLAnalytics?.ecommerce(currentProduct, 1);
+					if (view) window.MLAnalytics.track('view_item', view);
 				})
 				.catch(err => {
 					console.error('Error:', err);
@@ -1060,6 +1065,11 @@
 					'Product link: ' + link,
 					'Please confirm availability and final price.'
 				].filter(Boolean).join('\n');
+			// Track the enquiry click only, not a completed WhatsApp message or sale.
+			const enquiryItem = window.MLAnalytics?.item(p, quantity, selectedFlavour);
+			if (enquiryItem) window.MLAnalytics.track('whatsapp_enquiry_click', {
+				channel: 'whatsapp', source: 'product_detail', items: [enquiryItem]
+			});
 			window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 		}
 

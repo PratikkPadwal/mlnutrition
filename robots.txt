@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.mlnutrition.in/sitemap.xml
+Sitemap: https://www.mlnutrition.in/products-sitemap.xml

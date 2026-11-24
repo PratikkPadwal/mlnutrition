@@ -210,6 +210,12 @@
 		saveCart(cart);
 		updateBadges();
 		renderCart();
+		// The item was actually added; do not report failed attempts.
+		const analytics = window.MLAnalytics;
+		if (analytics && analytics.track) {
+			const productEvent = analytics.ecommerce(prod, addQty, selection);
+			if (productEvent) analytics.track('add_to_cart', productEvent);
+		}
 		showToast(t('addedCart'), 'success');
 		bump('cartBtn');
 		return true;
@@ -526,6 +532,16 @@
 			}
 			msg += '\n' + t('waConfirm');
 			const destination = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+			// This is a validated WhatsApp checkout *handoff*, NOT a purchase.
+			const tracker = window.MLAnalytics;
+			if (tracker && tracker.track) {
+				const items = refreshed.map(entry =>
+					tracker.item(registry[String(entry.productId || String(entry.id).split('::')[0])] || entry,
+						entry.qty, entry.flavour)).filter(Boolean);
+				const eventData = { currency: 'INR', items, checkout_type: 'whatsapp' };
+				if (tot.known && !tot.hasRequest && tot.min === tot.max) eventData.value = tot.min;
+				tracker.track('begin_checkout', eventData);
+			}
 			if (tab && !tab.closed) tab.location.replace(destination);
 			else window.location.href = destination;
 		} catch (err) {
