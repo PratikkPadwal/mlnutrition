@@ -10,7 +10,7 @@ The tracking code and sitemap improvements are prepared in `feature/analytics-se
 4. Put the value in `analytics-config.js`, replacing the empty `ga4MeasurementId` value, and deploy the reviewed change to `main`.
 5. Open the production website, choose **Allow analytics**, then test Google Analytics **Realtime** and **DebugView**. The script must not load if the visitor declines analytics.
 
-Analytics events: `view_item`, `add_to_cart`, `begin_checkout`, `search`, `whatsapp_enquiry_click`. A WhatsApp checkout handoff is **not** a completed purchase. Do not mark it as revenue or a `purchase` event. Price ranges and products without fixed prices do not send invented prices or values.
+Analytics events: `view_item`, `add_to_cart`, `begin_checkout`, `search`, `select_item` (autocomplete result selection), `whatsapp_enquiry_click`. A WhatsApp checkout handoff is **not** a completed purchase. Do not mark it as revenue or a `purchase` event. Price ranges and products without fixed prices do not send invented prices or values.
 
 ## 2. Verify the website in Google Search Console
 
