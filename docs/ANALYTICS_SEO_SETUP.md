@@ -7,7 +7,7 @@ The tracking code and sitemap improvements are prepared in `feature/analytics-se
 1. Sign in at https://analytics.google.com/ using the ML Nutrition Google account.
 2. Create or select a **Google Analytics 4** property and add a **Web** data stream for `https://www.mlnutrition.in`.
 3. Copy the **Measurement ID** beginning with `G-` (not a Measurement Protocol API secret, password or service key).
-4. Put the value in `analytics-config.js`, replacing the empty `ga4MeasurementId` value, and deploy the reviewed change to `main`.
+4. ML Nutrition's verified web-stream Measurement ID `G-4HQ3W72C7E` is now configured in `analytics-config.js` on the Phase 4 preview branch. Deploy this reviewed change to `main` once approved.
 5. Open the production website, choose **Allow analytics**, then test Google Analytics **Realtime** and **DebugView**. The script must not load if the visitor declines analytics.
 
 Analytics events: `view_item`, `add_to_cart`, `begin_checkout`, `search`, `select_item` (autocomplete result selection), `whatsapp_enquiry_click`. A WhatsApp checkout handoff is **not** a completed purchase. Do not mark it as revenue or a `purchase` event. Price ranges and products without fixed prices do not send invented prices or values.
