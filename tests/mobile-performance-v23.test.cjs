@@ -7,6 +7,9 @@ const { join } = require('node:path');
 
 const storefront = readFileSync(join(__dirname, '..', 'storefront-v13.js'), 'utf8');
 const product = readFileSync(join(__dirname, '..', 'product.html'), 'utf8');
+const catalogue = readFileSync(join(__dirname, '..', 'products.html'), 'utf8');
+const vercel = JSON.parse(readFileSync(join(__dirname, '..', 'vercel.json'), 'utf8'));
+
 const cart = readFileSync(join(__dirname, '..', 'cart.js'), 'utf8');
 function scripts(html) {
   return [...html.matchAll(/<script(?:\s+[^>]*)?>([\s\S]*?)<\/script>/g)]
@@ -65,4 +68,31 @@ test('shared cart and WhatsApp stock verification are untouched', () => {
   assert.match(cart, /async function checkout\(\)/);
   assert.match(product, /id="addCartBtn"/);
   assert.match(product, /id="buyWaBtn"/);
+});
+
+
+test('catalogue image rendering and optimizer compile with existing scripts', () => {
+  scripts(catalogue).forEach(code => assert.doesNotThrow(() => new Function(code)));
+});
+
+test('Vercel image optimizer allows only known Avvatar product-image host and fixed thumbnails', () => {
+  assert.deepEqual(vercel.images.sizes, [384]);
+  assert.deepEqual(vercel.images.qualities, [70]);
+  assert.equal(vercel.images.remotePatterns.length, 1);
+  assert.equal(vercel.images.remotePatterns[0].hostname, 'www.avvatarindia.com');
+  assert.match(vercel.images.remotePatterns[0].pathname, /product_images/);
+});
+
+test('catalogue renders small Avvatar image thumbnails with original image fallback', () => {
+  assert.match(catalogue, /function catalogueThumbnailUrl\(original\)/);
+  assert.match(catalogue, /hostname === 'www.avvatarindia.com'/);
+  assert.match(catalogue, /\/_vercel\/image\?url=/);
+  assert.match(catalogue, /data-original-src="\$\{safeHTML\(imageUrl\)\}"/);
+  assert.match(catalogue, /this\.dataset\.originalSrc/);
+});
+
+test('first two catalogue product images are eagerly fetched at high priority', () => {
+  assert.match(catalogue, /products\.map\(\(product, index\) =>/);
+  assert.match(catalogue, /loading="\$\{index < 2 \? 'eager' : 'lazy'\}"/);
+  assert.match(catalogue, /fetchpriority="\$\{index < 2 \? 'high' : 'low'\}"/);
 });
