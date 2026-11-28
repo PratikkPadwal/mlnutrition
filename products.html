@@ -1604,6 +1604,20 @@
 			} catch (err) { return ''; }
 		}
 
+		// Thumbnail-only optimization for known oversized catalogue images.
+		// The original URL remains available as a fallback if the optimizer fails.
+		function catalogueThumbnailUrl(original) {
+			if (!original) return '';
+			try {
+				const url = new URL(original, window.location.origin);
+				if (url.protocol === 'https:' && url.hostname === 'www.avvatarindia.com' &&
+					url.pathname.startsWith('/images/product_images/') && !url.search) {
+					return '/_vercel/image?url=' + encodeURIComponent(url.href) + '&w=384&q=70';
+				}
+			} catch (err) { /* use original */ }
+			return original;
+		}
+
 		// RENDER PRODUCTS
 		function renderProducts(products) {
 			const container = document.getElementById('productsContainer');
@@ -1623,6 +1637,7 @@
 				const brand = product.brand || 'ML Nutrition';
 				const price = product.price_range || 'Price on request';
 				const imageUrl = safeProductImage(product.image_url);
+				const thumbnailUrl = catalogueThumbnailUrl(imageUrl);
 				const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
 				const safeName = safeHTML(name), safeBrand = safeHTML(brand);
 				const safeInitials = safeHTML(initials);
@@ -1648,7 +1663,7 @@
 						<a class="product-link" href="${productUrl}" aria-label="${safeName}">
 							<div class="product-image">
 								${imageUrl ?
-									`<img src="${safeHTML(imageUrl)}" alt="${safeName}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="placeholder" style="display:none">${safeInitials}</div>` :
+									`<img src="${safeHTML(thumbnailUrl)}" data-original-src="${safeHTML(imageUrl)}" alt="${safeName}" loading="lazy" decoding="async" onerror="if(this.src!==this.dataset.originalSrc){this.src=this.dataset.originalSrc}else{this.style.display='none';this.nextElementSibling.style.display='flex'}"><div class="placeholder" style="display:none">${safeInitials}</div>` :
 									`<div class="placeholder">${safeInitials}</div>`
 								}
 							</div>
