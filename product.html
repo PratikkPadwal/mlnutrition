@@ -621,12 +621,12 @@
 			const single = images.length === 1 ? ' gallery-single' : '';
 			const slides = images.map((src, i) => `
 				<div class="gallery-slide">
-					<img src="${esc(src)}" alt="${esc(name)} - image ${i + 1}" decoding="async"
+					<img src="${esc(src)}" alt="${esc(name)} - image ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'low'}" decoding="async"
 						onerror="this.closest('.gallery-slide').innerHTML='<div class=\\'placeholder\\'>${initials}</div>'">
 				</div>`).join('');
 			const thumbs = images.map((src, i) => `
 				<button class="gallery-thumb${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="View image ${i + 1}">
-					<img src="${esc(src)}" alt="" decoding="async">
+					<img src="${esc(src)}" alt="" loading="lazy" fetchpriority="low" decoding="async">
 				</button>`).join('');
 			return `
 				<div class="gallery${single}" id="gallery">
@@ -645,6 +645,9 @@
 			if (!n) return;
 			galleryIndex = (i + n) % n;
 			const track = document.getElementById('galleryTrack');
+			// User-requested slides must load immediately even when natively lazy.
+			const activeImage = track?.querySelectorAll('.gallery-slide img')[galleryIndex];
+			if (activeImage) activeImage.loading = 'eager';
 			if (track) track.style.transform = `translateX(-${galleryIndex * 100}%)`;
 			document.querySelectorAll('#galleryThumbs .gallery-thumb')
 				.forEach((t, idx) => t.classList.toggle('active', idx === galleryIndex));

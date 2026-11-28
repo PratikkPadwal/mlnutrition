@@ -126,6 +126,10 @@ function fillHero(){
     const p=selected[i];if(!p)return;
     const img=slot.querySelector('img'),fallback=slot.querySelector('.jar-standin');
     slot.href=url(p);slot.setAttribute('aria-label','View '+p.name);
+    // Keep the hero visible immediately. The centre image is the likely
+    // visual LCP candidate; defer the less-important side images below it.
+    img.loading='eager';
+    img.fetchPriority=i===1?'high':'low';
     showImage(img,fallback,primaryPhoto(p),p.name);
   });
 }
@@ -143,6 +147,8 @@ function fillCategories(){
     const product=options.find(inStock)||options[0];
     if(!product)return;
     const img=card.querySelector('img'),fallback=card.querySelector('.category-graphic');
+    // Product photos in category cards are below the initial mobile viewport.
+    img.loading='lazy';img.fetchPriority='low';
     showImage(img,fallback,primaryPhoto(product),product.name);
   });
 }
@@ -230,7 +236,8 @@ function fillBrands(){
       image.alt=asset.icon?'':name+' brand logo';
       // Keep hidden loading images in a visible carousel slot so
       // native lazy loading can fetch them when customers scroll.
-      image.loading=index<6?'eager':'lazy';image.decoding='async';
+      // All brand logos live below the fold; do not compete with hero assets.
+      image.loading='lazy';image.fetchPriority='low';image.decoding='async';
       image.referrerPolicy='no-referrer';
       image.style.opacity='0';
       image.style.position='absolute';
@@ -249,8 +256,25 @@ function fillBrands(){
       };
       image.onerror=()=>{image.remove();fallback.hidden=false};
       link.prepend(image);
-      image.src=asset.src;
-      if(image.complete&&image.naturalWidth>0)image.onload();
+      // Brand logos are remote, below-fold assets. Their requests should
+      // begin only as visitors approach the brand carousel on mobile.
+      const loadLogo=()=>{
+        if(image.src)return;
+        image.src=asset.src;
+        if(image.complete&&image.naturalWidth>0)image.onload();
+      };
+      if('IntersectionObserver' in window){
+        const observer=new IntersectionObserver(entries=>{
+          if(entries.some(entry=>entry.isIntersecting)){
+            observer.disconnect();
+            loadLogo();
+          }
+        },{rootMargin:'180px'});
+        observer.observe(link);
+      }else{
+        // Older browsers still get the full brand experience.
+        loadLogo();
+      }
     }
     return link;
   }));
@@ -321,7 +345,7 @@ function productCard(p,index){
   const top=el('div','feature-top'),image=el('a','feature-image');
   image.href=url(p);image.setAttribute('aria-label','View '+p.name);
   const fallback=el('span','feature-fallback','MLN.');
-  const img=el('img');img.loading='eager';img.decoding='async';
+  const img=el('img');img.loading='lazy';img.fetchPriority='low';img.decoding='async';
   image.append(fallback,img);
   showImage(img,fallback,primaryPhoto(p),p.name);
   top.append(image);

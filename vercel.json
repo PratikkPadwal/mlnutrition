@@ -11,5 +11,26 @@
       "source": "/products-sitemap.xml",
       "destination": "/api/products-sitemap"
     }
-  ]
+  ],
+  "images": {
+    "sizes": [
+      384
+    ],
+    "qualities": [
+      70
+    ],
+    "formats": [
+      "image/webp"
+    ],
+    "minimumCacheTTL": 86400,
+    "remotePatterns": [
+      {
+        "protocol": "https",
+        "hostname": "www.avvatarindia.com",
+        "port": "",
+        "pathname": "^/images/product_images/.*$",
+        "search": ""
+      }
+    ]
+  }
 }
