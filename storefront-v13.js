@@ -256,8 +256,25 @@ function fillBrands(){
       };
       image.onerror=()=>{image.remove();fallback.hidden=false};
       link.prepend(image);
-      image.src=asset.src;
-      if(image.complete&&image.naturalWidth>0)image.onload();
+      // Brand logos are remote, below-fold assets. Their requests should
+      // begin only as visitors approach the brand carousel on mobile.
+      const loadLogo=()=>{
+        if(image.src)return;
+        image.src=asset.src;
+        if(image.complete&&image.naturalWidth>0)image.onload();
+      };
+      if('IntersectionObserver' in window){
+        const observer=new IntersectionObserver(entries=>{
+          if(entries.some(entry=>entry.isIntersecting)){
+            observer.disconnect();
+            loadLogo();
+          }
+        },{rootMargin:'180px'});
+        observer.observe(link);
+      }else{
+        // Older browsers still get the full brand experience.
+        loadLogo();
+      }
     }
     return link;
   }));
