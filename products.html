@@ -1632,7 +1632,7 @@
 				return;
 			}
 
-			const html = products.map(product => {
+			const html = products.map((product, index) => {
 				const name = product.name || 'Product';
 				const brand = product.brand || 'ML Nutrition';
 				const price = product.price_range || 'Price on request';
@@ -1663,7 +1663,7 @@
 						<a class="product-link" href="${productUrl}" aria-label="${safeName}">
 							<div class="product-image">
 								${imageUrl ?
-									`<img src="${safeHTML(thumbnailUrl)}" data-original-src="${safeHTML(imageUrl)}" alt="${safeName}" loading="lazy" decoding="async" onerror="if(this.src!==this.dataset.originalSrc){this.src=this.dataset.originalSrc}else{this.style.display='none';this.nextElementSibling.style.display='flex'}"><div class="placeholder" style="display:none">${safeInitials}</div>` :
+									`<img src="${safeHTML(thumbnailUrl)}" data-original-src="${safeHTML(imageUrl)}" alt="${safeName}" loading="${index < 2 ? 'eager' : 'lazy'}" fetchpriority="${index < 2 ? 'high' : 'low'}" decoding="async" onerror="if(this.src!==this.dataset.originalSrc){this.src=this.dataset.originalSrc}else{this.style.display='none';this.nextElementSibling.style.display='flex'}"><div class="placeholder" style="display:none">${safeInitials}</div>` :
 									`<div class="placeholder">${safeInitials}</div>`
 								}
 							</div>
